@@ -20,8 +20,8 @@ export const home: (args: HomeArgs) => RequiredDataFromCollectionSlug<'pages'> =
           link: {
             type: 'custom',
             appearance: 'default',
-            label: 'All posts',
-            url: '/posts',
+            label: 'All projects',
+            url: '/projects',
           },
         },
         {
@@ -530,7 +530,7 @@ export const home: (args: HomeArgs) => RequiredDataFromCollectionSlug<'pages'> =
                     format: 0,
                     mode: 'normal',
                     style: '',
-                    text: 'Recent posts',
+                    text: 'Recent projects',
                     version: 1,
                   },
                 ],
@@ -567,7 +567,7 @@ export const home: (args: HomeArgs) => RequiredDataFromCollectionSlug<'pages'> =
           },
         },
         populateBy: 'collection',
-        relationTo: 'posts',
+        relationTo: 'projects',
       },
       {
         blockName: 'CTA',
@@ -577,8 +577,8 @@ export const home: (args: HomeArgs) => RequiredDataFromCollectionSlug<'pages'> =
             link: {
               type: 'custom',
               appearance: 'default',
-              label: 'All posts',
-              url: '/posts',
+              label: 'All projects',
+              url: '/projects',
             },
           },
         ],

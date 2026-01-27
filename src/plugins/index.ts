@@ -10,14 +10,14 @@ import { FixedToolbarFeature, HeadingFeature, lexicalEditor } from '@payloadcms/
 import { searchFields } from '@/search/fieldOverrides'
 import { beforeSyncWithSearch } from '@/search/beforeSync'
 
-import { Page, Post } from '@/payload-types'
+import { Page, Project } from '@/payload-types'
 import { getServerSideURL } from '@/utilities/getURL'
 
-const generateTitle: GenerateTitle<Post | Page> = ({ doc }) => {
+const generateTitle: GenerateTitle<Project | Page> = ({ doc }) => {
   return doc?.title ? `${doc.title} | Payload Website Template` : 'Payload Website Template'
 }
 
-const generateURL: GenerateURL<Post | Page> = ({ doc }) => {
+const generateURL: GenerateURL<Project | Page> = ({ doc }) => {
   const url = getServerSideURL()
 
   return doc?.slug ? `${url}/${doc.slug}` : url
@@ -25,7 +25,7 @@ const generateURL: GenerateURL<Post | Page> = ({ doc }) => {
 
 export const plugins: Plugin[] = [
   redirectsPlugin({
-    collections: ['pages', 'posts'],
+    collections: ['pages', 'projects'],
     overrides: {
       // @ts-expect-error - This is a valid override, mapped fields don't resolve to the same type
       fields: ({ defaultFields }) => {
@@ -57,6 +57,61 @@ export const plugins: Plugin[] = [
   formBuilderPlugin({
     fields: {
       payment: false,
+      file: {
+        slug: 'file',
+        fields: [
+          {
+            type: 'row',
+            fields: [
+              {
+                name: 'name',
+                type: 'text',
+                label: 'Name (lowercase, no special characters)',
+                required: true,
+                admin: {
+                  width: '50%',
+                },
+              },
+              {
+                name: 'label',
+                type: 'text',
+                label: 'Label',
+                localized: true,
+                admin: {
+                  width: '50%',
+                },
+              },
+            ],
+          },
+          {
+            type: 'row',
+            fields: [
+              {
+                name: 'width',
+                type: 'number',
+                label: 'Field Width (percentage)',
+                admin: { width: '50%' },
+              },
+              {
+                name: 'required',
+                type: 'checkbox',
+                label: 'Required',
+                admin: { width: '50%' },
+              },
+            ],
+          },
+          {
+            name: 'defaultValue',
+            type: 'upload',
+            relationTo: 'media',
+            label: 'Default File',
+          },
+        ],
+        labels: {
+          plural: 'File Fields',
+          singular: 'File',
+        },
+      } as any,
     },
     formOverrides: {
       fields: ({ defaultFields }) => {
@@ -81,7 +136,7 @@ export const plugins: Plugin[] = [
     },
   }),
   searchPlugin({
-    collections: ['posts'],
+    collections: ['projects'],
     beforeSync: beforeSyncWithSearch,
     searchOverrides: {
       fields: ({ defaultFields }) => {
