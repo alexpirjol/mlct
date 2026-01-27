@@ -46,7 +46,7 @@ export default async function Project({ params: paramsPromise }: Args) {
   // Decode to support slugs with special characters
   const decodedSlug = decodeURIComponent(slug)
   const url = '/projects/' + decodedSlug
-  const project = await queryPostBySlug({ slug: decodedSlug })
+  const project = await queryProjectsBySlug({ slug: decodedSlug })
 
   if (!project) return <PayloadRedirects url={url} />
 
@@ -74,12 +74,12 @@ export async function generateMetadata({ params: paramsPromise }: Args): Promise
   const { slug = '' } = await paramsPromise
   // Decode to support slugs with special characters
   const decodedSlug = decodeURIComponent(slug)
-  const project = await queryPostBySlug({ slug: decodedSlug })
+  const project = await queryProjectsBySlug({ slug: decodedSlug })
 
   return generateMeta({ doc: project })
 }
 
-const queryPostBySlug = cache(async ({ slug }: { slug: string }) => {
+const queryProjectsBySlug = cache(async ({ slug }: { slug: string }) => {
   const { isEnabled: draft } = await draftMode()
 
   const payload = await getPayload({ config: configPromise })

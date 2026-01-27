@@ -386,6 +386,7 @@ export interface FolderInterface {
 export interface Category {
   id: string;
   title: string;
+  heroImage?: (string | null) | Media;
   /**
    * When enabled, the slug will auto-generate from the title field on save and autosave.
    */
@@ -1309,6 +1310,7 @@ export interface MediaSelect<T extends boolean = true> {
  */
 export interface CategoriesSelect<T extends boolean = true> {
   title?: T;
+  heroImage?: T;
   generateSlug?: T;
   slug?: T;
   parent?: T;

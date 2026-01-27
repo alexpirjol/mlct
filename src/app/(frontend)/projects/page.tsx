@@ -1,12 +1,8 @@
 import type { Metadata } from 'next/types'
 
-import { CollectionArchive } from '@/components/CollectionArchive'
-import { PageRange } from '@/components/PageRange'
-import { Pagination } from '@/components/Pagination'
+import { CategoryCard } from '@/components/CategoryCard'
 import configPromise from '@payload-config'
 import { getPayload } from 'payload'
-import React from 'react'
-import PageClient from './page.client'
 
 export const dynamic = 'force-static'
 export const revalidate = 600
@@ -14,43 +10,29 @@ export const revalidate = 600
 export default async function Page() {
   const payload = await getPayload({ config: configPromise })
 
-  const project = await payload.find({
-    collection: 'projects',
+  const categories = await payload.find({
+    collection: 'categories',
     depth: 1,
-    limit: 12,
+    limit: 50,
     overrideAccess: false,
     select: {
       title: true,
       slug: true,
-      categories: true,
-      meta: true,
+      heroImage: true,
     },
   })
 
   return (
     <div className="pt-24 pb-24">
-      <PageClient />
       <div className="container mb-16">
         <div className="prose dark:prose-invert max-w-none">
-          <h1>Projects</h1>
+          <h1>Project Categories</h1>
         </div>
       </div>
-
-      <div className="container mb-8">
-        <PageRange
-          collection="projects"
-          currentPage={project.page}
-          limit={12}
-          totalDocs={project.totalDocs}
-        />
-      </div>
-
-      <CollectionArchive projects={project.docs} />
-
-      <div className="container">
-        {project.totalPages > 1 && project.page && (
-          <Pagination page={project.page} totalPages={project.totalPages} />
-        )}
+      <div className="container grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {categories.docs.map((cat) => (
+          <CategoryCard key={cat.id} doc={cat} />
+        ))}
       </div>
     </div>
   )
