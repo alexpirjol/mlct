@@ -3,10 +3,9 @@ import { cn } from '@/utilities/ui'
 import useClickableCard from '@/utilities/useClickableCard'
 import Link from 'next/link'
 import React from 'react'
+import Image from 'next/image'
 
 import type { Category } from '@/payload-types'
-
-import { Media } from '@/components/Media'
 
 export type CardPostData = Pick<Category, 'slug' | 'title' | 'heroImage'>
 
@@ -23,15 +22,8 @@ export const CategoryCard: React.FC<{
   const { slug, title, heroImage } = doc || {}
 
   const titleToUse = titleFromProps || title
-  const href = `/projects/categories/${slug}`
-
-  // heroImage can be (string | null) | Media
-  let imageContent: React.ReactNode = <div className="">No image</div>
-  if (typeof heroImage === 'string' && heroImage) {
-    imageContent = <Media resource={heroImage} size="33vw" />
-  } else if (typeof heroImage === 'object' && heroImage?.url) {
-    imageContent = <Media resource={heroImage} size="33vw" />
-  }
+  const href = `/projects/${slug}`
+  const { url: imgSrc, width, height } = heroImage?.sizes.square ?? {}
 
   return (
     <article
@@ -41,7 +33,9 @@ export const CategoryCard: React.FC<{
       )}
       ref={card.ref}
     >
-      <div className="relative w-full ">{imageContent}</div>
+      <div className="relative w-full flex items-center justify-center bg-muted">
+        <Image src={imgSrc} width={width} height={height} alt={titleToUse || ''} />
+      </div>
       <div className="p-4">
         {titleToUse && (
           <div className="prose">

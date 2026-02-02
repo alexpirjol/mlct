@@ -21,21 +21,37 @@ export default async function Page({ params: paramsPromise }: Args) {
   const { category } = await paramsPromise
   const payload = await getPayload({ config: configPromise })
 
-  const sanitizedPageNumber = Number(category)
-
   if (!category) notFound()
+
+  // Find the category by slug to get its ID
+  const categoryResult = await payload.find({
+    collection: 'categories',
+    where: { slug: { equals: category } },
+    limit: 1,
+    overrideAccess: false,
+  })
+  const categoryDoc = categoryResult.docs[0]
+  if (!categoryDoc) notFound()
+
+  // Pagination: get page number from search params or default to 1
+  // (If you want to support pagination by query param, adjust here)
+  const pageNumber = 1
 
   const projects = await payload.find({
     collection: 'projects',
     depth: 1,
     limit: 12,
-    page: sanitizedPageNumber,
+    page: pageNumber,
     overrideAccess: false,
+    where: {
+      category: {
+        equals: categoryDoc.id,
+      },
+    },
   })
 
   return (
     <div className="pt-24 pb-24">
-      here
       <PageClient />
       <div className="container mb-16">
         <div className="prose dark:prose-invert max-w-none">

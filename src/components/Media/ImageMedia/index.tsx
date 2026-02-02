@@ -70,10 +70,10 @@ export const ImageMedia: React.FC<MediaProps> = (props) => {
     height = fullHeight!
     alt = altFromResource || ''
 
-    const cacheTag = resource.updatedAt
-
-    src = getMediaUrl(url, cacheTag)
+    src = url as string
   }
+
+  console.log('src', src, props)
 
   const loading = loadingFromProps || (!priority ? 'lazy' : undefined)
 
@@ -100,6 +100,7 @@ export const ImageMedia: React.FC<MediaProps> = (props) => {
         src={src}
         width={!fill ? width : undefined}
       />
+      {/* <Image src={url} height={height} width={width} alt={alt} /> */}
     </picture>
   )
 }

@@ -200,7 +200,7 @@ export interface Page {
       | null;
     media?: (string | Media)[] | null;
   };
-  layout: (CallToActionBlock | ContentBlock | MediaBlock | ArchiveBlock | FormBlock)[];
+  layout: (CallToActionBlock | ContentBlock | MediaBlock | ArchiveBlock | FormBlock | GalleryBlock)[];
   meta?: {
     title?: string | null;
     /**
@@ -242,7 +242,7 @@ export interface Project {
     };
     [k: string]: unknown;
   };
-  categories?: (string | Category)[] | null;
+  category: string | Category;
   meta?: {
     title?: string | null;
     /**
@@ -758,6 +758,16 @@ export interface Form {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "galleryBlock".
+ */
+export interface GalleryBlock {
+  media: (string | Media)[];
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'galleryBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users".
  */
 export interface User {
@@ -1089,6 +1099,7 @@ export interface PagesSelect<T extends boolean = true> {
         mediaBlock?: T | MediaBlockSelect<T>;
         archive?: T | ArchiveBlockSelect<T>;
         formBlock?: T | FormBlockSelect<T>;
+        galleryBlock?: T | GalleryBlockSelect<T>;
       };
   meta?:
     | T
@@ -1190,13 +1201,22 @@ export interface FormBlockSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "galleryBlock_select".
+ */
+export interface GalleryBlockSelect<T extends boolean = true> {
+  media?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "projects_select".
  */
 export interface ProjectsSelect<T extends boolean = true> {
   title?: T;
   heroImage?: T;
   content?: T;
-  categories?: T;
+  category?: T;
   meta?:
     | T
     | {
@@ -1640,6 +1660,10 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
  */
 export interface Header {
   id: string;
+  /**
+   * Upload a logo for the header (SVG or PNG recommended)
+   */
+  logo?: (string | null) | Media;
   navItems?:
     | {
         link: {
@@ -1697,6 +1721,7 @@ export interface Footer {
  * via the `definition` "header_select".
  */
 export interface HeaderSelect<T extends boolean = true> {
+  logo?: T;
   navItems?:
     | T
     | {

@@ -42,7 +42,6 @@ export function Carousel({ media }: CarouselProps) {
         return (
           <SwiperSlide key={i}>
             <Image src={url} height={height} width={width} alt={alt} />
-            {/* <Media fill imgClassName="-z-10 object-cover" priority resource={url} /> */}
           </SwiperSlide>
         )
       })}
