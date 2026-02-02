@@ -14,13 +14,18 @@ import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
 import { draftMode } from 'next/headers'
 
 import './globals.css'
-import { getServerSideURL } from '@/utilities/getURL'
+
+import { getSiteSEO } from '@/utilities/getSiteSEO'
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  const { isEnabled } = await draftMode()
-
+  const seo = await getSiteSEO()
+  const lang = seo.language || 'ro'
   return (
-    <html className={cn(GeistSans.variable, GeistMono.variable)} lang="en" suppressHydrationWarning>
+    <html
+      className={cn(GeistSans.variable, GeistMono.variable)}
+      lang={lang}
+      suppressHydrationWarning
+    >
       <head>
         <InitTheme />
         <link href="/favicon.ico" rel="icon" sizes="32x32" />
@@ -28,12 +33,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       </head>
       <body>
         <Providers>
-          <AdminBar
-            adminBarProps={{
-              preview: isEnabled,
-            }}
-          />
-
+          <AdminBar adminBarProps={{}} />
           <Header />
           {children}
           <Footer />
@@ -43,11 +43,30 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   )
 }
 
-export const metadata: Metadata = {
-  metadataBase: new URL(getServerSideURL()),
-  openGraph: mergeOpenGraph(),
-  twitter: {
-    card: 'summary_large_image',
-    creator: '@payloadcms',
-  },
+export async function generateMetadata(): Promise<Metadata> {
+  const { getSiteSEO } = await import('@/utilities/getSiteSEO')
+  const seo = await getSiteSEO()
+  const lang = seo.language || 'ro'
+  return {
+    title: seo.siteTitle,
+    description: seo.siteDescription,
+    metadataBase: new URL((await import('@/utilities/getURL')).getServerSideURL()),
+    openGraph: {
+      title: seo.siteTitle,
+      description: seo.siteDescription,
+      url: seo.siteUrl,
+      type: 'website',
+      locale: lang === 'ro' ? 'ro_RO' : lang,
+    },
+    twitter: {
+      card: 'summary_large_image',
+      creator: '',
+    },
+    alternates: {
+      canonical: seo.siteUrl,
+    },
+    other: {
+      language: lang,
+    },
+  }
 }

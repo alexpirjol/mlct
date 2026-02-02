@@ -10,6 +10,7 @@ import { Pages } from './collections/Pages'
 import { Projects } from './collections/Projects'
 import { Users } from './collections/Users'
 import { Footer } from './Footer/config'
+import { SEO } from './SEO/SEO'
 import { Header } from './Header/config'
 import { plugins } from './plugins'
 import { defaultLexical } from '@/fields/defaultLexical'
@@ -19,6 +20,19 @@ const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
 export default buildConfig({
+  localization: {
+    locales: [
+      { code: 'ro', label: 'Română' },
+      { code: 'en', label: 'English' },
+      { code: 'de', label: 'Deutsch' },
+      { code: 'fr', label: 'Français' },
+      { code: 'it', label: 'Italiano' },
+      { code: 'es', label: 'Español' },
+      { code: 'hu', label: 'Magyar' },
+    ],
+    defaultLocale: 'ro',
+    fallback: true,
+  },
   admin: {
     components: {
       // The `BeforeLogin` component renders a message that you see while logging into your admin panel.
@@ -62,7 +76,7 @@ export default buildConfig({
   }),
   collections: [Pages, Projects, Media, Categories, Users],
   cors: [getServerSideURL()].filter(Boolean),
-  globals: [Header, Footer],
+  globals: [Header, Footer, SEO],
   plugins,
   secret: process.env.PAYLOAD_SECRET,
   sharp,

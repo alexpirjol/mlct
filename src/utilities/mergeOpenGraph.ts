@@ -1,22 +1,29 @@
 import type { Metadata } from 'next'
 import { getServerSideURL } from './getURL'
+import type { Seo } from '@/payload-types'
 
 const defaultOpenGraph: Metadata['openGraph'] = {
   type: 'website',
-  description: 'An open-source website built with Payload and Next.js.',
+  description: '',
   images: [
     {
       url: `${getServerSideURL()}/website-template-OG.webp`,
     },
   ],
-  siteName: 'Payload Website Template',
-  title: 'Payload Website Template',
+  siteName: '',
+  title: '',
 }
 
-export const mergeOpenGraph = (og?: Metadata['openGraph']): Metadata['openGraph'] => {
+export const mergeOpenGraph = (og?: Metadata['openGraph'], seo?: Seo): Metadata['openGraph'] => {
   return {
     ...defaultOpenGraph,
     ...og,
-    images: og?.images ? og.images : defaultOpenGraph.images,
+    title: seo?.siteTitle || og?.title || defaultOpenGraph.title,
+    description: seo?.siteDescription || og?.description || defaultOpenGraph.description,
+    siteName: seo?.siteTitle || og?.siteName || defaultOpenGraph.siteName,
+    images:
+      seo?.logo && typeof seo.logo === 'object' && 'url' in seo.logo && seo.logo.url
+        ? [{ url: seo.logo.url }]
+        : og?.images || defaultOpenGraph.images,
   }
 }

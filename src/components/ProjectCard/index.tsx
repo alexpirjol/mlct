@@ -3,6 +3,7 @@ import { cn } from '@/utilities/ui'
 import useClickableCard from '@/utilities/useClickableCard'
 import Link from 'next/link'
 import React, { Fragment } from 'react'
+import Image from 'next/image'
 
 import type { Category, Project as ProjectType } from '@/payload-types'
 import { Media } from '@/components/Media'
@@ -23,19 +24,18 @@ export const ProjectCard: React.FC<{
   title?: string
 }> = (props) => {
   const { card, link } = useClickableCard({})
-  const { className, doc, showCategories, title: titleFromProps } = props
+  const { className, doc, title: titleFromProps } = props
   if (!doc || !doc.slug || !doc.category || !doc.category.slug) {
     return null // or render a fallback/error
   }
 
-  const { slug, category, meta, title } = doc
-  const { description, image: metaImage } = meta || {}
+  const { slug, category, title, heroImage } = doc
 
   const titleToUse = titleFromProps || title
-  const sanitizedDescription = description?.replace(/\s/g, ' ')
-  // Only one category is allowed and required, always has slug
   const categorySlug = category.slug
   const href = `/projects/${categorySlug}/${slug}`
+
+  const { url: imgSrc, width, height } = heroImage?.sizes.square ?? {}
 
   return (
     <article
@@ -45,13 +45,10 @@ export const ProjectCard: React.FC<{
       )}
       ref={card.ref}
     >
-      <div className="relative w-full ">
-        {metaImage && typeof metaImage !== 'string' && <Media resource={metaImage} size="33vw" />}
+      <div className="relative w-full flex items-center justify-center bg-muted">
+        <Image src={imgSrc} width={width} height={height} alt={titleToUse || ''} />
       </div>
       <div className="p-4">
-        {showCategories && category?.title && (
-          <div className="uppercase text-sm mb-4">{category.title}</div>
-        )}
         {titleToUse && (
           <div className="prose">
             <h3>
@@ -61,7 +58,6 @@ export const ProjectCard: React.FC<{
             </h3>
           </div>
         )}
-        {description && <div className="mt-2">{description && <p>{sanitizedDescription}</p>}</div>}
       </div>
     </article>
   )

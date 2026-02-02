@@ -108,16 +108,23 @@ export interface Config {
   db: {
     defaultIDType: string;
   };
-  fallbackLocale: null;
+  fallbackLocale:
+    | ('false' | 'none' | 'null')
+    | false
+    | null
+    | ('ro' | 'en' | 'de' | 'fr' | 'it' | 'es' | 'hu')
+    | ('ro' | 'en' | 'de' | 'fr' | 'it' | 'es' | 'hu')[];
   globals: {
     header: Header;
     footer: Footer;
+    seo: Seo;
   };
   globalsSelect: {
     header: HeaderSelect<false> | HeaderSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
+    seo: SeoSelect<false> | SeoSelect<true>;
   };
-  locale: null;
+  locale: 'ro' | 'en' | 'de' | 'fr' | 'it' | 'es' | 'hu';
   user: User & {
     collection: 'users';
   };
@@ -1693,26 +1700,65 @@ export interface Header {
  */
 export interface Footer {
   id: string;
-  navItems?:
+  title?: string | null;
+  categories?:
     | {
-        link: {
-          type?: ('reference' | 'custom') | null;
-          newTab?: boolean | null;
-          reference?:
-            | ({
+        label?: string | null;
+        links?:
+          | {
+              label?: string | null;
+              type: 'none' | 'mail' | 'phone' | 'address';
+              url?: string | null;
+              page?: {
                 relationTo: 'pages';
                 value: string | Page;
-              } | null)
-            | ({
-                relationTo: 'projects';
-                value: string | Project;
-              } | null);
-          url?: string | null;
-          label: string;
-        };
+              } | null;
+              id?: string | null;
+            }[]
+          | null;
         id?: string | null;
       }[]
     | null;
+  socialLinks?:
+    | {
+        label: string;
+        url: string;
+        icon?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "seo".
+ */
+export interface Seo {
+  id: string;
+  language: 'ro' | 'en' | 'de' | 'fr' | 'it' | 'es' | 'hu';
+  siteTitle?: string | null;
+  siteDescription?: string | null;
+  siteUrl?: string | null;
+  logo?: (string | null) | Media;
+  organization?: string | null;
+  contact?: {
+    phone?: string | null;
+    email?: string | null;
+    address?: string | null;
+    mapsUrl?: string | null;
+  };
+  siteLinks?:
+    | {
+        label: string;
+        url: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Paste the iframe code from Google Maps for a visual map on the site
+   */
+  mapEmbed?: string | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -1745,20 +1791,61 @@ export interface HeaderSelect<T extends boolean = true> {
  * via the `definition` "footer_select".
  */
 export interface FooterSelect<T extends boolean = true> {
-  navItems?:
+  title?: T;
+  categories?:
     | T
     | {
-        link?:
+        label?: T;
+        links?:
           | T
           | {
-              type?: T;
-              newTab?: T;
-              reference?: T;
-              url?: T;
               label?: T;
+              type?: T;
+              url?: T;
+              page?: T;
+              id?: T;
             };
         id?: T;
       };
+  socialLinks?:
+    | T
+    | {
+        label?: T;
+        url?: T;
+        icon?: T;
+        id?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "seo_select".
+ */
+export interface SeoSelect<T extends boolean = true> {
+  language?: T;
+  siteTitle?: T;
+  siteDescription?: T;
+  siteUrl?: T;
+  logo?: T;
+  organization?: T;
+  contact?:
+    | T
+    | {
+        phone?: T;
+        email?: T;
+        address?: T;
+        mapsUrl?: T;
+      };
+  siteLinks?:
+    | T
+    | {
+        label?: T;
+        url?: T;
+        id?: T;
+      };
+  mapEmbed?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
