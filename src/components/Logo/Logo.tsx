@@ -13,8 +13,6 @@ export const Logo = (props: Props) => {
 
   const loading = loadingFromProps || 'lazy'
   const priority = priorityFromProps || 'low'
-  const defaultLogo =
-    'https://raw.githubusercontent.com/payloadcms/payload/main/packages/ui/src/assets/payload-logo-light.svg'
 
   return (
     /* eslint-disable @next/next/no-img-element */
@@ -25,7 +23,7 @@ export const Logo = (props: Props) => {
       fetchPriority={priority}
       decoding="async"
       className={clsx('max-w-[9.375rem] w-full h-[34px]', className)}
-      src={url || defaultLogo}
+      src={url}
     />
   )
 }

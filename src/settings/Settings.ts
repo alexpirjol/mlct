@@ -1,8 +1,8 @@
 import type { GlobalConfig } from 'payload'
 import { authenticated } from '../access/authenticated'
 
-export const SEO: GlobalConfig = {
-  slug: 'seo',
+export const Settings: GlobalConfig = {
+  slug: 'settings',
   access: {
     read: () => true,
     update: authenticated,
@@ -113,4 +113,4 @@ export const SEO: GlobalConfig = {
   ],
 }
 
-export default SEO
+export default Settings

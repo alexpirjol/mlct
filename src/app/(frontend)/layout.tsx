@@ -10,16 +10,13 @@ import { Footer } from '@/Footer/Component'
 import { Header } from '@/Header/Component'
 import { Providers } from '@/providers'
 import { InitTheme } from '@/providers/Theme/InitTheme'
-import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
-import { draftMode } from 'next/headers'
 
+import { getSiteSettings } from '@/utilities/getSiteSettings'
 import './globals.css'
 
-import { getSiteSEO } from '@/utilities/getSiteSEO'
-
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  const seo = await getSiteSEO()
-  const lang = seo.language || 'ro'
+  const settings = await getSiteSettings()
+  const lang = settings.language || 'ro'
   return (
     <html
       className={cn(GeistSans.variable, GeistMono.variable)}
@@ -44,17 +41,17 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 }
 
 export async function generateMetadata(): Promise<Metadata> {
-  const { getSiteSEO } = await import('@/utilities/getSiteSEO')
-  const seo = await getSiteSEO()
-  const lang = seo.language || 'ro'
+  const { getSiteSettings } = await import('@/utilities/getSiteSettings')
+  const settings = await getSiteSettings()
+  const lang = settings.language || 'ro'
   return {
-    title: seo.siteTitle,
-    description: seo.siteDescription,
+    title: settings.siteTitle ?? '',
+    description: settings.siteDescription ?? '',
     metadataBase: new URL((await import('@/utilities/getURL')).getServerSideURL()),
     openGraph: {
-      title: seo.siteTitle,
-      description: seo.siteDescription,
-      url: seo.siteUrl,
+      title: settings.siteTitle ?? '',
+      description: settings.siteDescription ?? '',
+      url: settings.siteUrl ?? '',
       type: 'website',
       locale: lang === 'ro' ? 'ro_RO' : lang,
     },
@@ -63,7 +60,7 @@ export async function generateMetadata(): Promise<Metadata> {
       creator: '',
     },
     alternates: {
-      canonical: seo.siteUrl,
+      canonical: settings.siteUrl ?? '',
     },
     other: {
       language: lang,

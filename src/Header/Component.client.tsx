@@ -38,7 +38,6 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
           <Logo
             loading="eager"
             priority="high"
-            className="invert dark:invert-0"
             url={typeof data.logo === 'object' && data.logo?.url ? data.logo.url : undefined}
           />
         </Link>
