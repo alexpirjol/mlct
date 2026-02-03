@@ -22,6 +22,7 @@
     "test:int": "cross-env NODE_OPTIONS=--no-deprecation vitest run --config ./vitest.config.mts"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-free": "7.1.0",
     "@payloadcms/admin-bar": "3.73.0",
     "@payloadcms/db-mongodb": "3.73.0",
     "@payloadcms/live-preview-react": "3.73.0",
@@ -55,6 +56,7 @@
     "react-dom": "19.2.1",
     "react-hook-form": "7.45.4",
     "react-photo-album": "3.4.0",
+    "react-whatsapp-widget": "2.2.0",
     "sharp": "0.34.2",
     "swiper": "12.0.3",
     "tailwind-merge": "^3.4.0",

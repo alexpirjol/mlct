@@ -1706,7 +1706,6 @@ export interface Footer {
         label?: string | null;
         links?:
           | {
-              type: 'none' | 'mail' | 'phone' | 'address';
               label?: string | null;
               url?: string | null;
               page?: {
@@ -1746,8 +1745,8 @@ export interface Setting {
      */
     logo?: (string | null) | Media;
   };
-  organizationDetails?: {
-    organization?: string | null;
+  organization?: {
+    organizationName?: string | null;
     workHours?:
       | {
           day: ('Monday' | 'Tuesday' | 'Wednesday' | 'Thursday' | 'Friday' | 'Saturday' | 'Sunday')[];
@@ -1761,11 +1760,25 @@ export interface Setting {
     phone?: string | null;
     email?: string | null;
     address?: string | null;
+    location?: string | null;
   };
-  social?: {
-    facebook?: string | null;
-    instagram?: string | null;
-  };
+  social?:
+    | {
+        type:
+          | 'facebook'
+          | 'instagram'
+          | 'twitter'
+          | 'linkedin'
+          | 'youtube'
+          | 'tiktok'
+          | 'pinterest'
+          | 'whatsapp'
+          | 'other';
+        page: string;
+        icon?: string | null;
+        id?: string | null;
+      }[]
+    | null;
   siteLinks?:
     | {
         label: string;
@@ -1813,7 +1826,6 @@ export interface FooterSelect<T extends boolean = true> {
         links?:
           | T
           | {
-              type?: T;
               label?: T;
               url?: T;
               page?: T;
@@ -1847,10 +1859,10 @@ export interface SettingSelect<T extends boolean = true> {
         siteUrl?: T;
         logo?: T;
       };
-  organizationDetails?:
+  organization?:
     | T
     | {
-        organization?: T;
+        organizationName?: T;
         workHours?:
           | T
           | {
@@ -1866,12 +1878,15 @@ export interface SettingSelect<T extends boolean = true> {
         phone?: T;
         email?: T;
         address?: T;
+        location?: T;
       };
   social?:
     | T
     | {
-        facebook?: T;
-        instagram?: T;
+        type?: T;
+        page?: T;
+        icon?: T;
+        id?: T;
       };
   siteLinks?:
     | T

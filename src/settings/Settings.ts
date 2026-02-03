@@ -62,12 +62,12 @@ export const Settings: GlobalConfig = {
     },
 
     {
-      name: 'organizationDetails',
+      name: 'organization',
       type: 'group',
       label: 'Organization Details',
       fields: [
         {
-          name: 'organization',
+          name: 'organizationName',
           type: 'text',
           label: 'Organization Name',
           required: false,
@@ -140,22 +140,66 @@ export const Settings: GlobalConfig = {
           type: 'text',
           label: 'Address',
         },
+        {
+          name: 'location',
+          type: 'text',
+          label: 'Location',
+        },
       ],
     },
     {
       name: 'social',
-      type: 'group',
-      label: 'Social Info',
+      type: 'array',
+      label: 'Social Platforms',
+
       fields: [
         {
-          name: 'facebook',
-          type: 'text',
-          label: 'Facebook page',
+          name: 'type',
+          type: 'select',
+          label: 'Platform',
+          required: true,
+          options: [
+            { label: 'Facebook', value: 'facebook' },
+            { label: 'Instagram', value: 'instagram' },
+            { label: 'Twitter', value: 'twitter' },
+            { label: 'LinkedIn', value: 'linkedin' },
+            { label: 'YouTube', value: 'youtube' },
+            { label: 'TikTok', value: 'tiktok' },
+            { label: 'Pinterest', value: 'pinterest' },
+            { label: 'WhatsApp', value: 'whatsapp' },
+            { label: 'Other', value: 'other' },
+          ],
         },
         {
-          name: 'instagram',
+          name: 'page',
           type: 'text',
-          label: 'Instagram page',
+          label: 'Page/Handle/URL',
+          required: true,
+        },
+        {
+          name: 'icon',
+          type: 'text',
+          label: 'Icon',
+          admin: { readOnly: true, hidden: true },
+          hooks: {
+            afterRead: [
+              ({ siblingData }) => {
+                const iconMap: Record<string, string> = {
+                  facebook: 'fab fa-facebook',
+                  instagram: 'fab fa-instagram',
+                  twitter: 'fab fa-twitter',
+                  linkedin: 'fab fa-linkedin',
+                  youtube: 'fab fa-youtube',
+                  tiktok: 'fab fa-tiktok',
+                  pinterest: 'fab fa-pinterest',
+                  whatsapp: 'fab fa-whatsapp',
+                  other: 'fas fa-share-alt',
+                }
+                const type = typeof siblingData?.type === 'string' ? siblingData.type : 'other'
+                return iconMap[type] || iconMap.other
+              },
+            ],
+          },
         },
       ],
     },

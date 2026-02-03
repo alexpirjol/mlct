@@ -1,6 +1,5 @@
 import type { GlobalConfig } from 'payload'
 import { authenticated } from '../access/authenticated'
-import { revalidateFooter } from './hooks/revalidateFooter'
 
 export const Footer: GlobalConfig = {
   slug: 'footer',
@@ -30,21 +29,7 @@ export const Footer: GlobalConfig = {
           name: 'links',
           type: 'array',
           label: 'Links',
-
           fields: [
-            {
-              name: 'type',
-              type: 'select',
-              options: [
-                { label: 'Standard', value: 'none' },
-                { label: 'Email', value: 'mail' },
-                { label: 'Phone', value: 'phone' },
-                { label: 'Address', value: 'address' },
-              ],
-              defaultValue: 'none',
-              required: true,
-              label: 'Link Type',
-            },
             {
               name: 'label',
               type: 'text',
@@ -54,8 +39,7 @@ export const Footer: GlobalConfig = {
             {
               name: 'url',
               type: 'text',
-              label:
-                'URL (absolute, mailto, tel, Google Maps for address, or leave blank to link to CMS page below)',
+              label: 'URL',
               required: false,
               admin: {
                 // url is editable for 'none' and 'address'
