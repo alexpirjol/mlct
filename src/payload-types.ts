@@ -117,12 +117,12 @@ export interface Config {
   globals: {
     header: Header;
     footer: Footer;
-    settings: Settings;
+    setting: Setting;
   };
   globalsSelect: {
     header: HeaderSelect<false> | HeaderSelect<true>;
     footer: FooterSelect<false> | FooterSelect<true>;
-    settings: SettingsSelect<false> | SettingsSelect<true>;
+    setting: SettingSelect<false> | SettingSelect<true>;
   };
   locale: 'ro' | 'en' | 'de' | 'fr' | 'it' | 'es' | 'hu';
   user: User & {
@@ -1732,14 +1732,17 @@ export interface Footer {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "settings".
+ * via the `definition` "setting".
  */
-export interface Settings {
+export interface Setting {
   id: string;
-  language: 'ro' | 'en' | 'de' | 'fr' | 'it' | 'es' | 'hu';
+  language?: ('ro' | 'en' | 'de' | 'fr' | 'it' | 'es' | 'hu') | null;
   siteTitle?: string | null;
   siteDescription?: string | null;
   siteUrl?: string | null;
+  /**
+   * Upload a logo for the header (SVG or PNG recommended)
+   */
   logo?: (string | null) | Media;
   organization?: string | null;
   contact?: {
@@ -1821,9 +1824,9 @@ export interface FooterSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "settings_select".
+ * via the `definition` "setting_select".
  */
-export interface SettingsSelect<T extends boolean = true> {
+export interface SettingSelect<T extends boolean = true> {
   language?: T;
   siteTitle?: T;
   siteDescription?: T;

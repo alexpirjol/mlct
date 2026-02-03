@@ -16,11 +16,6 @@ interface CarouselProps {
 }
 
 export function Carousel({ media }: CarouselProps) {
-  // Prefer explicit media array, fallback to carouselImages, then single media
-
-  console.log(media)
-  // if (!media.length) return null
-
   return (
     <Swiper
       effect="fade"

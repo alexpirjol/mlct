@@ -5,7 +5,7 @@ interface Props {
   className?: string
   loading?: 'lazy' | 'eager'
   priority?: 'auto' | 'high' | 'low'
-  url?: string
+  url?: string | null
   alt?: string
 }
 

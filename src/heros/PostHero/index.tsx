@@ -9,8 +9,6 @@ export const PostHero: React.FC<{
 }> = ({ project }) => {
   const { heroImage, title } = project
 
-  console.log('heroImage', heroImage)
-
   if (!heroImage) {
     return null
   }

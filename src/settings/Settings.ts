@@ -2,7 +2,8 @@ import type { GlobalConfig } from 'payload'
 import { authenticated } from '../access/authenticated'
 
 export const Settings: GlobalConfig = {
-  slug: 'settings',
+  slug: 'setting',
+  label: 'Settings',
   access: {
     read: () => true,
     update: authenticated,
@@ -12,7 +13,7 @@ export const Settings: GlobalConfig = {
       name: 'language',
       type: 'select',
       label: 'Site Language',
-      required: true,
+      required: false,
       defaultValue: 'ro',
       options: [
         { label: 'Română', value: 'ro' },
@@ -44,10 +45,13 @@ export const Settings: GlobalConfig = {
     },
     {
       name: 'logo',
+      label: 'Logo',
       type: 'upload',
       relationTo: 'media',
-      label: 'Logo',
       required: false,
+      admin: {
+        description: 'Upload a logo for the header (SVG or PNG recommended)',
+      },
     },
     {
       name: 'organization',

@@ -16,6 +16,8 @@ import './globals.css'
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const settings = await getSiteSettings()
+
+  console.log('settings', settings)
   const lang = settings.language || 'ro'
   return (
     <html
