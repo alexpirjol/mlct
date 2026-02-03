@@ -10,55 +10,116 @@ export const Settings: GlobalConfig = {
   },
   fields: [
     {
-      name: 'language',
-      type: 'select',
-      label: 'Site Language',
-      required: false,
-      defaultValue: 'ro',
-      options: [
-        { label: 'Română', value: 'ro' },
-        { label: 'English', value: 'en' },
-        { label: 'Deutsch', value: 'de' },
-        { label: 'Français', value: 'fr' },
-        { label: 'Italiano', value: 'it' },
-        { label: 'Español', value: 'es' },
-        { label: 'Magyar', value: 'hu' },
+      name: 'generalSttings',
+      type: 'group',
+      label: 'General Settings',
+      fields: [
+        {
+          name: 'language',
+          type: 'select',
+          label: 'Site Language',
+          required: false,
+          defaultValue: 'ro',
+          options: [
+            { label: 'Română', value: 'ro' },
+            { label: 'English', value: 'en' },
+            { label: 'Deutsch', value: 'de' },
+            { label: 'Français', value: 'fr' },
+            { label: 'Italiano', value: 'it' },
+            { label: 'Español', value: 'es' },
+            { label: 'Magyar', value: 'hu' },
+          ],
+        },
+        {
+          name: 'siteTitle',
+          type: 'text',
+          label: 'Site Title',
+          required: false,
+        },
+        {
+          name: 'siteDescription',
+          type: 'textarea',
+          label: 'Site Description',
+          required: false,
+        },
+        {
+          name: 'siteUrl',
+          type: 'text',
+          label: 'Site URL',
+          required: false,
+        },
+        {
+          name: 'logo',
+          label: 'Logo',
+          type: 'upload',
+          relationTo: 'media',
+          required: false,
+          admin: {
+            description: 'Upload a logo for the header (SVG or PNG recommended)',
+          },
+        },
       ],
     },
+
     {
-      name: 'siteTitle',
-      type: 'text',
-      label: 'Site Title',
-      required: false,
+      name: 'organizationDetails',
+      type: 'group',
+      label: 'Organization Details',
+      fields: [
+        {
+          name: 'organization',
+          type: 'text',
+          label: 'Organization Name',
+          required: false,
+        },
+        {
+          name: 'workHours',
+          type: 'array',
+          label: 'Work Hours',
+          fields: [
+            {
+              name: 'day',
+              type: 'select',
+
+              options: [
+                'Monday',
+                'Tuesday',
+                'Wednesday',
+                'Thursday',
+                'Friday',
+                'Saturday',
+                'Sunday',
+              ],
+              required: true,
+              hasMany: true,
+            },
+            {
+              name: 'start',
+              type: 'date',
+              label: 'Start Time',
+              required: true,
+              admin: {
+                date: {
+                  pickerAppearance: 'timeOnly',
+                },
+              },
+            },
+            {
+              name: 'end',
+              type: 'date',
+              label: 'End Time',
+              required: true,
+              admin: {
+                date: {
+                  pickerAppearance: 'timeOnly',
+                },
+              },
+            },
+          ],
+        },
+      ],
     },
-    {
-      name: 'siteDescription',
-      type: 'textarea',
-      label: 'Site Description',
-      required: false,
-    },
-    {
-      name: 'siteUrl',
-      type: 'text',
-      label: 'Site URL',
-      required: false,
-    },
-    {
-      name: 'logo',
-      label: 'Logo',
-      type: 'upload',
-      relationTo: 'media',
-      required: false,
-      admin: {
-        description: 'Upload a logo for the header (SVG or PNG recommended)',
-      },
-    },
-    {
-      name: 'organization',
-      type: 'text',
-      label: 'Organization Name',
-      required: false,
-    },
+
     {
       name: 'contact',
       type: 'group',
@@ -79,17 +140,29 @@ export const Settings: GlobalConfig = {
           type: 'text',
           label: 'Address',
         },
+      ],
+    },
+    {
+      name: 'social',
+      type: 'group',
+      label: 'Social Info',
+      fields: [
         {
-          name: 'mapsUrl',
+          name: 'facebook',
           type: 'text',
-          label: 'Google Maps Link',
+          label: 'Facebook page',
+        },
+        {
+          name: 'instagram',
+          type: 'text',
+          label: 'Instagram page',
         },
       ],
     },
     {
       name: 'siteLinks',
       type: 'array',
-      label: 'Site Links (Sitelinks)',
+      label: 'Site Links (Google search results)',
       fields: [
         {
           name: 'label',
@@ -104,15 +177,6 @@ export const Settings: GlobalConfig = {
           required: true,
         },
       ],
-    },
-    {
-      name: 'mapEmbed',
-      type: 'textarea',
-      label: 'Google Maps Embed Iframe',
-      admin: {
-        description: 'Paste the iframe code from Google Maps for a visual map on the site',
-      },
-      required: false,
     },
   ],
 }

@@ -14,34 +14,24 @@ export const Footer: GlobalConfig = {
       type: 'text',
       required: false,
       label: 'Footer Title',
-      // localized: true,
     },
     {
       name: 'categories',
       type: 'array',
       label: 'Footer Categories',
-      // localized: true,
       fields: [
         {
           name: 'label',
           type: 'text',
           required: false,
           label: 'Category Label',
-          // localized: true,
         },
         {
           name: 'links',
           type: 'array',
           label: 'Links',
-          // localized: true,
+
           fields: [
-            {
-              name: 'label',
-              type: 'text',
-              required: false,
-              label: 'Link Label',
-              // localized: true,
-            },
             {
               name: 'type',
               type: 'select',
@@ -54,6 +44,12 @@ export const Footer: GlobalConfig = {
               defaultValue: 'none',
               required: true,
               label: 'Link Type',
+            },
+            {
+              name: 'label',
+              type: 'text',
+              required: false,
+              label: 'Link Label',
             },
             {
               name: 'url',
@@ -87,13 +83,11 @@ export const Footer: GlobalConfig = {
       name: 'socialLinks',
       type: 'array',
       label: 'Social Links',
-      // localized: true,
       fields: [
         {
           name: 'label',
           type: 'text',
           required: true,
-          // localized: true,
         },
         {
           name: 'url',
@@ -108,26 +102,4 @@ export const Footer: GlobalConfig = {
       ],
     },
   ],
-  hooks: {
-    beforeValidate: [
-      async ({ data }) => {
-        if (!data?.categories) return data
-        data.categories = data.categories.map((cat: any) => {
-          if (!cat.links) return cat
-          cat.links = cat.links.map((link: any) => {
-            if (link.type === 'mail' && link.label) {
-              link.url = `mailto:${link.label}`
-            } else if (link.type === 'phone' && link.label) {
-              link.url = `tel:${link.label}`
-            }
-            // address: do not auto-generate url, leave as entered
-            return link
-          })
-          return cat
-        })
-        return data
-      },
-    ],
-    afterChange: [revalidateFooter],
-  },
 }

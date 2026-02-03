@@ -1706,8 +1706,8 @@ export interface Footer {
         label?: string | null;
         links?:
           | {
-              label?: string | null;
               type: 'none' | 'mail' | 'phone' | 'address';
+              label?: string | null;
               url?: string | null;
               page?: {
                 relationTo: 'pages';
@@ -1736,20 +1736,35 @@ export interface Footer {
  */
 export interface Setting {
   id: string;
-  language?: ('ro' | 'en' | 'de' | 'fr' | 'it' | 'es' | 'hu') | null;
-  siteTitle?: string | null;
-  siteDescription?: string | null;
-  siteUrl?: string | null;
-  /**
-   * Upload a logo for the header (SVG or PNG recommended)
-   */
-  logo?: (string | null) | Media;
-  organization?: string | null;
+  generalSttings?: {
+    language?: ('ro' | 'en' | 'de' | 'fr' | 'it' | 'es' | 'hu') | null;
+    siteTitle?: string | null;
+    siteDescription?: string | null;
+    siteUrl?: string | null;
+    /**
+     * Upload a logo for the header (SVG or PNG recommended)
+     */
+    logo?: (string | null) | Media;
+  };
+  organizationDetails?: {
+    organization?: string | null;
+    workHours?:
+      | {
+          day: ('Monday' | 'Tuesday' | 'Wednesday' | 'Thursday' | 'Friday' | 'Saturday' | 'Sunday')[];
+          start: string;
+          end: string;
+          id?: string | null;
+        }[]
+      | null;
+  };
   contact?: {
     phone?: string | null;
     email?: string | null;
     address?: string | null;
-    mapsUrl?: string | null;
+  };
+  social?: {
+    facebook?: string | null;
+    instagram?: string | null;
   };
   siteLinks?:
     | {
@@ -1758,10 +1773,6 @@ export interface Setting {
         id?: string | null;
       }[]
     | null;
-  /**
-   * Paste the iframe code from Google Maps for a visual map on the site
-   */
-  mapEmbed?: string | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -1802,8 +1813,8 @@ export interface FooterSelect<T extends boolean = true> {
         links?:
           | T
           | {
-              label?: T;
               type?: T;
+              label?: T;
               url?: T;
               page?: T;
               id?: T;
@@ -1827,19 +1838,40 @@ export interface FooterSelect<T extends boolean = true> {
  * via the `definition` "setting_select".
  */
 export interface SettingSelect<T extends boolean = true> {
-  language?: T;
-  siteTitle?: T;
-  siteDescription?: T;
-  siteUrl?: T;
-  logo?: T;
-  organization?: T;
+  generalSttings?:
+    | T
+    | {
+        language?: T;
+        siteTitle?: T;
+        siteDescription?: T;
+        siteUrl?: T;
+        logo?: T;
+      };
+  organizationDetails?:
+    | T
+    | {
+        organization?: T;
+        workHours?:
+          | T
+          | {
+              day?: T;
+              start?: T;
+              end?: T;
+              id?: T;
+            };
+      };
   contact?:
     | T
     | {
         phone?: T;
         email?: T;
         address?: T;
-        mapsUrl?: T;
+      };
+  social?:
+    | T
+    | {
+        facebook?: T;
+        instagram?: T;
       };
   siteLinks?:
     | T
@@ -1848,7 +1880,6 @@ export interface SettingSelect<T extends boolean = true> {
         url?: T;
         id?: T;
       };
-  mapEmbed?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
