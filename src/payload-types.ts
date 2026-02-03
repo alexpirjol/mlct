@@ -117,7 +117,7 @@ export interface Config {
   globals: {
     header: Header;
     footer: Footer;
-    settings: Setting;
+    settings: Settings;
   };
   globalsSelect: {
     header: HeaderSelect<false> | HeaderSelect<true>;
@@ -1734,7 +1734,7 @@ export interface Footer {
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "settings".
  */
-export interface Setting {
+export interface Settings {
   id: string;
   language: 'ro' | 'en' | 'de' | 'fr' | 'it' | 'es' | 'hu';
   siteTitle?: string | null;

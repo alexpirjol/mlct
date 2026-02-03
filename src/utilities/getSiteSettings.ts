@@ -1,13 +1,12 @@
 import { getCachedGlobal } from '@/utilities/getGlobals'
-import type { Setting } from '@/payload-types'
+import type { Settings } from '@/payload-types'
 
 export async function getSiteSettings() {
-  const settings: Setting = await getCachedGlobal('settings', 1)()
+  const settings: Settings = await getCachedGlobal('settings', 1)()
   return settings
 }
 
-// Accepts Setting type
-export function buildMetaTags(settings: Setting, pageSettings?: Partial<Setting>) {
+export function buildMetaTags(settings: Settings, pageSettings?: Partial<Settings>) {
   const lang = pageSettings?.language || settings.language || 'ro'
   const meta = {
     title: pageSettings?.siteTitle || settings.siteTitle,

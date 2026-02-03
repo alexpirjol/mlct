@@ -6,10 +6,11 @@ interface Props {
   loading?: 'lazy' | 'eager'
   priority?: 'auto' | 'high' | 'low'
   url?: string
+  alt?: string
 }
 
 export const Logo = (props: Props) => {
-  const { loading: loadingFromProps, priority: priorityFromProps, className, url } = props
+  const { loading: loadingFromProps, priority: priorityFromProps, className, url, alt } = props
 
   const loading = loadingFromProps || 'lazy'
   const priority = priorityFromProps || 'low'
@@ -17,7 +18,7 @@ export const Logo = (props: Props) => {
   return (
     /* eslint-disable @next/next/no-img-element */
     <img
-      alt="Payload Logo"
+      alt={alt}
       height={50}
       loading={loading}
       fetchPriority={priority}
