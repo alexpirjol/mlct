@@ -44,44 +44,64 @@ export async function Footer() {
               <h4 className="font-semibold mb-2">Contact</h4>
               <ul className="space-y-1">
                 {settings.contact?.phone && (
-                  <li>
-                    <Link
-                      href={`tel:${settings.contact?.phone}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="hover:underline"
-                    >
-                      {settings.contact?.phone}
-                    </Link>
+                  <li className="fusion-li-item flex items-start gap-2">
+                    <span className="icon-wrapper circle-no mt-1">
+                      <i className="fa fa-mobile-alt fas text-lg" aria-hidden="true"></i>
+                    </span>
+                    <div className="fusion-li-item-content">
+                      <Link
+                        href={`tel:${settings.contact?.phone}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="hover:underline"
+                      >
+                        {settings.contact?.phone}
+                      </Link>
+                    </div>
                   </li>
                 )}
                 {settings.contact?.email && (
-                  <li>
-                    <Link
-                      href={`mailto:${settings.contact?.email}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="hover:underline"
-                    >
-                      {settings.contact?.email}
-                    </Link>
+                  <li className="fusion-li-item flex items-start gap-2">
+                    <span className="icon-wrapper circle-no mt-1">
+                      <i className="fa fa-envelope fas text-lg" aria-hidden="true"></i>
+                    </span>
+                    <div className="fusion-li-item-content">
+                      <Link
+                        href={`mailto:${settings.contact?.email}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="hover:underline"
+                      >
+                        {settings.contact?.email}
+                      </Link>
+                    </div>
                   </li>
                 )}
                 {settings.contact?.address && (
-                  <li>
-                    <Link
-                      href={settings.contact?.location}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="hover:underline"
-                    >
-                      {settings.contact?.address}
-                    </Link>
+                  <li className="fusion-li-item flex items-start gap-2">
+                    <span className="icon-wrapper circle-no mt-1">
+                      <i className="fa fa-map-marker-alt fas text-lg" aria-hidden="true"></i>
+                    </span>
+                    <div className="fusion-li-item-content">
+                      <Link
+                        href={settings.contact?.location}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="hover:underline"
+                      >
+                        {settings.contact?.address}
+                      </Link>
+                    </div>
                   </li>
                 )}
-                {settings.organization?.workHours && (
-                  <li>
-                    <WorkHours data={settings.organization?.workHours} />
+                {settings.organization?.workHours?.length && (
+                  <li className="fusion-li-item flex items-start gap-2">
+                    <span className="icon-wrapper circle-no mt-1">
+                      <i className="fa fa-clock fas text-lg" aria-hidden="true"></i>
+                    </span>
+                    <div className="fusion-li-item-content">
+                      <WorkHours data={settings.organization?.workHours} />
+                    </div>
                   </li>
                 )}
               </ul>

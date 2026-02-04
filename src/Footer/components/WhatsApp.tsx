@@ -22,7 +22,7 @@ export default function WhatsAppWidget({ data }: Props) {
       timeout = setTimeout(() => {
         setShowDots(false)
         setShowText(true)
-      }, 2000)
+      }, 1000)
     } else {
       setShowDots(false)
       setShowText(false)
@@ -48,7 +48,7 @@ export default function WhatsAppWidget({ data }: Props) {
           <div className={styles['whatsapp-header']}>
             <div className={styles['whatsapp-avatar-bg']}>
               <img
-                src={data.generalSttings?.logo?.url || '/media/default-logo.png'}
+                src={data.generalSttings?.logo?.url}
                 alt={data.organization?.organizationName || 'Avatar'}
                 className={styles['whatsapp-avatar-img']}
                 decoding="async"

@@ -216,6 +216,113 @@
   .container {
     @apply mx-auto max-w-7xl px-4;
   }
+
+
+  form {
+    background: var(--card);
+    border-radius: var(--radius-lg, 12px);
+    box-shadow: 0 2px 24px rgba(0, 0, 0, 0.08);
+    padding: 2.5rem 2rem;
+    max-width: 700px;
+    margin: 0 auto 2.5rem auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+  }
+
+  form label {
+    font-weight: 500;
+    color: var(--accent);
+    margin-bottom: 0.5rem;
+    display: block;
+  }
+
+  form input,
+  form textarea,
+  form select {
+    width: 100%;
+    background: var(--card);
+    color: var(--card-foreground);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md, 8px);
+    font-size: 1rem;
+    padding: 0.75rem 1rem;
+    margin-bottom: 1.25rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+    outline: none;
+  }
+
+  form input:focus,
+  form textarea:focus,
+  form select:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 2px var(--accent);
+  }
+
+  form input[type="file"] {
+    background: transparent;
+    color: var(--card-foreground);
+    border: none;
+    padding: 0;
+    margin-bottom: 1.25rem;
+  }
+
+  form textarea {
+    min-height: 120px;
+    resize: vertical;
+  }
+
+  form button,
+  form input[type="submit"] {
+    background: var(--accent);
+    color: var(--primary-foreground);
+    border: none;
+    border-radius: var(--radius-md, 8px);
+    font-weight: 600;
+    font-size: 1.1rem;
+    padding: 0.75rem 2rem;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    transition: background 0.2s, color 0.2s;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    display: inline-block;
+  }
+
+  form button:hover,
+  form input[type="submit"]:hover {
+    background: var(--accent-foreground);
+    color: var(--accent);
+  }
+
+  form input[aria-invalid="true"],
+  form textarea[aria-invalid="true"],
+  form select[aria-invalid="true"] {
+    border-color: var(--error);
+    box-shadow: 0 0 0 2px var(--error);
+  }
+
+
+  @media (max-width: 600px) {
+    form {
+      padding: 1.25rem 0.5rem;
+      gap: 1rem;
+    }
+
+    form input,
+    form textarea,
+    form select {
+      font-size: 0.95rem;
+      padding: 0.6rem 0.7rem;
+    }
+
+    form button,
+    form input[type="submit"] {
+      font-size: 1rem;
+      padding: 0.6rem 1.2rem;
+    }
+  }
 }
 
 html {
