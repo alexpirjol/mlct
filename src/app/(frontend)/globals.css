@@ -46,11 +46,15 @@
   --breakpoint-2xl: 86rem;
   --font-mono: var(--font-geist-mono);
   --font-sans: var(--font-geist-sans);
+
+  /* Custom breakpoints for header/navigation */
+  --breakpoint-mobile: 768px;
+  --breakpoint-tablet: 1024px;
+  --breakpoint-desktop: 1440px;
 }
 
 
 :root {
-  /* MAS WoodShop-inspired dark theme is now default */
   --background: #1b1b1b;
   --foreground: #ededed;
   --card: #292c30;
@@ -86,79 +90,19 @@
   --success: #65bc7b;
   --warning: #fcf8e3;
   --error: #fd9c9c;
-}
 
-[data-theme='dark'] {
-  --background: #1b1b1b;
-  /* --awb-custom_color_1 */
-  --foreground: #ededed;
-  /* --awb-custom17 */
-  --card: #292c30;
-  /* --awb-color8 */
-  --card-foreground: #ededed;
-  /* --awb-custom17 */
-  --popover: #1b1b1b;
-  /* --awb-custom_color_1 */
-  --popover-foreground: #ededed;
-  /* --awb-custom17 */
-  --primary: #ffffff;
-  /* --awb-color1 */
-  --primary-foreground: #1b1b1b;
-  /* --awb-custom_color_1 */
-  --secondary: #313539;
-  /* --awb-color6 */
-  --secondary-foreground: #ffffff;
-  /* --link_color */
-  --muted: #8c8989;
-  /* --footer_text_color */
-  --muted-foreground: #8c8989;
-  /* --footer_text_color */
-  --accent: #e9ce05;
-  /* --awb-color2 */
-  --accent-foreground: #1b1b1b;
-  /* --awb-custom_color_1 */
-  --destructive: #fd9c9c;
-  /* .button.red */
-  --destructive-foreground: #fd9c9c;
-  /* .button.red */
-  --border: #313030;
-  /* --menu_sub_sep_color */
-  --input: #1b1b1b;
-  /* --awb-custom_color_1 */
-  --ring: #3e3e3e;
-  /* --awb-color5 */
-  --chart-1: #e9ce05;
-  /* --awb-color2 */
-  --chart-2: #e9ce05;
-  /* --awb-color2 */
-  --chart-3: #bfbfbf;
-  /* --slidingbar_link_color */
-  --chart-4: #3e3e3e;
-  /* --awb-color5 */
-  --chart-5: #bfbfbf;
-  /* --slidingbar_link_color */
-  --sidebar: #1b1b1b;
-  /* --awb-custom_color_1 */
-  --sidebar-foreground: #ededed;
-  /* --awb-custom17 */
-  --sidebar-primary: #bfbfbf;
-  /* --slidingbar_link_color */
-  --sidebar-primary-foreground: #ffffff;
-  /* --link_color */
-  --sidebar-accent: #e9ce05;
-  /* --awb-color2 */
-  --sidebar-accent-foreground: #1b1b1b;
-  /* --awb-custom_color_1 */
-  --sidebar-border: #313030;
-  /* --menu_sub_sep_color */
-  --sidebar-ring: #3e3e3e;
-  /* --awb-color5 */
-  --success: #65bc7b;
-  /* --awb-color4 */
-  --warning: #fcf8e3;
-  /* --warning_bg_color */
-  --error: #fd9c9c;
-  /* .button.red */
+  /* Form theme variables - Dark theme */
+  --form-bg: 0 0% 9%;
+  --form-border: 0 0% 20%;
+  --form-input-bg: #3e3e3e;
+  --form-input-border: 30 5% 85%;
+  --form-input-focus-border: 30 5% 70%;
+  --form-input-text: 0 0% 45%;
+  --form-label-text: 0 0% 98%;
+  --form-button-bg: 0 0% 98%;
+  --form-button-text: 0 0% 9%;
+  --form-button-hover-bg: 0 0% 85%;
+  --form-radius: 0;
 }
 
 @theme inline {
@@ -218,109 +162,123 @@
   }
 
 
+  /* Form Styles - Mass Woodshop inspired */
   form {
-    background: var(--card);
-    border-radius: var(--radius-lg, 12px);
-    box-shadow: 0 2px 24px rgba(0, 0, 0, 0.08);
-    padding: 2.5rem 2rem;
-    max-width: 700px;
-    margin: 0 auto 2.5rem auto;
+    background: transparent;
+    padding: 0;
+    max-width: 100%;
+    margin: 0;
     display: flex;
-    flex-wrap: wrap;
-    gap: 2rem;
+    flex-direction: column;
+    gap: 1.25rem;
   }
 
   form label {
-    font-weight: 500;
-    color: var(--accent);
-    margin-bottom: 0.5rem;
+    font-weight: 600;
+    font-size: 0.75rem;
+    color: hsl(var(--form-label-text));
+    margin-bottom: 0.625rem;
     display: block;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
   }
 
   form input,
   form textarea,
   form select {
     width: 100%;
-    background: var(--card);
-    color: var(--card-foreground);
-    border: 1px solid var(--border);
-    border-radius: var(--radius-md, 8px);
-    font-size: 1rem;
-    padding: 0.75rem 1rem;
-    margin-bottom: 1.25rem;
-    transition: border-color 0.2s, box-shadow 0.2s;
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+    background: var(--form-input-bg);
+    color: var(--form-input-text);
+    border: 2px solid var(--form-input-border);
+    border-radius: 0;
+    font-size: 0.9375rem;
+    padding: 1rem 1.125rem;
+    transition: border-color 0.15s ease;
     outline: none;
+    font-family: inherit;
+    line-height: 1.5;
+  }
+
+  form input::placeholder,
+  form textarea::placeholder {
+    color: hsl(var(--form-input-text) / 0.4);
+    font-size: 0.875rem;
   }
 
   form input:focus,
   form textarea:focus,
   form select:focus {
-    border-color: var(--accent);
-    box-shadow: 0 0 0 2px var(--accent);
-  }
-
-  form input[type="file"] {
-    background: transparent;
-    color: var(--card-foreground);
-    border: none;
-    padding: 0;
-    margin-bottom: 1.25rem;
+    border-color: hsl(var(--form-input-focus-border));
+    box-shadow: none;
   }
 
   form textarea {
-    min-height: 120px;
+    min-height: 150px;
     resize: vertical;
+    font-family: inherit;
+    line-height: 1.6;
   }
 
-  form button,
   form input[type="submit"] {
-    background: var(--accent);
-    color: var(--primary-foreground);
+    background: hsl(var(--form-button-bg));
+    color: hsl(var(--form-button-text));
     border: none;
-    border-radius: var(--radius-md, 8px);
-    font-weight: 600;
-    font-size: 1.1rem;
-    padding: 0.75rem 2rem;
+    border-radius: 0;
+    font-weight: 700;
+    font-size: 0.8125rem;
+    padding: 1.125rem 2.75rem;
     cursor: pointer;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-    transition: background 0.2s, color 0.2s;
+    transition: background 0.2s ease;
     margin-top: 0.5rem;
-    margin-bottom: 0.5rem;
     display: inline-block;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    width: auto;
   }
 
   form button:hover,
-  form input[type="submit"]:hover {
-    background: var(--accent-foreground);
-    color: var(--accent);
+  form input[type='submit']:hover {
+    background: hsl(var(--form-button-hover-bg));
   }
 
-  form input[aria-invalid="true"],
-  form textarea[aria-invalid="true"],
-  form select[aria-invalid="true"] {
-    border-color: var(--error);
-    box-shadow: 0 0 0 2px var(--error);
+  form button:active,
+  form input[type='submit']:active {
+    transform: translateY(1px);
   }
 
+  form button:disabled,
+  form input[type='submit']:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
 
-  @media (max-width: 600px) {
+  /* Form field wrapper */
+  form .field-wrapper {
+    display: flex;
+    flex-direction: column;
+  }
+
+  @media (max-width: 768px) {
     form {
-      padding: 1.25rem 0.5rem;
-      gap: 1rem;
+      gap: 1.25rem;
+    }
+
+    form label {
+      font-size: 0.8125rem;
     }
 
     form input,
     form textarea,
     form select {
-      font-size: 0.95rem;
-      padding: 0.6rem 0.7rem;
+      font-size: 1rem;
+      padding: 0.75rem 0.875rem;
     }
 
     form button,
-    form input[type="submit"] {
-      font-size: 1rem;
-      padding: 0.6rem 1.2rem;
+    form input[type='submit'] {
+      font-size: 0.875rem;
+      padding: 0.875rem 2rem;
+      width: 100%;
     }
   }
 }

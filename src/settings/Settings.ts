@@ -1,5 +1,6 @@
 import type { GlobalConfig } from 'payload'
 import { authenticated } from '../access/authenticated'
+import { revalidateSettings } from './hooks/revalidateSettings'
 
 export const Settings: GlobalConfig = {
   slug: 'setting',
@@ -7,6 +8,9 @@ export const Settings: GlobalConfig = {
   access: {
     read: () => true,
     update: authenticated,
+  },
+  hooks: {
+    afterChange: [revalidateSettings],
   },
   fields: [
     {

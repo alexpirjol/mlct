@@ -17,8 +17,7 @@ import './globals.css'
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const settings = await getSiteSettings()
 
-  console.log('settings', settings)
-  const lang = settings.language || 'ro'
+  const lang = settings.generalSttings?.language || 'ro'
   return (
     <html
       className={cn(GeistSans.variable, GeistMono.variable)}
@@ -45,15 +44,15 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 export async function generateMetadata(): Promise<Metadata> {
   const { getSiteSettings } = await import('@/utilities/getSiteSettings')
   const settings = await getSiteSettings()
-  const lang = settings.language || 'ro'
+  const lang = settings.generalSttings?.language || 'ro'
   return {
-    title: settings.siteTitle ?? '',
-    description: settings.siteDescription ?? '',
+    title: settings.generalSttings?.siteTitle ?? '',
+    description: settings.generalSttings?.siteDescription ?? '',
     metadataBase: new URL((await import('@/utilities/getURL')).getServerSideURL()),
     openGraph: {
-      title: settings.siteTitle ?? '',
-      description: settings.siteDescription ?? '',
-      url: settings.siteUrl ?? '',
+      title: settings.generalSttings?.siteTitle ?? '',
+      description: settings.generalSttings?.siteDescription ?? '',
+      url: settings.generalSttings?.siteUrl ?? '',
       type: 'website',
       locale: lang === 'ro' ? 'ro_RO' : lang,
     },
@@ -62,7 +61,7 @@ export async function generateMetadata(): Promise<Metadata> {
       creator: '',
     },
     alternates: {
-      canonical: settings.siteUrl ?? '',
+      canonical: settings.generalSttings?.siteUrl ?? '',
     },
     other: {
       language: lang,

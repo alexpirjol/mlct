@@ -94,7 +94,7 @@ export async function Footer() {
                     </div>
                   </li>
                 )}
-                {settings.organization?.workHours?.length && (
+                {!!settings.organization?.workHours?.length && (
                   <li className="fusion-li-item flex items-start gap-2">
                     <span className="icon-wrapper circle-no mt-1">
                       <i className="fa fa-clock fas text-lg" aria-hidden="true"></i>
@@ -128,21 +128,17 @@ export async function Footer() {
           </div>
         </div>
       </div>
-      <div className="footer-bottom py-4 border-t border-border text-xs opacity-80">
-        <div className="container flex flex-col md:flex-row justify-between items-center gap-4">
-          <div className="lex flex items-center md:items-start w-full md:w-auto">
+      <div className="footer-bottom py-6 border-t border-border text-xs opacity-80">
+        <div className="container flex flex-col md:flex-row justify-between items-center gap-4 md:px-20 lg:px-24">
+          <div className="flex items-center md:items-start w-full md:w-auto md:pl-4">
             © {year} {settings.organization?.organizationName}
           </div>
-          <div className="footer-social min-h-8 flex items-center justify-end w-full md:w-auto text-right">
+          <div className="footer-social min-h-8 flex items-center justify-end w-full md:w-auto text-right md:pr-4">
             <Social data={settings.social} />
           </div>
         </div>
       </div>
-      <script src="https://elfsightcdn.com/platform.js" async></script>
-      {/* <div
-        className="elfsight-app-7292a445-db42-40b8-bc1b-1507f78f6a46"
-        data-elfsight-app-lazy
-      ></div> */}
+
       <WhatsAppClient data={settings} />
     </footer>
   )

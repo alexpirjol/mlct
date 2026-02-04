@@ -7,8 +7,6 @@ export async function Header() {
   const headerData: Header = await getCachedGlobal('header', 1)()
   const settingsData: Setting = await getCachedGlobal<'setting'>('setting', 2)()
 
-  console.log('settingsData', settingsData)
-
   return (
     <HeaderClient
       data={{
