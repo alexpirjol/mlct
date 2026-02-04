@@ -15,6 +15,7 @@ import { Banner } from '../../blocks/Banner/config'
 import { Code } from '../../blocks/Code/config'
 import { MediaBlock } from '../../blocks/MediaBlock/config'
 import { GalleryBlock } from '@/blocks/GalleryBlock/config'
+import { MapBlock } from '@/blocks/MapBlock/config'
 import { generatePreviewPath } from '../../utilities/generatePreviewPath'
 import { populateAuthors } from './hooks/populateAuthors'
 import { revalidateDelete, revalidateProject } from './hooks/revalidateProject'
@@ -90,7 +91,7 @@ export const Projects: CollectionConfig<'projects'> = {
                   return [
                     ...rootFeatures,
                     HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4'] }),
-                    BlocksFeature({ blocks: [Banner, Code, MediaBlock, GalleryBlock] }),
+                    BlocksFeature({ blocks: [Banner, Code, MediaBlock, GalleryBlock, MapBlock] }),
                     FixedToolbarFeature(),
                     InlineToolbarFeature(),
                     HorizontalRuleFeature(),

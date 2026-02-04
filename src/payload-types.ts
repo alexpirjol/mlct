@@ -207,7 +207,7 @@ export interface Page {
       | null;
     media?: (string | Media)[] | null;
   };
-  layout: (CallToActionBlock | ContentBlock | MediaBlock | ArchiveBlock | FormBlock | GalleryBlock)[];
+  layout: (CallToActionBlock | ContentBlock | MediaBlock | ArchiveBlock | FormBlock | GalleryBlock | MapBlock)[];
   meta?: {
     title?: string | null;
     /**
@@ -775,6 +775,21 @@ export interface GalleryBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "MapBlock".
+ */
+export interface MapBlock {
+  /**
+   * Leave empty to use the location from Settings, or enter a custom address/coordinates
+   */
+  location?: string | null;
+  height?: ('33' | '50' | '66' | '75' | '100' | '125' | '150' | '200') | null;
+  width?: ('25' | '33' | '50' | '66' | '75' | '100') | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'mapBlock';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users".
  */
 export interface User {
@@ -1107,6 +1122,7 @@ export interface PagesSelect<T extends boolean = true> {
         archive?: T | ArchiveBlockSelect<T>;
         formBlock?: T | FormBlockSelect<T>;
         galleryBlock?: T | GalleryBlockSelect<T>;
+        mapBlock?: T | MapBlockSelect<T>;
       };
   meta?:
     | T
@@ -1212,6 +1228,17 @@ export interface FormBlockSelect<T extends boolean = true> {
  */
 export interface GalleryBlockSelect<T extends boolean = true> {
   media?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "MapBlock_select".
+ */
+export interface MapBlockSelect<T extends boolean = true> {
+  location?: T;
+  height?: T;
+  width?: T;
   id?: T;
   blockName?: T;
 }
