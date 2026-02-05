@@ -57,11 +57,6 @@ export const hero: Field = {
       }),
       label: false,
     },
-    linkGroup({
-      overrides: {
-        maxRows: 2,
-      },
-    }),
     {
       name: 'media',
       type: 'upload',

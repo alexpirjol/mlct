@@ -1,45 +1,56 @@
 'use client'
 import React from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react'
-// import { Media } from '@/components/Media'
-import type { Media as MediaType } from '@/payload-types'
 
 // Import Swiper styles
 import 'swiper/css'
 import 'swiper/css/pagination'
 import './styles.css'
 import { Pagination, Autoplay, EffectFade } from 'swiper/modules'
-import Image from 'next/image'
+import RichText from '@/components/RichText'
 
-interface CarouselProps {
-  media: MediaType[]
-}
+import { Media } from '@/components/Media'
+import type { Page } from '@/payload-types'
 
-export function Carousel({ media }: CarouselProps) {
+export const Carousel: React.FC<Page['hero']> = ({ media, richText }) => {
   return (
-    <Swiper
-      effect="fade"
-      speed={2000}
-      direction={'vertical'}
-      pagination={{ clickable: true }}
-      modules={[Pagination, Autoplay, EffectFade]}
-      autoplay={{
-        delay: 2000,
-        disableOnInteraction: false,
-      }}
-      className="mySwiper"
-    >
-      {media.map((img, i) => {
-        const url = img?.url || ''
-        const height = img?.height ?? 600
-        const width = img?.width ?? 1000
-        const alt = img?.alt || 'Carousel image'
-        return (
-          <SwiperSlide key={i}>
-            <Image src={url} height={height} width={width} alt={alt} />
-          </SwiperSlide>
-        )
-      })}
-    </Swiper>
+    <div className="relative  flex items-center justify-center text-white" data-theme="dark">
+      {richText && (
+        <div className="absolute inset-0 z-20 flex items-center justify-center pointer-events-none">
+          <div className="container">
+            <div className="max-w-[36.5rem] mx-auto md:text-center">
+              <RichText className="mb-6" data={richText} enableGutter={false} />
+            </div>
+          </div>
+        </div>
+      )}
+      <Swiper
+        effect="fade"
+        speed={2000}
+        direction={'vertical'}
+        pagination={{ clickable: true }}
+        modules={[Pagination, Autoplay, EffectFade]}
+        autoplay={{
+          delay: 2000,
+          disableOnInteraction: false,
+        }}
+        className="mySwiper min-h-[80vh]"
+      >
+        {media &&
+          typeof media === 'object' &&
+          media.map((img, i) => {
+            return (
+              <SwiperSlide key={i} className="relative">
+                <Media
+                  className="w-full h-full"
+                  imgClassName="object-cover"
+                  priority
+                  resource={img}
+                />
+              </SwiperSlide>
+            )
+          })}
+      </Swiper>
+    </div>
   )
 }
