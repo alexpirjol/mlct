@@ -1,11 +1,11 @@
 import React from 'react'
 
-import type { Project } from '@/payload-types'
+import type { Project, Category } from '@/payload-types'
 
 import { Media } from '@/components/Media'
 
 export const PostHero: React.FC<{
-  project: Project
+  project: Project | Category
 }> = ({ project }) => {
   const { heroImage, title } = project
 

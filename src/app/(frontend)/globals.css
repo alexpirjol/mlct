@@ -25,9 +25,11 @@
 
 @plugin "@tailwindcss/typography";
 
+@source inline("lg:col-span-3");
 @source inline("lg:col-span-4");
 @source inline("lg:col-span-6");
 @source inline("lg:col-span-8");
+@source inline("lg:col-span-9");
 @source inline("lg:col-span-12");
 @source inline("border-border");
 @source inline("bg-card");

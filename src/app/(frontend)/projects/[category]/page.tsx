@@ -8,8 +8,12 @@ import { getPayload } from 'payload'
 import React from 'react'
 import PageClient from './page.client'
 import { notFound } from 'next/navigation'
-import RichText from '@/components/RichText'
 import { Media } from '@/components/Media'
+import { PostHero } from '@/heros/PostHero'
+import { PayloadRedirects } from '@/components/PayloadRedirects'
+import { draftMode } from 'next/headers'
+import { LivePreviewListener } from '@/components/LivePreviewListener'
+import { RenderBlocks } from '@/blocks/RenderBlocks'
 
 export const revalidate = 600
 
@@ -20,6 +24,7 @@ type Args = {
 }
 
 export default async function Page({ params: paramsPromise }: Args) {
+  const { isEnabled: draft } = await draftMode()
   const { category } = await paramsPromise
   const payload = await getPayload({ config: configPromise })
 
@@ -53,34 +58,17 @@ export default async function Page({ params: paramsPromise }: Args) {
   })
 
   return (
-    <div className="pt-24 pb-24">
+    <article className="pt-16 pb-16">
       <PageClient />
-      <div className="container mb-16">
-        {categoryDoc.heroImage && (
-          <div className="relative w-full h-[400px] mb-8">
-            <Media resource={categoryDoc.heroImage} className="object-cover" fill priority />
-          </div>
-        )}
-        <div className="prose dark:prose-invert max-w-none">
-          <h1>{categoryDoc.title} Projects</h1>
-          {categoryDoc.content && <RichText data={categoryDoc.content} enableGutter={false} />}
-        </div>
+
+      {draft && <LivePreviewListener />}
+
+      <PostHero project={categoryDoc} />
+
+      <div className="flex flex-col items-center gap-4 pt-8">
+        <RenderBlocks blocks={categoryDoc.layout} />
       </div>
-      <div className="container mb-8">
-        <PageRange
-          collection="projects"
-          currentPage={projects.page}
-          limit={12}
-          totalDocs={projects.totalDocs}
-        />
-      </div>
-      <CollectionArchive projects={projects.docs} />
-      <div className="container">
-        {projects?.page && projects?.totalPages > 1 && (
-          <Pagination page={projects.page} totalPages={projects.totalPages} />
-        )}
-      </div>
-    </div>
+    </article>
   )
 }
 

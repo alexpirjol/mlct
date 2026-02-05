@@ -10,10 +10,12 @@ export const ContentBlock: React.FC<ContentBlockProps> = (props) => {
   const { columns } = props
 
   const colsSpanClasses = {
-    full: '12',
-    half: '6',
+    quarter: '3',
     oneThird: '4',
+    half: '6',
     twoThirds: '8',
+    threeQuarters: '9',
+    full: '12',
   }
 
   return (

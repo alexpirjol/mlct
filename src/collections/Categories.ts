@@ -1,21 +1,13 @@
 import type { CollectionConfig } from 'payload'
 
-import {
-  BlocksFeature,
-  FixedToolbarFeature,
-  HeadingFeature,
-  HorizontalRuleFeature,
-  InlineToolbarFeature,
-  lexicalEditor,
-} from '@payloadcms/richtext-lexical'
-
 import { anyone } from '../access/anyone'
 import { authenticated } from '../access/authenticated'
-import { authenticatedOrPublished } from '../access/authenticatedOrPublished'
 import { slugField } from 'payload'
 import { generatePreviewPath } from '../utilities/generatePreviewPath'
-import { Banner } from '../blocks/Banner/config'
-import { Code } from '../blocks/Code/config'
+import { Archive } from '../blocks/ArchiveBlock/config'
+import { CallToAction } from '../blocks/CallToAction/config'
+import { Content } from '../blocks/Content/config'
+import { FormBlock } from '../blocks/Form/config'
 import { MediaBlock } from '../blocks/MediaBlock/config'
 import { GalleryBlock } from '@/blocks/GalleryBlock/config'
 import { MapBlock } from '@/blocks/MapBlock/config'
@@ -80,22 +72,26 @@ export const Categories: CollectionConfig = {
               type: 'upload',
               relationTo: 'media',
             },
+          ],
+          label: 'Hero',
+        },
+        {
+          fields: [
             {
-              name: 'content',
-              type: 'richText',
-              editor: lexicalEditor({
-                features: ({ rootFeatures }) => {
-                  return [
-                    ...rootFeatures,
-                    HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4'] }),
-                    BlocksFeature({ blocks: [Banner, Code, MediaBlock, GalleryBlock, MapBlock] }),
-                    FixedToolbarFeature(),
-                    InlineToolbarFeature(),
-                    HorizontalRuleFeature(),
-                  ]
-                },
-              }),
-              label: false,
+              name: 'layout',
+              type: 'blocks',
+              blocks: [
+                CallToAction,
+                Content,
+                MediaBlock,
+                Archive,
+                FormBlock,
+                GalleryBlock,
+                MapBlock,
+              ],
+              admin: {
+                initCollapsed: true,
+              },
             },
           ],
           label: 'Content',
