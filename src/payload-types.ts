@@ -108,12 +108,7 @@ export interface Config {
   db: {
     defaultIDType: string;
   };
-  fallbackLocale:
-    | ('false' | 'none' | 'null')
-    | false
-    | null
-    | ('ro' | 'en' | 'de' | 'fr' | 'it' | 'es' | 'hu')
-    | ('ro' | 'en' | 'de' | 'fr' | 'it' | 'es' | 'hu')[];
+  fallbackLocale: null;
   globals: {
     header: Header;
     footer: Footer;
@@ -124,7 +119,7 @@ export interface Config {
     footer: FooterSelect<false> | FooterSelect<true>;
     setting: SettingSelect<false> | SettingSelect<true>;
   };
-  locale: 'ro' | 'en' | 'de' | 'fr' | 'it' | 'es' | 'hu';
+  locale: null;
   user: User & {
     collection: 'users';
   };
