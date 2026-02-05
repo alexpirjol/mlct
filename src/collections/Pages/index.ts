@@ -41,15 +41,15 @@ export const Pages: CollectionConfig<'pages'> = {
   admin: {
     defaultColumns: ['title', 'slug', 'updatedAt'],
     livePreview: {
-      url: ({ data, req }) =>
-        generatePreviewPath({
+      url: async ({ data, req }) =>
+        await generatePreviewPath({
           slug: data?.slug,
           collection: 'pages',
           req,
         }),
     },
-    preview: (data, { req }) =>
-      generatePreviewPath({
+    preview: async (data, { req }) =>
+      await generatePreviewPath({
         slug: data?.slug as string,
         collection: 'pages',
         req,
