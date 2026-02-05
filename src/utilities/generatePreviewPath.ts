@@ -2,6 +2,7 @@ import { PayloadRequest, CollectionSlug } from 'payload'
 
 const collectionPrefixMap: Partial<Record<CollectionSlug, string>> = {
   projects: '/projects',
+  categories: '/projects',
   pages: '',
 }
 
@@ -28,7 +29,7 @@ export const generatePreviewPath = async ({ collection, slug, req, data }: Props
     // First try to get category from passed data, then from req.data
     const docData = data || req.data
     let categorySlug: string | null = null
-    
+
     if (typeof docData?.category === 'object' && docData.category?.slug) {
       // Category is already populated with slug
       categorySlug = docData.category.slug
@@ -45,7 +46,7 @@ export const generatePreviewPath = async ({ collection, slug, req, data }: Props
         console.error('Error fetching category for preview:', error)
       }
     }
-    
+
     if (categorySlug) {
       path = `/projects/${encodeURIComponent(categorySlug)}/${encodedSlug}`
     }

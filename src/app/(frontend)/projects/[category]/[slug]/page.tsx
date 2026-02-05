@@ -22,20 +22,27 @@ export async function generateStaticParams() {
     limit: 1000,
     overrideAccess: false,
     pagination: false,
+    depth: 1,
     select: {
       slug: true,
+      category: true,
     },
   })
 
-  const params = projects.docs.map(({ slug }) => {
-    return { slug }
+  const params = projects.docs.map((project) => {
+    const categorySlug = typeof project.category === 'object' ? project.category?.slug : null
+    return {
+      category: categorySlug || '',
+      slug: project.slug,
+    }
   })
 
-  return params
+  return params.filter((p) => p.category && p.slug)
 }
 
 type Args = {
   params: Promise<{
+    category?: string
     slug?: string
   }>
 }

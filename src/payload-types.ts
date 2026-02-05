@@ -394,20 +394,34 @@ export interface Category {
   id: string;
   title: string;
   heroImage?: (string | null) | Media;
+  content?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  meta?: {
+    title?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (string | null) | Media;
+    description?: string | null;
+  };
   /**
    * When enabled, the slug will auto-generate from the title field on save and autosave.
    */
   generateSlug?: boolean | null;
   slug: string;
-  parent?: (string | null) | Category;
-  breadcrumbs?:
-    | {
-        doc?: (string | null) | Category;
-        url?: string | null;
-        label?: string | null;
-        id?: string | null;
-      }[]
-    | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -540,14 +554,20 @@ export interface ArchiveBlock {
     [k: string]: unknown;
   } | null;
   populateBy?: ('collection' | 'selection') | null;
-  relationTo?: 'projects' | null;
+  relationTo?: ('categories' | 'projects') | null;
   categories?: (string | Category)[] | null;
   limit?: number | null;
   selectedDocs?:
-    | {
-        relationTo: 'projects';
-        value: string | Project;
-      }[]
+    | (
+        | {
+            relationTo: 'projects';
+            value: string | Project;
+          }
+        | {
+            relationTo: 'categories';
+            value: string | Category;
+          }
+      )[]
     | null;
   id?: string | null;
   blockName?: string | null;
@@ -1365,17 +1385,16 @@ export interface MediaSelect<T extends boolean = true> {
 export interface CategoriesSelect<T extends boolean = true> {
   title?: T;
   heroImage?: T;
-  generateSlug?: T;
-  slug?: T;
-  parent?: T;
-  breadcrumbs?:
+  content?: T;
+  meta?:
     | T
     | {
-        doc?: T;
-        url?: T;
-        label?: T;
-        id?: T;
+        title?: T;
+        image?: T;
+        description?: T;
       };
+  generateSlug?: T;
+  slug?: T;
   updatedAt?: T;
   createdAt?: T;
 }

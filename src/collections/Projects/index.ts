@@ -17,7 +17,6 @@ import { MediaBlock } from '../../blocks/MediaBlock/config'
 import { GalleryBlock } from '@/blocks/GalleryBlock/config'
 import { MapBlock } from '@/blocks/MapBlock/config'
 import { generatePreviewPath } from '../../utilities/generatePreviewPath'
-import { populateAuthors } from './hooks/populateAuthors'
 import { revalidateDelete, revalidateProject } from './hooks/revalidateProject'
 
 import {
@@ -154,7 +153,6 @@ export const Projects: CollectionConfig<'projects'> = {
   ],
   hooks: {
     afterChange: [revalidateProject],
-    afterRead: [populateAuthors],
     afterDelete: [revalidateDelete],
   },
   versions: {
