@@ -183,7 +183,16 @@ export interface Page {
     } | null;
     media?: (string | Media)[] | null;
   };
-  layout: (CallToActionBlock | ContentBlock | MediaBlock | ArchiveBlock | FormBlock | GalleryBlock | MapBlock)[];
+  layout: (
+    | CallToActionBlock
+    | ContentBlock
+    | MediaBlock
+    | ArchiveBlock
+    | FormBlock
+    | GalleryBlock
+    | MapBlock
+    | MediaCardBlock
+  )[];
   meta?: {
     title?: string | null;
     /**
@@ -419,7 +428,16 @@ export interface Category {
   title: string;
   heroImage?: (string | null) | Media;
   layout?:
-    | (CallToActionBlock | ContentBlock | MediaBlock | ArchiveBlock | FormBlock | GalleryBlock | MapBlock)[]
+    | (
+        | CallToActionBlock
+        | ContentBlock
+        | MediaBlock
+        | ArchiveBlock
+        | FormBlock
+        | GalleryBlock
+        | MapBlock
+        | MediaCardBlock
+      )[]
     | null;
   meta?: {
     title?: string | null;
@@ -774,6 +792,54 @@ export interface MapBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "MediaCardBlock".
+ */
+export interface MediaCardBlock {
+  displayType?: ('imageTop' | 'imageBottom' | 'imageLeft' | 'imageRight') | null;
+  imageRatio?: ('quarter' | 'third' | 'half' | 'twoThirds' | 'threeQuarters') | null;
+  media: string | Media;
+  title?: string | null;
+  richText?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  enableCTA?: boolean | null;
+  ctaLink?: {
+    type?: ('reference' | 'custom') | null;
+    newTab?: boolean | null;
+    reference?:
+      | ({
+          relationTo: 'pages';
+          value: string | Page;
+        } | null)
+      | ({
+          relationTo: 'projects';
+          value: string | Project;
+        } | null);
+    url?: string | null;
+    label: string;
+    /**
+     * Choose how the link should be rendered.
+     */
+    appearance?: ('default' | 'outline') | null;
+  };
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'mediaCard';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users".
  */
 export interface User {
@@ -1092,6 +1158,7 @@ export interface PagesSelect<T extends boolean = true> {
         formBlock?: T | FormBlockSelect<T>;
         galleryBlock?: T | GalleryBlockSelect<T>;
         mapBlock?: T | MapBlockSelect<T>;
+        mediaCard?: T | MediaCardBlockSelect<T>;
       };
   meta?:
     | T
@@ -1208,6 +1275,30 @@ export interface MapBlockSelect<T extends boolean = true> {
   location?: T;
   height?: T;
   width?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "MediaCardBlock_select".
+ */
+export interface MediaCardBlockSelect<T extends boolean = true> {
+  displayType?: T;
+  imageRatio?: T;
+  media?: T;
+  title?: T;
+  richText?: T;
+  enableCTA?: T;
+  ctaLink?:
+    | T
+    | {
+        type?: T;
+        newTab?: T;
+        reference?: T;
+        url?: T;
+        label?: T;
+        appearance?: T;
+      };
   id?: T;
   blockName?: T;
 }
@@ -1344,6 +1435,7 @@ export interface CategoriesSelect<T extends boolean = true> {
         formBlock?: T | FormBlockSelect<T>;
         galleryBlock?: T | GalleryBlockSelect<T>;
         mapBlock?: T | MapBlockSelect<T>;
+        mediaCard?: T | MediaCardBlockSelect<T>;
       };
   meta?:
     | T
