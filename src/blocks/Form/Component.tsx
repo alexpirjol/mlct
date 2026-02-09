@@ -127,7 +127,7 @@ export const FormBlock: React.FC<
           {error && <div>{`${error.status || '500'}: ${error.message || ''}`}</div>}
           {!hasSubmitted && (
             <form id={formID} onSubmit={handleSubmit(onSubmit)}>
-              <div className="mb-4 last:mb-0">
+              <div className="flex flex-wrap gap-8">
                 {formFromProps &&
                   formFromProps.fields &&
                   formFromProps.fields?.map((field, index) => {
@@ -135,23 +135,22 @@ export const FormBlock: React.FC<
                     const Field: React.FC<any> = fields?.[field.blockType as keyof typeof fields]
                     if (Field) {
                       return (
-                        <div className="mb-6 last:mb-0" key={index}>
-                          <Field
-                            form={formFromProps}
-                            {...field}
-                            {...formMethods}
-                            control={control}
-                            errors={errors}
-                            register={register}
-                          />
-                        </div>
+                        <Field
+                          key={index}
+                          form={formFromProps}
+                          {...field}
+                          {...formMethods}
+                          control={control}
+                          errors={errors}
+                          register={register}
+                        />
                       )
                     }
                     return null
                   })}
               </div>
 
-              <Button form={formID} type="submit" variant="default">
+              <Button form={formID} type="submit" variant="default" className="mt-6">
                 {submitButtonLabel}
               </Button>
             </form>

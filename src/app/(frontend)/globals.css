@@ -185,7 +185,9 @@
     letter-spacing: 0.05em;
   }
 
-  form input,
+
+
+  form input:not([type="file"]),
   form textarea,
   form select {
     width: 100%;
@@ -207,7 +209,7 @@
     font-size: 0.875rem;
   }
 
-  form input:focus,
+  form input:not([type="file"]):focus,
   form textarea:focus,
   form select:focus {
     border-color: hsl(var(--form-input-focus-border));
@@ -269,7 +271,7 @@
       font-size: 0.8125rem;
     }
 
-    form input,
+    form input:not([type="file"]),
     form textarea,
     form select {
       font-size: 1rem;
