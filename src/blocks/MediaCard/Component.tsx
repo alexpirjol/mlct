@@ -90,10 +90,14 @@ export const MediaCardBlock: React.FC<Props> = ({
       else if (displayType === 'imageRight') paddingClass = 'pr-6'
     }
 
+    // Don't apply container (horizontal padding) when noBackground with vertical layout
+    const shouldApplyContainer =
+      enableGutter && !(noBackground && (displayType === 'imageTop' || displayType === 'imageBottom'))
+
     return (
       <div
         className={cn(paddingClass, 'flex flex-col gap-4', {
-          container: enableGutter,
+          container: shouldApplyContainer,
         })}
       >
         {title && (

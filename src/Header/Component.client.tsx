@@ -36,7 +36,13 @@ const NavItems: React.FC<NavItemsProps> = ({ navItems, pathname, isMobile = fals
     <>
       {navItems.map((item: any, i: number) => {
         const href = getHref(item.link)
-        const isActive = pathname === href
+        // Match exact path or if current path starts with the href followed by a /
+        // This prevents /projects1 from matching /projects
+        const isActive =
+          pathname === href ||
+          (href !== '/' &&
+            pathname.startsWith(href) &&
+            (pathname[href.length] === '/' || pathname[href.length] === '?'))
         return (
           <li
             key={i}

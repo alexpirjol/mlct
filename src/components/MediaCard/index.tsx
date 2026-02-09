@@ -14,6 +14,7 @@ export type MediaCardProps = {
   imageWidth?: number
   imageHeight?: number
   imageAlt?: string
+  showBackground?: boolean
 }
 
 export const MediaCard: React.FC<MediaCardProps> = ({
@@ -24,12 +25,13 @@ export const MediaCard: React.FC<MediaCardProps> = ({
   imageWidth,
   imageHeight,
   imageAlt = '',
+  showBackground = true,
 }) => {
   const { card, link } = useClickableCard({})
 
   return (
     <article
-      className={cn('overflow-hidden bg-card hover:cursor-pointer', className)}
+      className={cn('overflow-hidden hover:cursor-pointer', showBackground && 'bg-card', className)}
       ref={card.ref}
     >
       {imageUrl && imageWidth && imageHeight && (
@@ -43,7 +45,7 @@ export const MediaCard: React.FC<MediaCardProps> = ({
           />
         </div>
       )}
-      <div className="p-4">
+      <div className={cn(showBackground && 'p-4')}>
         {title && (
           <div className="prose">
             <h3>

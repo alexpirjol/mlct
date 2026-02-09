@@ -41,6 +41,7 @@ export const ProjectCard: React.FC<{
       imageWidth={width}
       imageHeight={height}
       imageAlt={titleToUse || ''}
+      showBackground={false}
     />
   )
 }

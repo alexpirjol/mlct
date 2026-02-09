@@ -28,6 +28,7 @@ export const CategoryCard: React.FC<{
       imageWidth={width}
       imageHeight={height}
       imageAlt={titleToUse || ''}
+      showBackground={false}
     />
   )
 }
