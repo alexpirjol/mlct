@@ -34,8 +34,7 @@ export const CollectionArchive: React.FC<Props> = (props) => {
           } else {
             // Project item
             const project = result as Project
-            const categorySlug =
-              typeof project.category === 'object' ? project.category.slug : ''
+            const categorySlug = typeof project.category === 'object' ? project.category.slug : ''
             href = `/projects/${categorySlug}/${project.slug}`
             title = project.title || ''
             media = project.heroImage

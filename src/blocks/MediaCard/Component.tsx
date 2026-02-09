@@ -92,7 +92,8 @@ export const MediaCardBlock: React.FC<Props> = ({
 
     // Don't apply container (horizontal padding) when noBackground with vertical layout
     const shouldApplyContainer =
-      enableGutter && !(noBackground && (displayType === 'imageTop' || displayType === 'imageBottom'))
+      enableGutter &&
+      !(noBackground && (displayType === 'imageTop' || displayType === 'imageBottom'))
 
     return (
       <div
