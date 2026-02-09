@@ -1,16 +1,11 @@
 import type { Metadata } from 'next/types'
 
-import { CollectionArchive } from '@/components/CollectionArchive'
-import { PageRange } from '@/components/PageRange'
-import { Pagination } from '@/components/Pagination'
 import configPromise from '@payload-config'
 import { getPayload } from 'payload'
 import React from 'react'
 import PageClient from './page.client'
 import { notFound } from 'next/navigation'
-import { Media } from '@/components/Media'
 import { PostHero } from '@/heros/PostHero'
-import { PayloadRedirects } from '@/components/PayloadRedirects'
 import { draftMode } from 'next/headers'
 import { LivePreviewListener } from '@/components/LivePreviewListener'
 import { RenderBlocks } from '@/blocks/RenderBlocks'
@@ -57,6 +52,7 @@ export default async function Page({ params: paramsPromise }: Args) {
     },
   })
 
+  console.log('here', categoryDoc.layout)
   return (
     <article className="pt-16 pb-16">
       <PageClient />
@@ -65,7 +61,7 @@ export default async function Page({ params: paramsPromise }: Args) {
 
       <PostHero project={categoryDoc} />
 
-      <div className="flex flex-col items-center gap-4 pt-8">
+      <div className="container">
         {categoryDoc.layout && <RenderBlocks blocks={categoryDoc.layout} />}
       </div>
     </article>

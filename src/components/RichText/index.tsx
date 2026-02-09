@@ -63,10 +63,10 @@ const jsxConverters: JSXConvertersFunction<NodeTypes> = ({ defaultConverters }) 
     ),
     galleryBlock: ({ node }) => (
       <GalleryBlock
-        className="col-start-1 col-span-3"
+        className="col-start-1 "
         imgClassName="m-0"
         {...node.fields}
-        captionClassName="mx-auto max-w-[48rem]"
+        captionClassName="mx-auto"
         enableGutter={false}
         disableInnerContainer={true}
       />

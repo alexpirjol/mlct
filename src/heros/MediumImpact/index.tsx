@@ -9,7 +9,7 @@ export const MediumImpactHero: React.FC<Page['hero']> = ({ media, richText }) =>
   const heroImage = media?.[0] ?? {}
   return (
     <div className="">
-      <div className="container mb-8">
+      <div className="container mb-8 hero-text">
         {richText && <RichText className="mb-6" data={richText} enableGutter={false} />}
       </div>
       <div className="container ">

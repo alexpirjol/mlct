@@ -21,10 +21,22 @@ interface NavItemsProps {
 }
 
 const NavItems: React.FC<NavItemsProps> = ({ navItems, pathname, isMobile = false }) => {
+  const getHref = (link: any) => {
+    if (
+      link?.type === 'reference' &&
+      typeof link?.reference?.value === 'object' &&
+      link?.reference?.value?.slug
+    ) {
+      return `${link?.reference?.relationTo !== 'pages' ? `/${link?.reference?.relationTo}` : ''}/${link?.reference?.value?.slug}`
+    }
+    return link?.url || ''
+  }
+
   return (
     <>
       {navItems.map((item: any, i: number) => {
-        const isActive = pathname === (item.link?.url || '')
+        const href = getHref(item.link)
+        const isActive = pathname === href
         return (
           <li
             key={i}
@@ -46,7 +58,8 @@ const NavItems: React.FC<NavItemsProps> = ({ navItems, pathname, isMobile = fals
                 {isMobile ? (
                   <ul>
                     {item.link.subItems.map((sub: any, j: number) => {
-                      const isSubActive = pathname === (sub.url || '')
+                      const subHref = getHref(sub)
+                      const isSubActive = pathname === subHref
                       return (
                         <li
                           key={j}
@@ -55,7 +68,7 @@ const NavItems: React.FC<NavItemsProps> = ({ navItems, pathname, isMobile = fals
                             (isSubActive ? ' ' + styles['active'] : '')
                           }
                         >
-                          <Link href={sub.url || '#'}>
+                          <Link href={subHref || '#'}>
                             <span className={styles['header-link-bg']}></span>
                             {sub.label}
                           </Link>
@@ -65,11 +78,12 @@ const NavItems: React.FC<NavItemsProps> = ({ navItems, pathname, isMobile = fals
                   </ul>
                 ) : (
                   item.link.subItems.map((sub: any, j: number) => {
-                    const isSubActive = pathname === (sub.url || '')
+                    const subHref = getHref(sub)
+                    const isSubActive = pathname === subHref
                     return (
                       <Link
                         key={j}
-                        href={sub.url || '#'}
+                        href={subHref || '#'}
                         className={
                           styles['header-submenu-item'] +
                           (isSubActive ? ' ' + styles['active'] : '')

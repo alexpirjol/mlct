@@ -458,3 +458,23 @@ html[data-theme='dark'],
 html[data-theme='light'] {
   opacity: initial;
 }
+
+/* Override prose image margins in gallery blocks */
+.react-photo-album img {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+/* Hero text should be white */
+.hero-text h1,
+.hero-text h2,
+.hero-text h3,
+.hero-text h4,
+.hero-text h5,
+.hero-text h6,
+.hero-text p,
+.hero-text a,
+.hero-text span,
+.hero-text div {
+  color: white !important;
+}

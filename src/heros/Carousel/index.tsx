@@ -88,7 +88,11 @@ export const Carousel: React.FC<Page['hero']> = ({
           typeof media === 'object' &&
           media.map((img, i) => {
             return (
-              <SwiperSlide key={i} className="relative h-full w-full" data-zoom={i % 2 === 0 ? 'in' : 'out'}>
+              <SwiperSlide
+                key={i}
+                className="relative h-full w-full"
+                data-zoom={i % 2 === 0 ? 'in' : 'out'}
+              >
                 <Media
                   className="w-full h-full absolute inset-0"
                   imgClassName="object-cover w-full h-full"

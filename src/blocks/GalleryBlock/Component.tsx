@@ -1,7 +1,7 @@
 'use client'
 import type { StaticImageData } from 'next/image'
 
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 
 import Lightbox from 'yet-another-react-lightbox'
 import Captions from 'yet-another-react-lightbox/plugins/captions'
@@ -34,15 +34,7 @@ type Props = GalleryBlockProps & {
 }
 
 export const GalleryBlock: React.FC<Props> = (props) => {
-  const {
-    captionClassName,
-    className,
-    enableGutter = true,
-    imgClassName,
-    media,
-    staticImage,
-    disableInnerContainer,
-  } = props
+  const { captionClassName, className, enableGutter = true, media, disableInnerContainer } = props
   const [index, setIndex] = useState(-1)
 
   const slides = Array.isArray(media)
@@ -58,7 +50,6 @@ export const GalleryBlock: React.FC<Props> = (props) => {
             description: caption && (
               <div
                 className={cn(
-                  'mt-6',
                   {
                     container: !disableInnerContainer,
                   },
@@ -80,13 +71,12 @@ export const GalleryBlock: React.FC<Props> = (props) => {
                 : [],
           }
         })
-        .filter(Boolean)
+        .filter((slide): slide is NonNullable<typeof slide> => slide !== null)
     : []
 
   return (
     <div
       className={cn(
-        '',
         {
           container: enableGutter,
         },

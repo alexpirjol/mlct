@@ -68,10 +68,8 @@ export default async function Project({ params: paramsPromise }: Args) {
 
       <PostHero project={project} />
 
-      <div className="flex flex-col items-center gap-4 pt-8">
-        <div className="container">
-          <RichText className="max-w-[48rem] mx-auto" data={project.content} enableGutter={false} />
-        </div>
+      <div className="container mt-16">
+        <RichText className=" mx-auto" data={project.content} enableGutter={false} />
       </div>
     </article>
   )
