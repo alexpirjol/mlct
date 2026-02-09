@@ -17,6 +17,7 @@ import { MediaBlock } from '../../blocks/MediaBlock/config'
 import { GalleryBlock } from '@/blocks/GalleryBlock/config'
 import { MapBlock } from '@/blocks/MapBlock/config'
 import { MediaCardBlock } from '@/blocks/MediaCard/config'
+import { ContactInfoBlock } from '@/blocks/ContactInfoBlock/config'
 import { generatePreviewPath } from '../../utilities/generatePreviewPath'
 import { revalidateDelete, revalidateProject } from './hooks/revalidateProject'
 
@@ -94,7 +95,15 @@ export const Projects: CollectionConfig<'projects'> = {
                     ...rootFeatures,
                     HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4'] }),
                     BlocksFeature({
-                      blocks: [Banner, Code, MediaBlock, GalleryBlock, MapBlock, MediaCardBlock],
+                      blocks: [
+                        Banner,
+                        Code,
+                        MediaBlock,
+                        GalleryBlock,
+                        MapBlock,
+                        MediaCardBlock,
+                        ContactInfoBlock,
+                      ],
                     }),
                     FixedToolbarFeature(),
                     InlineToolbarFeature(),

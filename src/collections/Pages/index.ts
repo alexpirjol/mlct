@@ -10,6 +10,7 @@ import { MediaBlock } from '../../blocks/MediaBlock/config'
 import { GalleryBlock } from '@/blocks/GalleryBlock/config'
 import { MapBlock } from '@/blocks/MapBlock/config'
 import { MediaCardBlock } from '@/blocks/MediaCard/config'
+import { ContactInfoBlock } from '@/blocks/ContactInfoBlock/config'
 import { hero } from '@/heros/config'
 import { slugField } from 'payload'
 import { populatePublishedAt } from '../../hooks/populatePublishedAt'
@@ -84,6 +85,7 @@ export const Pages: CollectionConfig<'pages'> = {
                 GalleryBlock,
                 MapBlock,
                 MediaCardBlock,
+                ContactInfoBlock,
               ],
               required: true,
               admin: {

@@ -1,7 +1,7 @@
 import React from 'react'
 import Link from 'next/link'
 import { getCachedGlobal } from '@/utilities/getGlobals'
-import { WorkHours } from './components/WorkHours'
+import { ContactInfo } from '@/components/ContactInfo'
 import { Social } from './components/Social'
 import WhatsAppClient from './components/WhatsApp'
 import type { Footer, Setting } from '@/payload-types'
@@ -54,69 +54,11 @@ export async function Footer() {
           <div className={`footer-categories flex-1 grid grid-cols-1 ${gridColsClass} gap-6`}>
             <div className="footer-category">
               <h4 className="font-semibold mb-2">Contact</h4>
-              <ul className="space-y-1">
-                {settings.contact?.phone && (
-                  <li className="fusion-li-item flex items-start gap-2">
-                    <span className="icon-wrapper circle-no mt-1">
-                      <i className="fa fa-mobile-alt fas text-lg" aria-hidden="true"></i>
-                    </span>
-                    <div className="fusion-li-item-content">
-                      <Link
-                        href={`tel:${settings.contact?.phone}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="hover:underline"
-                      >
-                        {settings.contact?.phone}
-                      </Link>
-                    </div>
-                  </li>
-                )}
-                {settings.contact?.email && (
-                  <li className="fusion-li-item flex items-start gap-2">
-                    <span className="icon-wrapper circle-no mt-1">
-                      <i className="fa fa-envelope fas text-lg" aria-hidden="true"></i>
-                    </span>
-                    <div className="fusion-li-item-content">
-                      <Link
-                        href={`mailto:${settings.contact?.email}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="hover:underline"
-                      >
-                        {settings.contact?.email}
-                      </Link>
-                    </div>
-                  </li>
-                )}
-                {settings.contact?.address && (
-                  <li className="fusion-li-item flex items-start gap-2">
-                    <span className="icon-wrapper circle-no mt-1">
-                      <i className="fa fa-map-marker-alt fas text-lg" aria-hidden="true"></i>
-                    </span>
-                    <div className="fusion-li-item-content">
-                      <Link
-                        href={settings.contact?.location}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="hover:underline"
-                      >
-                        {settings.contact?.address}
-                      </Link>
-                    </div>
-                  </li>
-                )}
-                {!!settings.organization?.workHours?.length && (
-                  <li className="fusion-li-item flex items-start gap-2">
-                    <span className="icon-wrapper circle-no mt-1">
-                      <i className="fa fa-clock fas text-lg" aria-hidden="true"></i>
-                    </span>
-                    <div className="fusion-li-item-content">
-                      <WorkHours data={settings.organization?.workHours} />
-                    </div>
-                  </li>
-                )}
-              </ul>
+              <ContactInfo
+                contact={settings.contact}
+                workHours={settings.organization?.workHours}
+                variant="footer"
+              />
             </div>
             {footer.categories?.map((cat: FooterCategory, i: number) => (
               <div className="footer-category" key={i}>

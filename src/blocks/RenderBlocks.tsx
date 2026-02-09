@@ -10,6 +10,7 @@ import { MediaBlock } from '@/blocks/MediaBlock/Component'
 import { GalleryBlock } from '@/blocks/GalleryBlock/Component'
 import { MapBlock } from '@/blocks/MapBlock/Component'
 import { MediaCardBlock } from '@/blocks/MediaCard/Component'
+import { ContactInfoBlock } from '@/blocks/ContactInfoBlock/Component'
 
 const blockComponents = {
   archive: ArchiveBlock,
@@ -20,6 +21,7 @@ const blockComponents = {
   galleryBlock: GalleryBlock,
   mapBlock: MapBlock,
   mediaCard: MediaCardBlock,
+  contactInfo: ContactInfoBlock,
 }
 
 export const RenderBlocks: React.FC<{
