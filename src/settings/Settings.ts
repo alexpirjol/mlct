@@ -188,6 +188,8 @@ export const Settings: GlobalConfig = {
           hooks: {
             afterRead: [
               ({ siblingData }) => {
+                if (!siblingData) return 'fas fa-share-alt'
+
                 const iconMap: Record<string, string> = {
                   facebook: 'fab fa-facebook',
                   instagram: 'fab fa-instagram',

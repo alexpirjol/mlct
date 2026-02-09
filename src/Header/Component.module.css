@@ -1,8 +1,8 @@
 /* ===== Base Styles ===== */
 .header-root {
   width: 100%;
-  background: var(--card);
-  color: var(--accent);
+  background: var(--color-card);
+  color: var(--color-accent);
   box-shadow: 0 2px 24px rgba(0, 0, 0, 0.08);
   position: relative;
   z-index: 100;
@@ -23,7 +23,7 @@
   gap: 1.5rem;
   font-size: 2.2rem;
   font-weight: 700;
-  color: var(--accent);
+  color: var(--color-accent);
   letter-spacing: 0.04em;
 }
 
@@ -34,7 +34,7 @@
 }
 
 .header-nav li {
-  min-height: 90px;
+  min-height: 100px;
   display: flex;
   align-items: center;
 }
@@ -60,7 +60,7 @@
 .header-hamburger-bar {
   width: 26px;
   height: 3px;
-  background: var(--foreground);
+  background: var(--color-foreground);
   margin: 3px 0;
   border-radius: 2px;
   transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
@@ -69,7 +69,7 @@
 /* Mobile nav dropdown */
 .header-mobile-nav {
   display: none;
-  background: var(--card);
+  background: var(--color-card);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.13);
   position: absolute;
   left: 0;
@@ -111,21 +111,23 @@
 .header-submenu-item {
   position: relative;
   display: inline-block;
-  color: var(--foreground);
+  color: var(--color-foreground);
   font-weight: 600;
   padding: 0.5rem 1.2rem;
   overflow: hidden;
   text-decoration: none;
   transition: color 0.2s;
   z-index: 1;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
 .header-link {
-  font-size: 1.1rem;
+  font-size: 1.125rem;
 }
 
 .header-submenu-item {
-  font-size: 1rem;
+  font-size: 0.8125rem;
   font-weight: 500;
   display: block;
 }
@@ -134,7 +136,7 @@
 .header-submenu-item .header-link-bg {
   position: absolute;
   inset: 0;
-  background: var(--menu_highlight_background, #1c1c1c);
+  background: var(--color-secondary);
   z-index: -1;
   transform: scaleY(0);
   transform-origin: bottom;
@@ -147,7 +149,7 @@
 .header-submenu-item:hover,
 .header-submenu-item:focus,
 .header-submenu-item.active {
-  color: var(--foreground);
+  color: var(--color-accent);
 }
 
 .header-link:hover .header-link-bg,
@@ -165,7 +167,7 @@
   left: 0;
   top: 100%;
   min-width: 220px;
-  background: var(--card);
+  background: var(--color-card);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.13);
   padding: 0.5rem 0;
   opacity: 0;

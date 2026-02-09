@@ -31,10 +31,10 @@ export async function Footer() {
   const year = new Date().getFullYear()
 
   return (
-    <footer className="site-footer mt-auto border-t border-border dark:bg-card text-white">
+    <footer className="site-footer mt-auto border-t border-border text-white">
       {footer.title && (
         <div className="footer-title w-full mb-6 text-center pt-8 md:pt-12">
-          <h2 className="text-2xl font-bold">{footer.title}</h2>
+          <h2>{footer.title}</h2>
         </div>
       )}
       <div className="container py-8 gap-8 flex flex-col md:flex-row md:justify-between">

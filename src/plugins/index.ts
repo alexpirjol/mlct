@@ -14,7 +14,21 @@ import { Page, Project } from '@/payload-types'
 import { getServerSideURL } from '@/utilities/getURL'
 
 const generateTitle: GenerateTitle<Project | Page> = ({ doc }) => {
-  return doc?.title ? `${doc.title}` : ''
+  if (!doc) return ''
+  
+  // Handle localized title (object) or regular string title
+  if (doc.title) {
+    if (typeof doc.title === 'string') {
+      return doc.title
+    }
+    // If title is a localized object, try to get a value
+    if (typeof doc.title === 'object') {
+      const titleObj = doc.title as Record<string, string>
+      return titleObj.en || Object.values(titleObj)[0] || ''
+    }
+  }
+  
+  return ''
 }
 
 const generateURL: GenerateURL<Project | Page> = ({ doc }) => {
