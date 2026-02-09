@@ -43,6 +43,24 @@ export const hero: Field = {
       required: true,
     },
     {
+      name: 'autoplay',
+      type: 'checkbox',
+      defaultValue: true,
+      label: 'Enable Autoplay',
+      admin: {
+        condition: (_, { type } = {}) => type === 'carousel',
+      },
+    },
+    {
+      name: 'autoplayInterval',
+      type: 'number',
+      defaultValue: 2000,
+      label: 'Autoplay Interval (ms)',
+      admin: {
+        condition: (_, siblingData = {}) => siblingData.type === 'carousel' && siblingData.autoplay === true,
+      },
+    },
+    {
       name: 'richText',
       type: 'richText',
       editor: lexicalEditor({

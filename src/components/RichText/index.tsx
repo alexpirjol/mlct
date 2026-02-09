@@ -19,15 +19,22 @@ import type {
   CallToActionBlock as CTABlockProps,
   MediaBlock as MediaBlockProps,
   GalleryBlock as GalleryBlockProps,
+  MediaCardBlock as MediaCardBlockProps,
 } from '@/payload-types'
 import { BannerBlock } from '@/blocks/Banner/Component'
 import { CallToActionBlock } from '@/blocks/CallToAction/Component'
+import { MediaCardBlock } from '@/blocks/MediaCard/Component'
 import { cn } from '@/utilities/ui'
 
 type NodeTypes =
   | DefaultNodeTypes
   | SerializedBlockNode<
-      CTABlockProps | MediaBlockProps | BannerBlockProps | CodeBlockProps | GalleryBlockProps
+      | CTABlockProps
+      | MediaBlockProps
+      | BannerBlockProps
+      | CodeBlockProps
+      | GalleryBlockProps
+      | MediaCardBlockProps
     >
 
 const internalDocToHref = ({ linkNode }: { linkNode: SerializedLinkNode }) => {
@@ -61,6 +68,13 @@ const jsxConverters: JSXConvertersFunction<NodeTypes> = ({ defaultConverters }) 
         {...node.fields}
         captionClassName="mx-auto max-w-[48rem]"
         enableGutter={false}
+        disableInnerContainer={true}
+      />
+    ),
+    mediaCard: ({ node }) => (
+      <MediaCardBlock
+        className="col-start-1 col-span-3"
+        {...node.fields}
         disableInnerContainer={true}
       />
     ),

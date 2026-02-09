@@ -12,7 +12,12 @@ import RichText from '@/components/RichText'
 import { Media } from '@/components/Media'
 import type { Page } from '@/payload-types'
 
-export const Carousel: React.FC<Page['hero']> = ({ media, richText }) => {
+export const Carousel: React.FC<Page['hero']> = ({
+  media,
+  richText,
+  autoplay = true,
+  autoplayInterval = 2000,
+}) => {
   return (
     <div className="relative  flex items-center justify-center text-white" data-theme="dark">
       {richText && (
@@ -30,10 +35,14 @@ export const Carousel: React.FC<Page['hero']> = ({ media, richText }) => {
         direction={'vertical'}
         pagination={{ clickable: true }}
         modules={[Pagination, Autoplay, EffectFade]}
-        autoplay={{
-          delay: 2000,
-          disableOnInteraction: false,
-        }}
+        autoplay={
+          autoplay
+            ? {
+                delay: autoplayInterval,
+                disableOnInteraction: false,
+              }
+            : false
+        }
         className="mySwiper min-h-[80vh]"
       >
         {media &&

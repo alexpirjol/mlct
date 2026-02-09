@@ -177,6 +177,8 @@ export interface Page {
       [k: string]: unknown;
     } | null;
     media?: (string | Media)[] | null;
+    autoplay?: boolean | null;
+    autoplayInterval?: number | null;
   };
   layout: (
     | CallToActionBlock
@@ -809,6 +811,7 @@ export interface MediaCardBlock {
     };
     [k: string]: unknown;
   } | null;
+  noBackground?: boolean | null;
   enableCTA?: boolean | null;
   ctaLink?: {
     type?: ('reference' | 'custom') | null;
@@ -1142,6 +1145,8 @@ export interface PagesSelect<T extends boolean = true> {
         type?: T;
         richText?: T;
         media?: T;
+        autoplay?: T;
+        autoplayInterval?: T;
       };
   layout?:
     | T
@@ -1283,6 +1288,7 @@ export interface MediaCardBlockSelect<T extends boolean = true> {
   media?: T;
   title?: T;
   richText?: T;
+  noBackground?: T;
   enableCTA?: T;
   ctaLink?:
     | T

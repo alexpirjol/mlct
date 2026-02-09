@@ -9,7 +9,14 @@ import { CMSLink } from '@/components/Link'
 
 import type { MediaCardBlock as MediaCardBlockProps } from '@/payload-types'
 
-export const MediaCardBlock: React.FC<MediaCardBlockProps> = ({
+type Props = MediaCardBlockProps & {
+  className?: string
+  disableInnerContainer?: boolean
+  enableGutter?: boolean
+}
+
+export const MediaCardBlock: React.FC<Props> = ({
+  className: classNameProp,
   displayType = 'imageTop',
   imageRatio = 'half',
   media,
@@ -17,7 +24,11 @@ export const MediaCardBlock: React.FC<MediaCardBlockProps> = ({
   richText,
   enableCTA,
   ctaLink,
+  disableInnerContainer,
+  enableGutter = true,
+  noBackground = false,
 }) => {
+  console.log('disableInnerContainer', disableInnerContainer)
   const { card, link } = useClickableCard({})
 
   // Determine if we should link the whole card
@@ -57,49 +68,72 @@ export const MediaCardBlock: React.FC<MediaCardBlockProps> = ({
   const ratioKey = imageRatio || 'half'
 
   const renderMedia = () => (
-    <div className={cn('relative w-full bg-muted', isHorizontal && 'h-full min-h-[300px]')}>
+    <div
+      className={cn(
+        'relative w-full bg-muted overflow-hidden',
+        isHorizontal ? 'h-full min-h-[300px]' : 'aspect-[92/59]',
+      )}
+    >
       {media && typeof media === 'object' && (
-        <Media
-          resource={media}
-          className="w-full h-full"
-          imgClassName="object-cover"
-          fill={isHorizontal}
-        />
+        <Media resource={media} className="w-full h-full" imgClassName="object-cover" fill />
       )}
     </div>
   )
 
-  const renderContent = () => (
-    <div className="p-6 flex flex-col gap-4">
-      {title && (
-        <h3 className="text-2xl font-semibold">
-          {shouldLinkWholeCard ? (
-            <Link href={wholeCardHref} ref={link.ref} className="hover:underline">
-              {title}
-            </Link>
-          ) : (
-            title
-          )}
-        </h3>
-      )}
-      {richText && (
-        <div className="prose dark:prose-invert max-w-none">
-          <RichText data={richText} enableGutter={false} />
-        </div>
-      )}
-      {enableCTA && ctaLink?.label && ctaLink && (
-        <div className="mt-2">
-          <CMSLink {...ctaLink} />
-        </div>
-      )}
-    </div>
-  )
+  const renderContent = () => {
+    // Determine padding based on noBackground and displayType
+    let paddingClass = 'p-6'
+    if (noBackground) {
+      if (displayType === 'imageTop') paddingClass = 'pt-6'
+      else if (displayType === 'imageBottom') paddingClass = 'pb-6'
+      else if (displayType === 'imageLeft') paddingClass = 'pl-6'
+      else if (displayType === 'imageRight') paddingClass = 'pr-6'
+    }
+
+    return (
+      <div
+        className={cn(paddingClass, 'flex flex-col gap-4', {
+          container: enableGutter,
+        })}
+      >
+        {title && (
+          <h3 className="text-2xl font-semibold !text-white">
+            {shouldLinkWholeCard ? (
+              <Link href={wholeCardHref} ref={link.ref} className="hover:underline">
+                {title}
+              </Link>
+            ) : (
+              title
+            )}
+          </h3>
+        )}
+        {richText && (
+          <div className="prose dark:prose-invert max-w-none">
+            <RichText data={richText} enableGutter={false} />
+          </div>
+        )}
+        {enableCTA && ctaLink?.label && ctaLink && (
+          <div className="mt-2">
+            <CMSLink {...ctaLink} />
+          </div>
+        )}
+      </div>
+    )
+  }
 
   return (
-    <div className="container my-16">
+    <div
+      className={cn(
+        {
+          container: !disableInnerContainer,
+        },
+        classNameProp,
+      )}
+    >
       <article
         className={cn(
-          'border border-border rounded-lg overflow-hidden bg-card',
+          'overflow-hidden',
+          !noBackground && 'bg-card',
           shouldLinkWholeCard && 'hover:cursor-pointer',
         )}
         ref={shouldLinkWholeCard ? card.ref : undefined}

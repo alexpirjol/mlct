@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 
 import { cn } from '@/utilities/ui'
 import { GeistMono } from 'geist/font/mono'
-import { GeistSans } from 'geist/font/sans'
+import { Cairo } from 'next/font/google'
 import React from 'react'
 
 import { AdminBar } from '@/components/AdminBar'
@@ -14,16 +14,19 @@ import { InitTheme } from '@/providers/Theme/InitTheme'
 import { getSiteSettings } from '@/utilities/getSiteSettings'
 import './globals.css'
 
+const cairo = Cairo({
+  subsets: ['latin'],
+  weight: ['200', '300', '400', '600', '700', '900'],
+  variable: '--font-cairo',
+  display: 'swap',
+})
+
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const settings = await getSiteSettings()
 
   const lang = settings.generalSttings?.language || 'ro'
   return (
-    <html
-      className={cn(GeistSans.variable, GeistMono.variable)}
-      lang={lang}
-      suppressHydrationWarning
-    >
+    <html className={cn(cairo.variable, GeistMono.variable)} lang={lang} suppressHydrationWarning>
       <head>
         <InitTheme />
         <link href="/favicon.ico" rel="icon" sizes="32x32" />

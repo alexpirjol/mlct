@@ -37,7 +37,7 @@ export const MapBlock: React.FC<Props> = async (props) => {
           allowFullScreen
           loading="lazy"
           referrerPolicy="no-referrer-when-downgrade"
-          className="w-full rounded-lg border border-border"
+          className="w-full "
         />
       </div>
     </div>

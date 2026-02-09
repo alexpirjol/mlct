@@ -21,10 +21,6 @@ import 'react-photo-album/rows.css'
 
 import RichText from '@/components/RichText'
 
-import type { MediaBlock as MediaBlockProps } from '@/payload-types'
-
-// import { Media } from '../../components/Media'
-
 import type { GalleryBlock as GalleryBlockProps } from '@/payload-types'
 
 type Props = GalleryBlockProps & {

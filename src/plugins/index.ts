@@ -15,7 +15,7 @@ import { getServerSideURL } from '@/utilities/getURL'
 
 const generateTitle: GenerateTitle<Project | Page> = ({ doc }) => {
   if (!doc) return ''
-  
+
   // Handle localized title (object) or regular string title
   if (doc.title) {
     if (typeof doc.title === 'string') {
@@ -27,7 +27,7 @@ const generateTitle: GenerateTitle<Project | Page> = ({ doc }) => {
       return titleObj.en || Object.values(titleObj)[0] || ''
     }
   }
-  
+
   return ''
 }
 

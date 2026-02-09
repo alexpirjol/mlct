@@ -29,15 +29,18 @@ export const MediaCard: React.FC<MediaCardProps> = ({
 
   return (
     <article
-      className={cn(
-        'border border-border rounded-lg overflow-hidden bg-card hover:cursor-pointer',
-        className,
-      )}
+      className={cn('overflow-hidden bg-card hover:cursor-pointer', className)}
       ref={card.ref}
     >
       {imageUrl && imageWidth && imageHeight && (
-        <div className="relative w-full flex items-center justify-center bg-muted">
-          <Image src={imageUrl} width={imageWidth} height={imageHeight} alt={imageAlt} />
+        <div className="relative w-full aspect-[92/59] overflow-hidden bg-muted">
+          <Image
+            src={imageUrl}
+            fill
+            className="object-cover"
+            alt={imageAlt}
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          />
         </div>
       )}
       <div className="p-4">

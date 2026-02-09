@@ -9,7 +9,7 @@ import {
 
 import { link } from '../../fields/link'
 
-export const MediaCard: Block = {
+export const MediaCardBlock: Block = {
   slug: 'mediaCard',
   interfaceName: 'MediaCardBlock',
   fields: [
@@ -96,6 +96,12 @@ export const MediaCard: Block = {
           ]
         },
       }),
+    },
+    {
+      name: 'noBackground',
+      type: 'checkbox',
+      label: 'No Background',
+      defaultValue: false,
     },
     {
       name: 'enableCTA',
