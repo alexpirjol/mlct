@@ -30,6 +30,18 @@ export async function Footer() {
   const settings: Setting = await getCachedGlobal('setting', 1)()
   const year = new Date().getFullYear()
 
+  // Calculate total columns: 1 (Contact) + number of footer categories
+  const totalColumns = 1 + (footer.categories?.length || 0)
+  const gridColsClasses: Record<number, string> = {
+    1: 'md:grid-cols-1',
+    2: 'md:grid-cols-2',
+    3: 'md:grid-cols-3',
+    4: 'md:grid-cols-4',
+    5: 'md:grid-cols-5',
+    6: 'md:grid-cols-6',
+  }
+  const gridColsClass = gridColsClasses[totalColumns] || 'md:grid-cols-3'
+
   return (
     <footer className="site-footer mt-auto border-t border-border text-white">
       {footer.title && (
@@ -39,7 +51,7 @@ export async function Footer() {
       )}
       <div className="container py-8 gap-8 flex flex-col md:flex-row md:justify-between">
         <div className="footer-main w-full flex flex-col md:flex-row md:gap-8">
-          <div className="footer-categories flex-1 grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className={`footer-categories flex-1 grid grid-cols-1 ${gridColsClass} gap-6`}>
             <div className="footer-category">
               <h4 className="font-semibold mb-2">Contact</h4>
               <ul className="space-y-1">
@@ -128,10 +140,13 @@ export async function Footer() {
           </div>
         </div>
       </div>
-      <div className="footer-bottom py-6 border-t border-border text-xs opacity-80">
+      <div className="footer-bottom py-6 border-t border-border text-sm opacity-80">
         <div className="container flex flex-col md:flex-row justify-between items-center gap-4 md:px-20 lg:px-24">
           <div className="flex items-center md:items-start w-full md:w-auto md:pl-4">
-            © {year} {settings.organization?.organizationName}
+            <span className="text-lg mr-1 leading-none">©</span>
+            <span className="leading-none">
+              {year} {settings.organization?.organizationName?.toUpperCase()}
+            </span>
           </div>
           <div className="footer-social min-h-8 flex items-center justify-end w-full md:w-auto text-right md:pr-4">
             <Social data={settings.social} />
