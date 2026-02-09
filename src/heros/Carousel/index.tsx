@@ -5,6 +5,7 @@ import { Swiper, SwiperSlide } from 'swiper/react'
 // Import Swiper styles
 import 'swiper/css'
 import 'swiper/css/pagination'
+import 'swiper/css/effect-fade'
 import './styles.css'
 import { Pagination, Autoplay, EffectFade } from 'swiper/modules'
 import RichText from '@/components/RichText'
@@ -31,14 +32,16 @@ export const Carousel: React.FC<Page['hero']> = ({
       )}
       <Swiper
         effect="fade"
-        speed={2000}
-        direction={'vertical'}
-        pagination={{ clickable: true }}
+        loop={true}
+        speed={1000}
+        pagination={{
+          clickable: true,
+        }}
         modules={[Pagination, Autoplay, EffectFade]}
         autoplay={
           autoplay
             ? {
-                delay: autoplayInterval,
+                delay: autoplayInterval || 2000,
                 disableOnInteraction: false,
               }
             : false

@@ -7,8 +7,6 @@ import {
   lexicalEditor,
 } from '@payloadcms/richtext-lexical'
 
-import { linkGroup } from '@/fields/linkGroup'
-
 export const hero: Field = {
   name: 'hero',
   type: 'group',
@@ -46,7 +44,7 @@ export const hero: Field = {
       name: 'autoplay',
       type: 'checkbox',
       defaultValue: true,
-      label: 'Enable Autoplay',
+      label: 'Autoplay',
       admin: {
         condition: (_, { type } = {}) => type === 'carousel',
       },
@@ -57,7 +55,8 @@ export const hero: Field = {
       defaultValue: 2000,
       label: 'Autoplay Interval (ms)',
       admin: {
-        condition: (_, siblingData = {}) => siblingData.type === 'carousel' && siblingData.autoplay === true,
+        condition: (_, siblingData = {}) =>
+          siblingData.type === 'carousel' && siblingData.autoplay === true,
       },
     },
     {
