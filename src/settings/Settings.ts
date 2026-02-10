@@ -190,7 +190,8 @@ export const Settings: GlobalConfig = {
                           whatsapp: 'fab fa-whatsapp',
                           other: 'fas fa-share-alt',
                         }
-                        const type = typeof siblingData?.type === 'string' ? siblingData.type : 'other'
+                        const type =
+                          typeof siblingData?.type === 'string' ? siblingData.type : 'other'
                         return iconMap[type] || iconMap.other
                       },
                     ],
