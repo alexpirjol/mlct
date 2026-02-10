@@ -1,6 +1,5 @@
 'use client'
 
-import { useHeaderTheme } from '@/providers/HeaderTheme'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
@@ -111,23 +110,13 @@ const NavItems: React.FC<NavItemsProps> = ({ navItems, pathname, isMobile = fals
 }
 
 export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
-  // Storing the value in a useState to avoid hydration errors
-  const [theme, setTheme] = useState<string | null>(null)
-  const { headerTheme, setHeaderTheme } = useHeaderTheme()
   const pathname = usePathname()
   const navItems = (data as any)?.navItems || []
   const [mobileOpen, setMobileOpen] = useState(false)
 
   useEffect(() => {
-    setHeaderTheme(null)
     setMobileOpen(false)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname])
-
-  useEffect(() => {
-    if (headerTheme && headerTheme !== theme) setTheme(headerTheme)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [headerTheme])
 
   useEffect(() => {
     const handleResize = () => {
@@ -157,7 +146,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
   )
 
   return (
-    <header className={styles['header-root']} {...(theme ? { 'data-theme': theme } : {})}>
+    <header className={styles['header-root']}>
       <div className={styles['header-inner']}>
         <Link href="/" className={styles['header-logo']}>
           <Logo loading="eager" priority="high" url={(data as any)?.logo?.url} />

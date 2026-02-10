@@ -14,217 +14,215 @@ export const Settings: GlobalConfig = {
   },
   fields: [
     {
-      name: 'generalSttings',
-      type: 'group',
-      label: 'General Settings',
-      fields: [
+      type: 'tabs',
+      tabs: [
         {
-          name: 'language',
-          type: 'select',
-          label: 'Site Language',
-          required: false,
-          defaultValue: 'ro',
-          options: [
-            { label: 'Română', value: 'ro' },
-            { label: 'English', value: 'en' },
-            { label: 'Deutsch', value: 'de' },
-            { label: 'Français', value: 'fr' },
-            { label: 'Italiano', value: 'it' },
-            { label: 'Español', value: 'es' },
-            { label: 'Magyar', value: 'hu' },
-          ],
-        },
-        {
-          name: 'siteTitle',
-          type: 'text',
-          label: 'Site Title',
-          required: false,
-        },
-        {
-          name: 'siteDescription',
-          type: 'textarea',
-          label: 'Site Description',
-          required: false,
-        },
-        {
-          name: 'siteUrl',
-          type: 'text',
-          label: 'Site URL',
-          required: false,
-        },
-        {
-          name: 'logo',
-          label: 'Logo',
-          type: 'upload',
-          relationTo: 'media',
-          required: false,
-          admin: {
-            description: 'Upload a logo for the header (SVG or PNG recommended)',
-          },
-        },
-      ],
-    },
-
-    {
-      name: 'organization',
-      type: 'group',
-      label: 'Organization Details',
-      fields: [
-        {
-          name: 'organizationName',
-          type: 'text',
-          label: 'Organization Name',
-          required: false,
-        },
-        {
-          name: 'workHours',
-          type: 'array',
-          label: 'Work Hours',
+          name: 'generalSttings',
+          label: 'General Settings',
           fields: [
             {
-              name: 'day',
+              name: 'language',
               type: 'select',
-
+              label: 'Site Language',
+              required: false,
+              defaultValue: 'ro',
               options: [
-                'Monday',
-                'Tuesday',
-                'Wednesday',
-                'Thursday',
-                'Friday',
-                'Saturday',
-                'Sunday',
+                { label: 'Română', value: 'ro' },
+                { label: 'English', value: 'en' },
+                { label: 'Deutsch', value: 'de' },
+                { label: 'Français', value: 'fr' },
+                { label: 'Italiano', value: 'it' },
+                { label: 'Español', value: 'es' },
+                { label: 'Magyar', value: 'hu' },
               ],
-              required: true,
-              hasMany: true,
             },
             {
-              name: 'start',
-              type: 'date',
-              label: 'Start Time',
-              required: true,
-              admin: {
-                date: {
-                  pickerAppearance: 'timeOnly',
-                },
-              },
+              name: 'siteTitle',
+              type: 'text',
+              label: 'Site Title',
+              required: false,
             },
             {
-              name: 'end',
-              type: 'date',
-              label: 'End Time',
-              required: true,
-              admin: {
-                date: {
-                  pickerAppearance: 'timeOnly',
-                },
-              },
+              name: 'siteDescription',
+              type: 'textarea',
+              label: 'Site Description',
+              required: false,
+            },
+            {
+              name: 'siteUrl',
+              type: 'text',
+              label: 'Site URL',
+              required: false,
             },
           ],
         },
-      ],
-    },
-
-    {
-      name: 'contact',
-      type: 'group',
-      label: 'Contact Info',
-      fields: [
         {
-          name: 'phone',
-          type: 'text',
-          label: 'Phone',
-        },
-        {
-          name: 'email',
-          type: 'email',
-          label: 'Email',
-        },
-        {
-          name: 'address',
-          type: 'text',
-          label: 'Address',
-        },
-        {
-          name: 'location',
-          type: 'text',
-          label: 'Location',
-        },
-      ],
-    },
-    {
-      name: 'social',
-      type: 'array',
-      label: 'Social Platforms',
-
-      fields: [
-        {
-          name: 'type',
-          type: 'select',
-          label: 'Platform',
-          required: true,
-          options: [
-            { label: 'Facebook', value: 'facebook' },
-            { label: 'Instagram', value: 'instagram' },
-            { label: 'Twitter', value: 'twitter' },
-            { label: 'LinkedIn', value: 'linkedin' },
-            { label: 'YouTube', value: 'youtube' },
-            { label: 'TikTok', value: 'tiktok' },
-            { label: 'Pinterest', value: 'pinterest' },
-            { label: 'WhatsApp', value: 'whatsapp' },
-            { label: 'Other', value: 'other' },
+          name: 'organization',
+          label: 'Organization Details',
+          fields: [
+            {
+              name: 'organizationName',
+              type: 'text',
+              label: 'Organization Name',
+              required: false,
+            },
+            {
+              name: 'workHours',
+              type: 'array',
+              label: 'Work Hours',
+              fields: [
+                {
+                  name: 'day',
+                  type: 'select',
+                  options: [
+                    'Monday',
+                    'Tuesday',
+                    'Wednesday',
+                    'Thursday',
+                    'Friday',
+                    'Saturday',
+                    'Sunday',
+                  ],
+                  required: true,
+                  hasMany: true,
+                },
+                {
+                  name: 'start',
+                  type: 'date',
+                  label: 'Start Time',
+                  required: true,
+                  admin: {
+                    date: {
+                      pickerAppearance: 'timeOnly',
+                    },
+                  },
+                },
+                {
+                  name: 'end',
+                  type: 'date',
+                  label: 'End Time',
+                  required: true,
+                  admin: {
+                    date: {
+                      pickerAppearance: 'timeOnly',
+                    },
+                  },
+                },
+              ],
+            },
           ],
         },
         {
-          name: 'page',
-          type: 'text',
-          label: 'Page/Handle/URL',
-          required: true,
+          name: 'contact',
+          label: 'Contact Info',
+          fields: [
+            {
+              name: 'phone',
+              type: 'text',
+              label: 'Phone',
+            },
+            {
+              name: 'email',
+              type: 'email',
+              label: 'Email',
+            },
+            {
+              name: 'address',
+              type: 'text',
+              label: 'Address',
+            },
+            {
+              name: 'location',
+              type: 'text',
+              label: 'Location',
+            },
+          ],
         },
         {
-          name: 'icon',
-          type: 'text',
-          label: 'Icon',
-          admin: { readOnly: true, hidden: true },
-          hooks: {
-            afterRead: [
-              ({ siblingData }) => {
-                if (!siblingData) return 'fas fa-share-alt'
+          label: 'Social Platforms',
+          fields: [
+            {
+              name: 'social',
+              type: 'array',
+              label: 'Social Links',
+              fields: [
+                {
+                  name: 'type',
+                  type: 'select',
+                  label: 'Platform',
+                  required: true,
+                  options: [
+                    { label: 'Facebook', value: 'facebook' },
+                    { label: 'Instagram', value: 'instagram' },
+                    { label: 'Twitter', value: 'twitter' },
+                    { label: 'LinkedIn', value: 'linkedin' },
+                    { label: 'YouTube', value: 'youtube' },
+                    { label: 'TikTok', value: 'tiktok' },
+                    { label: 'Pinterest', value: 'pinterest' },
+                    { label: 'WhatsApp', value: 'whatsapp' },
+                    { label: 'Other', value: 'other' },
+                  ],
+                },
+                {
+                  name: 'page',
+                  type: 'text',
+                  label: 'Page/Handle/URL',
+                  required: true,
+                },
+                {
+                  name: 'icon',
+                  type: 'text',
+                  label: 'Icon',
+                  admin: { readOnly: true, hidden: true },
+                  hooks: {
+                    afterRead: [
+                      ({ siblingData }) => {
+                        if (!siblingData) return 'fas fa-share-alt'
 
-                const iconMap: Record<string, string> = {
-                  facebook: 'fab fa-facebook',
-                  instagram: 'fab fa-instagram',
-                  twitter: 'fab fa-twitter',
-                  linkedin: 'fab fa-linkedin',
-                  youtube: 'fab fa-youtube',
-                  tiktok: 'fab fa-tiktok',
-                  pinterest: 'fab fa-pinterest',
-                  whatsapp: 'fab fa-whatsapp',
-                  other: 'fas fa-share-alt',
-                }
-                const type = typeof siblingData?.type === 'string' ? siblingData.type : 'other'
-                return iconMap[type] || iconMap.other
-              },
-            ],
-          },
-        },
-      ],
-    },
-    {
-      name: 'siteLinks',
-      type: 'array',
-      label: 'Site Links (Google search results)',
-      fields: [
-        {
-          name: 'label',
-          type: 'text',
-          label: 'Label',
-          required: true,
+                        const iconMap: Record<string, string> = {
+                          facebook: 'fab fa-facebook',
+                          instagram: 'fab fa-instagram',
+                          twitter: 'fab fa-twitter',
+                          linkedin: 'fab fa-linkedin',
+                          youtube: 'fab fa-youtube',
+                          tiktok: 'fab fa-tiktok',
+                          pinterest: 'fab fa-pinterest',
+                          whatsapp: 'fab fa-whatsapp',
+                          other: 'fas fa-share-alt',
+                        }
+                        const type = typeof siblingData?.type === 'string' ? siblingData.type : 'other'
+                        return iconMap[type] || iconMap.other
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          ],
         },
         {
-          name: 'url',
-          type: 'text',
-          label: 'URL',
-          required: true,
+          label: 'SEO',
+          fields: [
+            {
+              name: 'siteLinks',
+              type: 'array',
+              label: 'Site Links (Google search results)',
+              fields: [
+                {
+                  name: 'label',
+                  type: 'text',
+                  label: 'Label',
+                  required: true,
+                },
+                {
+                  name: 'url',
+                  type: 'text',
+                  label: 'URL',
+                  required: true,
+                },
+              ],
+            },
+          ],
         },
       ],
     },
