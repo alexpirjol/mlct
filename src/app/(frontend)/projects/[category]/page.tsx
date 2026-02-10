@@ -9,6 +9,7 @@ import { PostHero } from '@/heros/PostHero'
 import { draftMode } from 'next/headers'
 import { LivePreviewListener } from '@/components/LivePreviewListener'
 import { RenderBlocks } from '@/blocks/RenderBlocks'
+import { PayloadRedirects } from '@/components/PayloadRedirects'
 
 export const revalidate = 600
 
@@ -25,16 +26,16 @@ export default async function Page({ params: paramsPromise }: Args) {
   const decodedSlug = decodeURIComponent(category)
   const categoryDoc = await queryCategoriesBySlug({ slug: decodedSlug })
 
-  if (!categoryDoc) notFound()
+  const url = '/projects/' + encodeURIComponent(category)
+  if (!categoryDoc) return <PayloadRedirects url={url} />
 
   return (
     <article className="pt-16 pb-16">
       <PageClient />
-
+      {/* Allows redirects for valid pages too */}
+      <PayloadRedirects disableNotFound url={url} />
       {draft && <LivePreviewListener />}
-
       <PostHero project={categoryDoc} />
-
       <div className="container">
         {categoryDoc.layout && <RenderBlocks blocks={categoryDoc.layout} />}
       </div>
@@ -80,18 +81,13 @@ export async function generateMetadata({ params: paramsPromise }: Args): Promise
 
 export async function generateStaticParams() {
   const payload = await getPayload({ config: configPromise })
-  const { totalDocs } = await payload.count({
-    collection: 'projects',
-    overrideAccess: false,
+  const { docs: categories } = await payload.find({
+    collection: 'categories',
+    limit: 1000, // adjust as needed
+    pagination: false,
   })
 
-  const totalPages = Math.ceil(totalDocs / 10)
-
-  const pages: { pageNumber: string }[] = []
-
-  for (let i = 1; i <= totalPages; i++) {
-    pages.push({ pageNumber: String(i) })
-  }
-
-  return pages
+  return categories.map((cat: { slug: string }) => ({
+    category: cat.slug,
+  }))
 }
