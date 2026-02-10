@@ -60,7 +60,11 @@ export const GalleryBlock: React.FC<Props> = (props) => {
               </div>
             ),
             srcSet:
-              sizes && sizes.og && sizes.og.url
+              sizes &&
+              sizes.og &&
+              sizes.og.url &&
+              typeof sizes.og.width === 'number' &&
+              typeof sizes.og.height === 'number'
                 ? [
                     {
                       src: sizes.og.url,

@@ -52,7 +52,6 @@ export default async function Page({ params: paramsPromise }: Args) {
     },
   })
 
-  console.log('here', categoryDoc.layout)
   return (
     <article className="pt-16 pb-16">
       <PageClient />

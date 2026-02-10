@@ -28,7 +28,6 @@ export const MediaCardBlock: React.FC<Props> = ({
   enableGutter = true,
   noBackground = false,
 }) => {
-  console.log('disableInnerContainer', disableInnerContainer)
   const { card, link } = useClickableCard({})
 
   // Determine if we should link the whole card

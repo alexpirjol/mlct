@@ -14,19 +14,22 @@ export const CategoryCard: React.FC<{
   const { className, doc, title: titleFromProps } = props
 
   const { slug, title, heroImage } = doc || {}
-
   const titleToUse = titleFromProps || title
   const href = `/projects/${slug}`
-  const { url: imgSrc, width, height } = heroImage?.sizes?.square ?? {}
+  const {
+    url: imgSrc,
+    width,
+    height,
+  } = typeof heroImage === 'object' && heroImage?.sizes?.square ? heroImage.sizes.square : {}
 
   return (
     <MediaCard
       className={className}
       title={titleToUse}
       href={href}
-      imageUrl={imgSrc}
-      imageWidth={width}
-      imageHeight={height}
+      imageUrl={imgSrc ?? undefined}
+      imageWidth={width ?? undefined}
+      imageHeight={height ?? undefined}
       imageAlt={titleToUse || ''}
       showBackground={false}
     />

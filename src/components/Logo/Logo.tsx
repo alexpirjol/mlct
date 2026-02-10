@@ -24,7 +24,7 @@ export const Logo = (props: Props) => {
       fetchPriority={priority}
       decoding="async"
       className={clsx(' w-full h-[70px]', className)}
-      src={url}
+      src={url as string}
     />
   )
 }

@@ -48,7 +48,11 @@ export default function WhatsAppWidget({ data }: Props) {
           <div className={styles['whatsapp-header']}>
             <div className={styles['whatsapp-avatar-bg']}>
               <img
-                src={data.generalSttings?.logo?.url}
+                src={
+                  typeof data.generalSttings?.logo === 'object' && data.generalSttings?.logo?.url
+                    ? data.generalSttings.logo.url
+                    : ''
+                }
                 alt={data.organization?.organizationName || 'Avatar'}
                 className={styles['whatsapp-avatar-img']}
                 decoding="async"
