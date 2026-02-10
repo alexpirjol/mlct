@@ -42,7 +42,7 @@ export default async function Page({ params: paramsPromise }: Args) {
   )
 }
 
-async function queryCategoriesBySlug({ slug }: { slug: string }) {
+const queryCategoriesBySlug = cache(async ({ slug }: { slug: string }) => {
   const { isEnabled: draft } = await draftMode()
   const payload = await getPayload({ config: configPromise })
   const result = await payload.find({
@@ -58,7 +58,7 @@ async function queryCategoriesBySlug({ slug }: { slug: string }) {
     },
   })
   return result.docs?.[0] || null
-}
+})
 
 export async function generateMetadata({ params: paramsPromise }: Args): Promise<Metadata> {
   const { category } = await paramsPromise
