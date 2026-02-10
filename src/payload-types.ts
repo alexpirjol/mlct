@@ -1,3 +1,17 @@
+/**
+ * Custom SEO type for OpenGraph merging utility
+ */
+export interface Seo {
+  siteTitle?: string;
+  siteDescription?: string;
+  logo?: {
+    url?: string;
+    alt?: string;
+    width?: number;
+    height?: number;
+    // Add more fields as needed based on your Media type
+  } | null;
+}
 /* tslint:disable */
 /* eslint-disable */
 /**

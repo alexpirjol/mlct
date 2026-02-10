@@ -10,11 +10,11 @@ import { CMSLink } from '@/components/Link'
 import type { Header as HeaderType, Setting as SettingsType } from '@/payload-types'
 
 interface HeaderClientProps {
-  data: HeaderType | SettingsType
+  data: HeaderType & SettingsType
 }
 
 interface NavItemsProps {
-  navItems: any[]
+  navItems: HeaderType['navItems']
   pathname: string
   isMobile?: boolean
 }
@@ -33,7 +33,7 @@ const NavItems: React.FC<NavItemsProps> = ({ navItems, pathname, isMobile = fals
 
   return (
     <>
-      {navItems.map((item: any, i: number) => {
+      {navItems?.map((item: any, i: number) => {
         const href = getHref(item.link)
         // Match exact path or if current path starts with the href followed by a /
         // This prevents /projects1 from matching /projects
@@ -111,7 +111,7 @@ const NavItems: React.FC<NavItemsProps> = ({ navItems, pathname, isMobile = fals
 
 export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
   const pathname = usePathname()
-  const navItems = (data as any)?.navItems || []
+  const navItems = data.navItems || []
   const [mobileOpen, setMobileOpen] = useState(false)
 
   useEffect(() => {

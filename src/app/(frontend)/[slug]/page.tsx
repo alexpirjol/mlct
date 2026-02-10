@@ -11,6 +11,7 @@ import { RenderHero } from '@/heros/RenderHero'
 import { generateMeta } from '@/utilities/generateMeta'
 import PageClient from './page.client'
 import { LivePreviewListener } from '@/components/LivePreviewListener'
+import { notFound } from 'next/navigation'
 
 export async function generateStaticParams() {
   const payload = await getPayload({ config: configPromise })
@@ -27,7 +28,7 @@ export async function generateStaticParams() {
 
   const params = pages.docs
     ?.filter((doc) => {
-      return doc.slug !== 'home'
+      return doc.slug !== 'home' && doc.slug !== 'projects'
     })
     .map(({ slug }) => {
       return { slug }
@@ -52,8 +53,9 @@ export default async function Page({ params: paramsPromise }: Args) {
     slug: decodedSlug,
   })
 
+  console.log('page --------->', page, url, decodedSlug)
   if (!page) {
-    return <PayloadRedirects url={url} />
+    return notFound()
   }
 
   const { hero, layout } = page
@@ -66,7 +68,7 @@ export default async function Page({ params: paramsPromise }: Args) {
 
       {draft && <LivePreviewListener />}
 
-      <RenderHero {...hero} />
+      {hero && <RenderHero {...hero} />}
       <RenderBlocks blocks={layout} />
     </main>
   )
