@@ -48,7 +48,6 @@ export const CollectionArchive: React.FC<Props> = (props) => {
                 ctaLink={{
                   type: 'custom',
                   url: href,
-                  label: 'View',
                 }}
                 noBackground={true}
                 disableInnerContainer={true}

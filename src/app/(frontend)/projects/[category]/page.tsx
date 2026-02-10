@@ -2,7 +2,7 @@ import type { Metadata } from 'next/types'
 
 import configPromise from '@payload-config'
 import { getPayload } from 'payload'
-import React from 'react'
+import React, { cache } from 'react'
 import PageClient from './page.client'
 import { notFound } from 'next/navigation'
 import { PostHero } from '@/heros/PostHero'
@@ -21,36 +21,11 @@ type Args = {
 export default async function Page({ params: paramsPromise }: Args) {
   const { isEnabled: draft } = await draftMode()
   const { category } = await paramsPromise
-  const payload = await getPayload({ config: configPromise })
+  // Decode to support slugs with special characters
+  const decodedSlug = decodeURIComponent(category)
+  const categoryDoc = await queryCategoriesBySlug({ slug: decodedSlug })
 
-  if (!category) notFound()
-
-  // Find the category by slug to get its ID
-  const categoryResult = await payload.find({
-    collection: 'categories',
-    where: { slug: { equals: category } },
-    limit: 1,
-    depth: 1,
-    overrideAccess: false,
-  })
-  const categoryDoc = categoryResult.docs[0]
-
-  // Pagination: get page number from search params or default to 1
-  // (If you want to support pagination by query param, adjust here)
-  const pageNumber = 1
-
-  const projects = await payload.find({
-    collection: 'projects',
-    depth: 1,
-    limit: 12,
-    page: pageNumber,
-    overrideAccess: false,
-    where: {
-      category: {
-        equals: categoryDoc.id,
-      },
-    },
-  })
+  if (!categoryDoc) notFound()
 
   return (
     <article className="pt-16 pb-16">
@@ -65,6 +40,24 @@ export default async function Page({ params: paramsPromise }: Args) {
       </div>
     </article>
   )
+}
+
+async function queryCategoriesBySlug({ slug }: { slug: string }) {
+  const { isEnabled: draft } = await draftMode()
+  const payload = await getPayload({ config: configPromise })
+  const result = await payload.find({
+    collection: 'categories',
+    draft,
+    limit: 1,
+    overrideAccess: draft,
+    pagination: false,
+    where: {
+      slug: {
+        equals: slug,
+      },
+    },
+  })
+  return result.docs?.[0] || null
 }
 
 export async function generateMetadata({ params: paramsPromise }: Args): Promise<Metadata> {
