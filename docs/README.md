@@ -298,6 +298,22 @@ Before deploying your app, you need to:
 
 You can also deploy your app manually, check out the [deployment documentation](https://payloadcms.com/docs/production/deployment) for full details.
 
+## Running in Production
+
+To run Payload in production mode on your VPS or any self-hosted environment, use the following start script:
+
+```bash
+npm run build
+npm run start
+```
+
+- `npm run build` compiles your Next.js/Payload app for production.
+- `npm run start` launches the server in production mode.
+
+If you use Docker Compose, ensure your production service runs these commands as part of its startup.
+
+Add this script to your deployment platform or VPS startup routine to ensure Payload starts correctly in production.
+
 ## Questions
 
 If you have any issues or questions, reach out to us on [Discord](https://discord.com/invite/payload) or start a [GitHub discussion](https://github.com/payloadcms/payload/discussions).

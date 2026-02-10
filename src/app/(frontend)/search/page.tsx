@@ -73,7 +73,16 @@ export default async function Page({ searchParams: searchParamsPromise }: Args) 
       </div>
 
       {projects.totalDocs > 0 ? (
-        <CollectionArchive projects={projects.docs as CardPostData[]} />
+        <CollectionArchive
+          projects={projects.docs.map((doc: any) => ({
+            ...doc,
+            category:
+              doc.category ??
+              (doc.categories && Array.isArray(doc.categories) && doc.categories.length > 0
+                ? doc.categories[0]
+                : { slug: '', title: '' }),
+          }))}
+        />
       ) : (
         <div className="container">No results found.</div>
       )}
