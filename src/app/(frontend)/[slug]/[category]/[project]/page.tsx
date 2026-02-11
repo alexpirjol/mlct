@@ -43,17 +43,17 @@ export async function generateStaticParams() {
 type Args = {
   params: Promise<{
     category?: string
-    slug?: string
+    project?: string
   }>
 }
 
 export default async function Project({ params: paramsPromise }: Args) {
   const { isEnabled: draft } = await draftMode()
-  const { slug = '' } = await paramsPromise
+  const { project = '', category = '' } = await paramsPromise
   // Decode to support slugs with special characters
-  const decodedSlug = decodeURIComponent(slug)
-  const url = '/projects/' + decodedSlug
-  const project = await queryProjectsBySlug({ slug: decodedSlug })
+  const decodedSlug = decodeURIComponent(project)
+  const url = '/projects/' + category + '/' + decodedSlug
+  const projectDoc = await queryProjectsBySlug({ slug: decodedSlug })
 
   if (!project) return <PayloadRedirects url={url} />
 
@@ -66,22 +66,22 @@ export default async function Project({ params: paramsPromise }: Args) {
 
       {draft && <LivePreviewListener />}
 
-      <PostHero project={project} />
+      <PostHero project={projectDoc} />
 
       <div className="container mt-16">
-        <RichText className=" mx-auto" data={project.content} enableGutter={false} />
+        <RichText className=" mx-auto" data={projectDoc.content} enableGutter={false} />
       </div>
     </article>
   )
 }
 
 export async function generateMetadata({ params: paramsPromise }: Args): Promise<Metadata> {
-  const { slug = '' } = await paramsPromise
+  const { project = '' } = await paramsPromise
   // Decode to support slugs with special characters
-  const decodedSlug = decodeURIComponent(slug)
-  const project = await queryProjectsBySlug({ slug: decodedSlug })
+  const decodedSlug = decodeURIComponent(project)
+  const projectDoc = await queryProjectsBySlug({ slug: decodedSlug })
 
-  return generateMeta({ doc: project })
+  return generateMeta({ doc: projectDoc })
 }
 
 const queryProjectsBySlug = cache(async ({ slug }: { slug: string }) => {
