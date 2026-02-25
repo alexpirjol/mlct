@@ -24,7 +24,7 @@ export const ProjectCard: React.FC<{
     return null // or render a fallback/error
   }
 
-  const { slug, category, title, heroImage } = doc
+  const { slug, category, title, heroImage } = doc || {}
 
   const titleToUse = titleFromProps || title
   const categorySlug = category.slug

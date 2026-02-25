@@ -69,7 +69,7 @@ export default async function Project({ params: paramsPromise }: Args) {
       <PostHero project={projectDoc} />
 
       <div className="container mt-16">
-        <RichText className=" mx-auto" data={projectDoc.content} enableGutter={false} />
+        <RichText className=" mx-auto" data={projectDoc?.content} enableGutter={false} />
       </div>
     </article>
   )

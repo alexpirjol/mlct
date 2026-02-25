@@ -28,14 +28,14 @@ export const CollectionArchive: React.FC<Props> = (props) => {
             const category = result as Category
             href = `/projects/${category.slug}`
             title = category.title || ''
-            media = (category.heroImage ?? '') as string | Media
+            media = (category?.heroImage ?? '') as string | Media
           } else {
             // Project item
             const project = result as Project
             const categorySlug = typeof project.category === 'object' ? project.category.slug : ''
             href = `/projects/${categorySlug}/${project.slug}`
             title = project.title || ''
-            media = (project.heroImage ?? '') as string | Media
+            media = (project?.heroImage ?? '') as string | Media
           }
 
           return (
