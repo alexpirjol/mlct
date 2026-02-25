@@ -53,7 +53,6 @@ export default async function Page({ params: paramsPromise }: Args) {
     slug: decodedSlug,
   })
 
-  console.log('page --------->', page, url, decodedSlug)
   if (!page) {
     return notFound()
   }
