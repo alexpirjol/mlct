@@ -7,7 +7,7 @@ import { Media } from '@/components/Media'
 export const PostHero: React.FC<{
   project: Project | Category
 }> = ({ project }) => {
-  const { heroImage, title } = project
+  const { heroImage, title } = project || {}
 
   if (!heroImage) {
     return null

@@ -1,20 +1,17 @@
 version: '3'
 
 services:
-  postgres:
-    image: postgres:16
-    restart: always
-    environment:
-      POSTGRES_USER: payload
-      POSTGRES_PASSWORD: payloadpass
-      POSTGRES_DB: payload_db
+  mongo:
+    image: mongo:latest
     ports:
-      - '5432:5432'
+      - '27017:27017'
+    command:
+      - --storageEngine=wiredTiger
     volumes:
-      - pg_data:/var/lib/postgresql/data
+      - mctl_data:/data/db
     logging:
       driver: none
 
 volumes:
-  pg_data:
-    name: pg_data # Use exact volume name without prefix
+  mctl_data:
+    name: mctl_data # Use exact volume name without prefix
