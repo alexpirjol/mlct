@@ -1,12 +1,9 @@
 'use client'
 import React from 'react'
-import dynamic from 'next/dynamic'
 import { cn } from '@/utilities/ui'
 import useClickableCard from '@/utilities/useClickableCard'
 import Link from 'next/link'
-
-// Dynamically import RichText to avoid circular imports with RichText -> MediaCard
-const RichText = dynamic(() => import('@/components/RichText'), { ssr: false })
+import RichText from '@/components/RichText'
 import { Media } from '@/components/Media'
 import { CMSLink } from '@/components/Link'
 
