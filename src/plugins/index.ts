@@ -40,12 +40,10 @@ const generateURL: GenerateURL<Project | Page> = ({ doc }) => {
 console.log('uploadplugin ==========> ', process.env.BLOB_READ_WRITE_TOKEN)
 export const plugins: Plugin[] = [
   vercelBlobStorage({
-    enabled: true, // Optional, defaults to true
-    // Specify which collections should use Vercel Blob
+    enabled: true,
     collections: {
       media: true,
     },
-    // Token provided by Vercel once Blob storage is added to your Vercel project
     token: process.env.BLOB_READ_WRITE_TOKEN,
   }),
 
