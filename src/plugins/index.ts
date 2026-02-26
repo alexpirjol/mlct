@@ -37,10 +37,9 @@ const generateURL: GenerateURL<Project | Page> = ({ doc }) => {
   return doc?.slug ? `${url}/${doc.slug}` : url
 }
 
-console.log('uploadplugin ==========> ', process.env.BLOB_READ_WRITE_TOKEN)
 export const plugins: Plugin[] = [
   vercelBlobStorage({
-    enabled: true,
+    enabled: !!process.env.BLOB_READ_WRITE_TOKEN,
     collections: {
       media: true,
     },

@@ -39,7 +39,9 @@ export const Media: CollectionConfig = {
     },
   ],
   upload: {
-    disableLocalStorage: true,
+    ...(!process.env.BLOB_READ_WRITE_TOKEN
+      ? { staticDir: path.resolve(dirname, '../../../public/media') }
+      : { disableLocalStorage: true }),
     adminThumbnail: 'thumbnail',
     focalPoint: true,
     imageSizes: [
