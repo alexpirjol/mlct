@@ -1,17 +1,3 @@
-/**
- * Custom SEO type for OpenGraph merging utility
- */
-export interface Seo {
-  siteTitle?: string;
-  siteDescription?: string;
-  logo?: {
-    url?: string;
-    alt?: string;
-    width?: number;
-    height?: number;
-    // Add more fields as needed based on your Media type
-  } | null;
-}
 /* tslint:disable */
 /* eslint-disable */
 /**
@@ -175,6 +161,8 @@ export interface Page {
   title: string;
   hero: {
     type: 'none' | 'highImpact' | 'mediumImpact' | 'lowImpact' | 'carousel';
+    autoplay?: boolean | null;
+    autoplayInterval?: number | null;
     richText?: {
       root: {
         type: string;
@@ -191,8 +179,6 @@ export interface Page {
       [k: string]: unknown;
     } | null;
     media?: (string | Media)[] | null;
-    autoplay?: boolean | null;
-    autoplayInterval?: number | null;
   };
   layout: (
     | CallToActionBlock
@@ -203,6 +189,7 @@ export interface Page {
     | GalleryBlock
     | MapBlock
     | MediaCardBlock
+    | ContactInfoBlock
   )[];
   meta?: {
     title?: string | null;
@@ -840,7 +827,7 @@ export interface MediaCardBlock {
           value: string | Project;
         } | null);
     url?: string | null;
-    label?: string;
+    label: string;
     /**
      * Choose how the link should be rendered.
      */
@@ -849,6 +836,16 @@ export interface MediaCardBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'mediaCard';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ContactInfoBlock".
+ */
+export interface ContactInfoBlock {
+  title?: string | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'contactInfo';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1157,10 +1154,10 @@ export interface PagesSelect<T extends boolean = true> {
     | T
     | {
         type?: T;
-        richText?: T;
-        media?: T;
         autoplay?: T;
         autoplayInterval?: T;
+        richText?: T;
+        media?: T;
       };
   layout?:
     | T
@@ -1173,6 +1170,7 @@ export interface PagesSelect<T extends boolean = true> {
         galleryBlock?: T | GalleryBlockSelect<T>;
         mapBlock?: T | MapBlockSelect<T>;
         mediaCard?: T | MediaCardBlockSelect<T>;
+        contactInfo?: T | ContactInfoBlockSelect<T>;
       };
   meta?:
     | T
@@ -1314,6 +1312,15 @@ export interface MediaCardBlockSelect<T extends boolean = true> {
         label?: T;
         appearance?: T;
       };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ContactInfoBlock_select".
+ */
+export interface ContactInfoBlockSelect<T extends boolean = true> {
+  title?: T;
   id?: T;
   blockName?: T;
 }
@@ -1779,10 +1786,6 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
  */
 export interface Header {
   id: string;
-  /**
-   * Upload a logo for the header (SVG or PNG recommended)
-   */
-  logo?: (string | null) | Media;
   navItems?:
     | {
         link: {
@@ -1848,14 +1851,14 @@ export interface Footer {
 export interface Setting {
   id: string;
   generalSttings?: {
-    language?: ('ro' | 'en' | 'de' | 'fr' | 'it' | 'es' | 'hu') | null;
-    siteTitle?: string | null;
-    siteDescription?: string | null;
-    siteUrl?: string | null;
     /**
      * Upload a logo for the header (SVG or PNG recommended)
      */
     logo?: (string | null) | Media;
+    language?: ('ro' | 'en' | 'de' | 'fr' | 'it' | 'es' | 'hu') | null;
+    siteTitle?: string | null;
+    siteDescription?: string | null;
+    siteUrl?: string | null;
   };
   organization?: {
     organizationName?: string | null;
@@ -1906,7 +1909,6 @@ export interface Setting {
  * via the `definition` "header_select".
  */
 export interface HeaderSelect<T extends boolean = true> {
-  logo?: T;
   navItems?:
     | T
     | {
@@ -1965,11 +1967,11 @@ export interface SettingSelect<T extends boolean = true> {
   generalSttings?:
     | T
     | {
+        logo?: T;
         language?: T;
         siteTitle?: T;
         siteDescription?: T;
         siteUrl?: T;
-        logo?: T;
       };
   organization?:
     | T

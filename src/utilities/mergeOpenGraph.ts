@@ -1,6 +1,16 @@
 import type { Metadata } from 'next'
 import { getServerSideURL } from './getURL'
-import type { Seo } from '@/payload-types'
+
+export interface Seo {
+  siteTitle?: string
+  siteDescription?: string
+  logo?: {
+    url?: string
+    alt?: string
+    width?: number
+    height?: number
+  } | null
+}
 
 const defaultOpenGraph: Metadata['openGraph'] = {
   type: 'website',

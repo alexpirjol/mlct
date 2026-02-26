@@ -41,6 +41,7 @@ export const CollectionArchive: React.FC<Props> = (props) => {
           return (
             <div className="col-span-4" key={index}>
               <MediaCardBlock
+                equalHeights={300}
                 displayType="imageTop"
                 media={media}
                 title={title}
@@ -48,6 +49,7 @@ export const CollectionArchive: React.FC<Props> = (props) => {
                 ctaLink={{
                   type: 'custom',
                   url: href,
+                  label: '',
                 }}
                 noBackground={true}
                 disableInnerContainer={true}

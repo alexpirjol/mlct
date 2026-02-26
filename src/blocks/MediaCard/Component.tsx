@@ -4,7 +4,6 @@ import { cn } from '@/utilities/ui'
 import useClickableCard from '@/utilities/useClickableCard'
 import Link from 'next/link'
 import RichText from '@/components/RichText'
-import { Media } from '@/components/Media'
 import { CMSLink } from '@/components/Link'
 
 import type { MediaCardBlock as MediaCardBlockProps } from '@/payload-types'
@@ -13,6 +12,7 @@ type Props = MediaCardBlockProps & {
   className?: string
   disableInnerContainer?: boolean
   enableGutter?: boolean
+  equalHeights?: number | string
 }
 
 export const MediaCardBlock: React.FC<Props> = ({
@@ -27,6 +27,7 @@ export const MediaCardBlock: React.FC<Props> = ({
   disableInnerContainer,
   enableGutter = true,
   noBackground = false,
+  equalHeights,
 }) => {
   const { card, link } = useClickableCard({})
 
@@ -66,18 +67,25 @@ export const MediaCardBlock: React.FC<Props> = ({
   const isHorizontal = displayType === 'imageLeft' || displayType === 'imageRight'
   const ratioKey = imageRatio || 'half'
 
-  const renderMedia = () => (
-    <div
-      className={cn(
-        'relative w-full bg-muted overflow-hidden',
-        isHorizontal ? 'h-full min-h-[300px]' : 'aspect-[92/59]',
-      )}
-    >
-      {media && typeof media === 'object' && (
-        <Media resource={media} className="w-full h-full" imgClassName="object-cover" fill />
-      )}
-    </div>
-  )
+  console.log('title', title)
+  const renderMedia = () => {
+    const fixedHeightStyle = equalHeights
+      ? { height: typeof equalHeights === 'number' ? `${equalHeights}px` : equalHeights }
+      : undefined
+
+    const pictureClasses = cn(
+      'relative w-full bg-muted overflow-hidden block',
+      isHorizontal ? 'h-full min-h-[300px]' : !equalHeights && 'aspect-[92/59] h-[300px]',
+    )
+
+    return (
+      <picture className={pictureClasses} style={fixedHeightStyle}>
+        {media && typeof media === 'object' && media?.url && (
+          <img className="w-full h-full object-cover" src={media.url} alt={title ?? 'Media'} />
+        )}
+      </picture>
+    )
+  }
 
   const renderContent = () => {
     // Determine padding based on noBackground and displayType
@@ -94,6 +102,7 @@ export const MediaCardBlock: React.FC<Props> = ({
       enableGutter &&
       !(noBackground && (displayType === 'imageTop' || displayType === 'imageBottom'))
 
+    console.log('here', title)
     return (
       <div
         className={cn(paddingClass, 'flex flex-col gap-4', {

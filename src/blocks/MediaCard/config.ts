@@ -118,8 +118,4 @@ export const MediaCardBlock: Block = {
       },
     }),
   ],
-  labels: {
-    plural: 'Media Cards',
-    singular: 'Media Card',
-  },
 }

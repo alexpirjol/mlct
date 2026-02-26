@@ -13,7 +13,7 @@ import { Code } from '../../blocks/Code/config'
 import { MediaBlock } from '../../blocks/MediaBlock/config'
 import { GalleryBlock } from '@/blocks/GalleryBlock/config'
 import { MapBlock } from '@/blocks/MapBlock/config'
-import { MediaCard } from '../MediaCard'
+import { MediaCardBlock } from '@/blocks/MediaCard/config'
 
 import { link } from '@/fields/link'
 
@@ -57,7 +57,9 @@ const columnFields: Field[] = [
         return [
           ...rootFeatures,
           HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4'] }),
-          BlocksFeature({ blocks: [Banner, Code, MediaBlock, GalleryBlock, MapBlock, MediaCard] }),
+          BlocksFeature({
+            blocks: [Banner, Code, MediaBlock, GalleryBlock, MapBlock, MediaCardBlock],
+          }),
           FixedToolbarFeature(),
           InlineToolbarFeature(),
           HorizontalRuleFeature(),
