@@ -67,14 +67,13 @@ export const MediaCardBlock: React.FC<Props> = ({
   const isHorizontal = displayType === 'imageLeft' || displayType === 'imageRight'
   const ratioKey = imageRatio || 'half'
 
-  console.log('title', title)
   const renderMedia = () => {
     const fixedHeightStyle = equalHeights
       ? { height: typeof equalHeights === 'number' ? `${equalHeights}px` : equalHeights }
       : undefined
 
     const pictureClasses = cn(
-      'relative w-full bg-muted overflow-hidden block',
+      'relative w-full bg-muted overflow-hidden block mt-0 mb-0',
       isHorizontal ? 'h-full min-h-[300px]' : !equalHeights && 'aspect-[92/59] h-[300px]',
     )
 
@@ -102,7 +101,6 @@ export const MediaCardBlock: React.FC<Props> = ({
       enableGutter &&
       !(noBackground && (displayType === 'imageTop' || displayType === 'imageBottom'))
 
-    console.log('here', title)
     return (
       <div
         className={cn(paddingClass, 'flex flex-col gap-4', {
