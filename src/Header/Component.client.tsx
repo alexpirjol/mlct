@@ -149,7 +149,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
     <header className={styles['header-root']}>
       <div className={styles['header-inner']}>
         <Link href="/" className={styles['header-logo']}>
-          <Logo loading="eager" priority="high" url={(data as any)?.logo?.url} />
+          <Logo loading="eager" priority="high" url={(data as any)?.generalSttings.logo?.url} />
         </Link>
         {/* Desktop nav */}
         <nav className={styles['header-desktop-nav']}>

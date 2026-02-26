@@ -21,6 +21,16 @@ export const Settings: GlobalConfig = {
           label: 'General Settings',
           fields: [
             {
+              name: 'logo',
+              label: 'Logo',
+              type: 'upload',
+              relationTo: 'media',
+              required: false,
+              admin: {
+                description: 'Upload a logo for the header (SVG or PNG recommended)',
+              },
+            },
+            {
               name: 'language',
               type: 'select',
               label: 'Site Language',
