@@ -90,7 +90,7 @@ export async function Footer() {
               {year} {settings.organization?.organizationName?.toUpperCase()}
             </span>
           </div>
-          <div className="footer-social min-h-8 flex items-center justify-end w-full md:w-auto text-right md:pr-4">
+          <div className="footer-social min-h-8 flex items-center justify-start md:justify-end w-full md:w-auto text-left md:text-right md:pr-4">
             <Social data={settings.social} />
           </div>
         </div>

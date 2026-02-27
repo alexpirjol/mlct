@@ -49,7 +49,6 @@ export function WorkHours({
   data: WorkHour[]
   variant?: 'short' | 'long'
 }) {
-  console.log('data', data)
   if (!data?.length) return null
 
   if (variant === 'short') {
