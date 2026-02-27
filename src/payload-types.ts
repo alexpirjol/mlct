@@ -1866,9 +1866,7 @@ export interface Setting {
       | {
           day: ('Monday' | 'Tuesday' | 'Wednesday' | 'Thursday' | 'Friday' | 'Saturday' | 'Sunday')[];
           start: string;
-          start_tz: SupportedTimezones;
           end: string;
-          end_tz: SupportedTimezones;
           id?: string | null;
         }[]
       | null;
@@ -1984,9 +1982,7 @@ export interface SettingSelect<T extends boolean = true> {
           | {
               day?: T;
               start?: T;
-              start_tz?: T;
               end?: T;
-              end_tz?: T;
               id?: T;
             };
       };

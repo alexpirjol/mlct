@@ -29,7 +29,12 @@ const dayLong: Record<string, string> = {
 
 function formatTime(dateStr: string) {
   const d = new Date(dateStr)
-  return d.toLocaleTimeString('ro-RO', { hour: '2-digit', minute: '2-digit', hour12: false })
+  return d.toLocaleTimeString('ro-RO', {
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: false,
+    timeZone: 'Europe/Athens',
+  })
 }
 
 function joinDays(days: string[], map: Record<string, string>, sep = '-') {
@@ -44,6 +49,7 @@ export function WorkHours({
   data: WorkHour[]
   variant?: 'short' | 'long'
 }) {
+  console.log('data', data)
   if (!data?.length) return null
 
   if (variant === 'short') {
