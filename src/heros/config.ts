@@ -82,7 +82,6 @@ export const hero: Field = {
         condition: (_, { type } = {}) => ['highImpact', 'mediumImpact', 'carousel'].includes(type),
       },
       relationTo: 'media',
-      required: true,
     },
   ],
   label: false,
