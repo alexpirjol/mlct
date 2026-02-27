@@ -43,7 +43,7 @@ export async function Footer() {
   const gridColsClass = gridColsClasses[totalColumns] || 'md:grid-cols-3'
 
   return (
-    <footer className="site-footer mt-auto border-t border-border text-white">
+    <footer className="site-footer mt-16 border-t border-border text-white">
       {footer.title && (
         <div className="footer-title w-full mb-6 text-center pt-8 md:pt-12">
           <h2>{footer.title}</h2>

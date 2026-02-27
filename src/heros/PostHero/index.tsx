@@ -24,7 +24,7 @@ export const PostHero: React.FC<{
           <div className="flex flex-col md:flex-row gap-4 md:gap-16"></div>
         </div>
       </div>
-      <div className="min-h-[80vh] select-none">
+      <div className="min-h-[50vh] md:min-h-[80vh] select-none">
         {heroImage && typeof heroImage !== 'string' && (
           <Media fill priority imgClassName="-z-10 object-cover" resource={heroImage} />
         )}

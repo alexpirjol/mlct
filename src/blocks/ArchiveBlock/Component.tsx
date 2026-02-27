@@ -79,7 +79,7 @@ export const ArchiveBlock: React.FC<
   const items = relationTo === 'categories' ? categoryDocs : projects
 
   return (
-    <div className="container my-16" id={`block-${id}`}>
+    <div className="container" id={`block-${id}`}>
       {introContent && (
         <div className=" mb-8">
           <RichText className="ms-0 " data={introContent} enableGutter={false} />

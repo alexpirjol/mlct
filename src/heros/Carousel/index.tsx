@@ -40,7 +40,7 @@ export const Carousel: React.FC<Page['hero']> = ({
 
   return (
     <div
-      className="relative h-[80vh] flex items-center justify-center text-white"
+      className="relative h-[50vh] md:h-[80vh] flex items-center justify-center text-white"
       data-theme="dark"
     >
       {richText && (

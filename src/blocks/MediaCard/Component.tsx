@@ -74,7 +74,7 @@ export const MediaCardBlock: React.FC<Props> = ({
 
     const pictureClasses = cn(
       'relative w-full bg-muted overflow-hidden block mt-0 mb-0',
-      isHorizontal ? 'h-full min-h-[300px]' : !equalHeights && 'aspect-[92/59] h-[300px]',
+      isHorizontal ? 'h-full min-h-[300px]' : !equalHeights && 'aspect-[92/59]',
     )
 
     return (
