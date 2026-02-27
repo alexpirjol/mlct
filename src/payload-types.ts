@@ -159,10 +159,34 @@ export interface UserAuthOperations {
 export interface Page {
   id: string;
   title: string;
-  hero: {
-    type: 'none' | 'highImpact' | 'mediumImpact' | 'lowImpact' | 'carousel';
+  hero?: {
+    type?: ('none' | 'highImpact' | 'mediumImpact' | 'lowImpact' | 'carousel') | null;
+    animation?: boolean | null;
     autoplay?: boolean | null;
     autoplayInterval?: number | null;
+    direction?: ('vertical' | 'horizontal') | null;
+    effect?: ('slide' | 'fade' | 'cube' | 'coverflow' | 'flip' | 'creative' | 'cards') | null;
+    slides?:
+      | {
+          richText?: {
+            root: {
+              type: string;
+              children: {
+                type: any;
+                version: number;
+                [k: string]: unknown;
+              }[];
+              direction: ('ltr' | 'rtl') | null;
+              format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+              indent: number;
+              version: number;
+            };
+            [k: string]: unknown;
+          } | null;
+          media?: (string | null) | Media;
+          id?: string | null;
+        }[]
+      | null;
     richText?: {
       root: {
         type: string;
@@ -190,6 +214,7 @@ export interface Page {
     | MapBlock
     | MediaCardBlock
     | ContactInfoBlock
+    | Carousel
   )[];
   meta?: {
     title?: string | null;
@@ -435,6 +460,7 @@ export interface Category {
         | GalleryBlock
         | MapBlock
         | MediaCardBlock
+        | Carousel
       )[]
     | null;
   meta?: {
@@ -839,6 +865,58 @@ export interface MediaCardBlock {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "Carousel".
+ */
+export interface Carousel {
+  type: string;
+  animation?: boolean | null;
+  autoplay?: boolean | null;
+  autoplayInterval?: number | null;
+  direction?: ('vertical' | 'horizontal') | null;
+  effect?: ('slide' | 'fade' | 'cube' | 'coverflow' | 'flip' | 'creative' | 'cards') | null;
+  slides?:
+    | {
+        richText?: {
+          root: {
+            type: string;
+            children: {
+              type: any;
+              version: number;
+              [k: string]: unknown;
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+          };
+          [k: string]: unknown;
+        } | null;
+        media?: (string | null) | Media;
+        id?: string | null;
+      }[]
+    | null;
+  richText?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  media?: (string | Media)[] | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'carousel';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "ContactInfoBlock".
  */
 export interface ContactInfoBlock {
@@ -1154,8 +1232,18 @@ export interface PagesSelect<T extends boolean = true> {
     | T
     | {
         type?: T;
+        animation?: T;
         autoplay?: T;
         autoplayInterval?: T;
+        direction?: T;
+        effect?: T;
+        slides?:
+          | T
+          | {
+              richText?: T;
+              media?: T;
+              id?: T;
+            };
         richText?: T;
         media?: T;
       };
@@ -1171,6 +1259,7 @@ export interface PagesSelect<T extends boolean = true> {
         mapBlock?: T | MapBlockSelect<T>;
         mediaCard?: T | MediaCardBlockSelect<T>;
         contactInfo?: T | ContactInfoBlockSelect<T>;
+        carousel?: T | CarouselSelect<T>;
       };
   meta?:
     | T
@@ -1326,6 +1415,29 @@ export interface ContactInfoBlockSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "Carousel_select".
+ */
+export interface CarouselSelect<T extends boolean = true> {
+  type?: T;
+  animation?: T;
+  autoplay?: T;
+  autoplayInterval?: T;
+  direction?: T;
+  effect?: T;
+  slides?:
+    | T
+    | {
+        richText?: T;
+        media?: T;
+        id?: T;
+      };
+  richText?: T;
+  media?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "projects_select".
  */
 export interface ProjectsSelect<T extends boolean = true> {
@@ -1458,6 +1570,7 @@ export interface CategoriesSelect<T extends boolean = true> {
         galleryBlock?: T | GalleryBlockSelect<T>;
         mapBlock?: T | MapBlockSelect<T>;
         mediaCard?: T | MediaCardBlockSelect<T>;
+        carousel?: T | CarouselSelect<T>;
       };
   meta?:
     | T

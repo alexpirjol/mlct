@@ -56,7 +56,6 @@ const columnFields: Field[] = [
       features: ({ rootFeatures }) => {
         return [
           ...rootFeatures,
-          HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4'] }),
           BlocksFeature({
             blocks: [Banner, Code, MediaBlock, GalleryBlock, MapBlock, MediaCardBlock],
           }),
@@ -91,7 +90,7 @@ export const Content: Block = {
       name: 'columns',
       type: 'array',
       admin: {
-        initCollapsed: true,
+        initCollapsed: false,
       },
       fields: columnFields,
     },

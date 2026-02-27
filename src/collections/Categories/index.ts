@@ -12,6 +12,7 @@ import { MediaBlock } from '../../blocks/MediaBlock/config'
 import { GalleryBlock } from '@/blocks/GalleryBlock/config'
 import { MapBlock } from '@/blocks/MapBlock/config'
 import { MediaCardBlock } from '@/blocks/MediaCard/config'
+import { Carousel } from '@/blocks/CarouselBlock/config'
 
 import {
   MetaDescriptionField,
@@ -90,9 +91,10 @@ export const Categories: CollectionConfig = {
                 GalleryBlock,
                 MapBlock,
                 MediaCardBlock,
+                Carousel,
               ],
               admin: {
-                initCollapsed: true,
+                initCollapsed: false,
               },
             },
           ],

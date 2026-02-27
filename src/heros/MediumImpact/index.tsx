@@ -5,7 +5,10 @@ import type { Page } from '@/payload-types'
 import { Media } from '@/components/Media'
 import RichText from '@/components/RichText'
 
-export const MediumImpactHero: React.FC<Page['hero']> = ({ media, richText }) => {
+export const MediumImpactHero: React.FC<Partial<NonNullable<Page['hero']>>> = ({
+  media,
+  richText,
+}) => {
   const heroImage = media?.[0] ?? undefined
   return (
     <div className="">

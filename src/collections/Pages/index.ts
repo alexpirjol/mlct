@@ -8,6 +8,7 @@ import { Content } from '../../blocks/Content/config'
 import { FormBlock } from '../../blocks/Form/config'
 import { MediaBlock } from '../../blocks/MediaBlock/config'
 import { GalleryBlock } from '@/blocks/GalleryBlock/config'
+import { Carousel } from '@/blocks/CarouselBlock/config'
 import { MapBlock } from '@/blocks/MapBlock/config'
 import { MediaCardBlock } from '@/blocks/MediaCard/config'
 import { ContactInfoBlock } from '@/blocks/ContactInfoBlock/config'
@@ -86,10 +87,11 @@ export const Pages: CollectionConfig<'pages'> = {
                 MapBlock,
                 MediaCardBlock,
                 ContactInfoBlock,
+                Carousel,
               ],
               required: true,
               admin: {
-                initCollapsed: true,
+                initCollapsed: false,
               },
             },
           ],

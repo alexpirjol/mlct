@@ -1,4 +1,4 @@
-import type { Field } from 'payload'
+import type { GroupField } from 'payload'
 
 import {
   FixedToolbarFeature,
@@ -7,7 +7,7 @@ import {
   lexicalEditor,
 } from '@payloadcms/richtext-lexical'
 
-export const hero: Field = {
+export const hero: GroupField = {
   name: 'hero',
   type: 'group',
   fields: [
@@ -38,7 +38,16 @@ export const hero: Field = {
           value: 'carousel',
         },
       ],
-      required: true,
+      required: false,
+    },
+    {
+      name: 'animation',
+      type: 'checkbox',
+      defaultValue: true,
+      label: 'Animation',
+      admin: {
+        condition: (_, { type } = {}) => type === 'carousel',
+      },
     },
     {
       name: 'autoplay',
@@ -59,27 +68,82 @@ export const hero: Field = {
           siblingData.type === 'carousel' && siblingData.autoplay === true,
       },
     },
+
+    {
+      name: 'direction',
+      type: 'select',
+      label: 'Direction',
+      defaultValue: 'vertical',
+      options: [
+        { label: 'Vertical', value: 'vertical' },
+        { label: 'Horizontal', value: 'horizontal' },
+      ],
+      admin: {
+        condition: (_, { type } = {}) => type === 'carousel',
+      },
+    },
+    {
+      name: 'effect',
+      type: 'select',
+      label: 'Effect',
+      defaultValue: 'fade',
+      required: true,
+      options: [
+        { label: 'Slide', value: 'slide' },
+        { label: 'Fade', value: 'fade' },
+        { label: 'Cube', value: 'cube' },
+        { label: 'Coverflow', value: 'coverflow' },
+        { label: 'Flip', value: 'flip' },
+        { label: 'Creative', value: 'creative' },
+        { label: 'Cards', value: 'cards' },
+      ],
+      admin: {
+        condition: (_, { type } = {}) => type === 'carousel',
+      },
+    },
+    {
+      name: 'slides',
+      label: 'Slides',
+      type: 'array',
+      admin: { initCollapsed: false, condition: (_, { type } = {}) => type === 'carousel' },
+      fields: [
+        {
+          name: 'richText',
+          type: 'richText',
+          label: false,
+          required: false,
+          editor: lexicalEditor({
+            features: ({ rootFeatures }) => [...rootFeatures],
+          }),
+        },
+        {
+          name: 'media',
+          type: 'upload',
+          relationTo: 'media',
+          hasMany: false,
+          required: false,
+        },
+      ],
+    },
     {
       name: 'richText',
       type: 'richText',
       editor: lexicalEditor({
         features: ({ rootFeatures }) => {
-          return [
-            ...rootFeatures,
-            HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4'] }),
-            FixedToolbarFeature(),
-            InlineToolbarFeature(),
-          ]
+          return [...rootFeatures]
         },
       }),
       label: false,
+      admin: {
+        condition: (_, { type } = {}) => type !== 'carousel',
+      },
     },
     {
       name: 'media',
       type: 'upload',
       hasMany: true,
       admin: {
-        condition: (_, { type } = {}) => ['highImpact', 'mediumImpact', 'carousel'].includes(type),
+        condition: (_, { type } = {}) => ['highImpact', 'mediumImpact'].includes(type),
       },
       relationTo: 'media',
     },

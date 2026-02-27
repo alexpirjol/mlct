@@ -6,6 +6,13 @@ import {
   ParagraphFeature,
   lexicalEditor,
   UnderlineFeature,
+  HeadingFeature,
+  FixedToolbarFeature,
+  InlineToolbarFeature,
+  IndentFeature,
+  OrderedListFeature,
+  StrikethroughFeature,
+  UnorderedListFeature,
   type LinkFields,
 } from '@payloadcms/richtext-lexical'
 
@@ -43,5 +50,12 @@ export const defaultLexical = lexicalEditor({
         ]
       },
     }),
+    HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'] }),
+    FixedToolbarFeature(),
+    InlineToolbarFeature(),
+    IndentFeature(),
+    OrderedListFeature(),
+    UnorderedListFeature(),
+    StrikethroughFeature(),
   ],
 })

@@ -7,7 +7,10 @@ import type { Page } from '@/payload-types'
 import { Media } from '@/components/Media'
 import RichText from '@/components/RichText'
 
-export const HighImpactHero: React.FC<Page['hero']> = ({ media, richText }) => {
+export const HighImpactHero: React.FC<Partial<NonNullable<Page['hero']>>> = ({
+  media,
+  richText,
+}) => {
   const { setHeaderTheme } = useHeaderTheme()
 
   useEffect(() => {

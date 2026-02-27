@@ -93,7 +93,6 @@ export const Projects: CollectionConfig<'projects'> = {
                 features: ({ rootFeatures }) => {
                   return [
                     ...rootFeatures,
-                    HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4'] }),
                     BlocksFeature({
                       blocks: [
                         Banner,
@@ -105,9 +104,6 @@ export const Projects: CollectionConfig<'projects'> = {
                         ContactInfoBlock,
                       ],
                     }),
-                    FixedToolbarFeature(),
-                    InlineToolbarFeature(),
-                    HorizontalRuleFeature(),
                   ]
                 },
               }),

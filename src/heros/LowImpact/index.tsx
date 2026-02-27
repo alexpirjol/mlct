@@ -4,17 +4,9 @@ import type { Page } from '@/payload-types'
 
 import RichText from '@/components/RichText'
 
-type LowImpactHeroType =
-  | {
-      children?: React.ReactNode
-      richText?: never
-    }
-  | (Omit<Page['hero'], 'richText'> & {
-      children?: never
-      richText?: Page['hero']['richText']
-    })
-
-export const LowImpactHero: React.FC<LowImpactHeroType> = ({ children, richText }) => {
+export const LowImpactHero: React.FC<
+  Partial<NonNullable<Page['hero']>> & { children?: React.ReactNode }
+> = ({ children, richText }) => {
   return (
     <div className="container mt-16 hero-text">
       <div className="max-w-[48rem]">

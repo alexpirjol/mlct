@@ -11,6 +11,7 @@ import { GalleryBlock } from '@/blocks/GalleryBlock/Component'
 import { MapBlock } from '@/blocks/MapBlock/Component'
 import { MediaCardBlock } from '@/blocks/MediaCard/Component'
 import { ContactInfoBlock } from '@/blocks/ContactInfoBlock/Component'
+import { CarouselBlock } from '@/blocks/CarouselBlock/Component'
 
 const blockComponents = {
   archive: ArchiveBlock,
@@ -21,6 +22,7 @@ const blockComponents = {
   galleryBlock: GalleryBlock,
   mapBlock: MapBlock,
   mediaCard: MediaCardBlock,
+  carousel: CarouselBlock,
   contactInfo: ContactInfoBlock,
 }
 
