@@ -100,6 +100,7 @@ export const Settings: GlobalConfig = {
                   name: 'start',
                   type: 'date',
                   label: 'Start Time',
+                  localized: true,
                   required: true,
                   admin: {
                     date: {
@@ -111,6 +112,7 @@ export const Settings: GlobalConfig = {
                   name: 'end',
                   type: 'date',
                   label: 'End Time',
+                  localized: true,
                   required: true,
                   admin: {
                     date: {
