@@ -9,7 +9,13 @@ type Props = MapBlockType & {
 }
 
 export const MapBlock: React.FC<Props> = async (props) => {
-  const { location, height = '100', width = '100', disableInnerContainer, noHorizontalSpacing } = props
+  const {
+    location,
+    height = '100',
+    width = '100',
+    disableInnerContainer,
+    noHorizontalSpacing,
+  } = props
 
   const settings = await getSiteSettings()
   const settingsLocation = settings?.contact?.location || ''

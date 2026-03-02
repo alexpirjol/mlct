@@ -11,7 +11,12 @@ type Props = {
   noHorizontalSpacing?: boolean | null
 }
 
-export const ContactInfoBlock = async ({ title, className, enableGutter = true, noHorizontalSpacing }: Props) => {
+export const ContactInfoBlock = async ({
+  title,
+  className,
+  enableGutter = true,
+  noHorizontalSpacing,
+}: Props) => {
   const settings: Setting = await getCachedGlobal('setting', 1)()
 
   return (

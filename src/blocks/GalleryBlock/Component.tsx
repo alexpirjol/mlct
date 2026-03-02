@@ -35,7 +35,14 @@ type Props = GalleryBlockProps & {
 }
 
 export const GalleryBlock: React.FC<Props> = (props) => {
-  const { captionClassName, className, enableGutter = true, media, disableInnerContainer, noHorizontalSpacing } = props
+  const {
+    captionClassName,
+    className,
+    enableGutter = true,
+    media,
+    disableInnerContainer,
+    noHorizontalSpacing,
+  } = props
   const [index, setIndex] = useState(-1)
 
   const slides = Array.isArray(media)
