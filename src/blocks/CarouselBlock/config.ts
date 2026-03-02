@@ -3,6 +3,7 @@ import type { Block } from 'payload'
 import { hero } from '@/heros/config'
 import { colorPickerField } from '@/fields/colorPicker'
 import { noVerticalSpacingField } from '@/fields/noVerticalSpacing'
+import { noHorizontalSpacingField } from '@/fields/noHorizontalSpacing'
 
 export const Carousel: Block = {
   slug: 'carousel',
@@ -10,6 +11,7 @@ export const Carousel: Block = {
   fields: [
     colorPickerField(),
     noVerticalSpacingField(),
+    noHorizontalSpacingField(),
     {
       name: 'type',
       type: 'text',

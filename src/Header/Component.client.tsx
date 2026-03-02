@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import React, { useEffect, useState } from 'react'
 import styles from './Component.module.css'
+import { cn } from '@/utilities/ui'
 import { Logo } from '@/components/Logo/Logo'
 import { CMSLink } from '@/components/Link'
 
@@ -120,7 +121,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
 
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth > 768) {
+      if (window.innerWidth > 1024) {
         setMobileOpen(false)
       }
     }
@@ -147,22 +148,28 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
 
   return (
     <header className={styles['header-root']}>
-      <div className={styles['header-inner']}>
+      <div className={cn(styles['header-inner'], 'p-4 lg:px-10 lg:py-0 min-h-[70px] lg:min-h-0')}>
         <Link href="/" className={styles['header-logo']}>
           <Logo loading="eager" priority="high" url={(data as any)?.generalSttings.logo?.url} />
         </Link>
         {/* Desktop nav */}
-        <nav className={styles['header-desktop-nav']}>
+        <nav className={cn(styles['header-desktop-nav'], 'hidden lg:flex')}>
           <ul className={styles['header-nav']}>
             <NavItems navItems={navItems} pathname={pathname} />
           </ul>
         </nav>
         {/* Hamburger for mobile */}
-        <div className={styles['header-mobile-toggle']}>{Hamburger}</div>
+        <div className={cn(styles['header-mobile-toggle'], 'flex lg:hidden ml-auto')}>
+          {Hamburger}
+        </div>
       </div>
       {/* Mobile nav dropdown */}
       <nav
-        className={styles['header-mobile-nav'] + (mobileOpen ? ' ' + styles['open'] : '')}
+        className={cn(
+          styles['header-mobile-nav'],
+          'lg:hidden overflow-hidden transition-all duration-300 ease-in-out',
+          mobileOpen ? 'max-h-[800px] opacity-100 py-2' : 'max-h-0 opacity-0 py-0',
+        )}
         aria-hidden={!mobileOpen}
       >
         <ul>

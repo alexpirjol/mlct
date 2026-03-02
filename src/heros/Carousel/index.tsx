@@ -32,12 +32,21 @@ export const Carousel: React.FC<Partial<NonNullable<Page['hero']>>> = ({
   direction,
   effect,
   autoplayInterval = 2000,
+  centered = false,
+  slidesPerView,
+  slideWidth,
 }) => {
   const [activeIndex, setActiveIndex] = React.useState(0)
   const [showText, setShowText] = React.useState(!animation)
   const hasMovedPastFirstSlide = React.useRef(false)
   const fadeDuration = (autoplayInterval || 2000) + 1000
   const fixedHeight = slides && slides.some((s) => Boolean(s?.media))
+
+  // Centered-mode derived values
+  const isCentered = Boolean(centered)
+  const centeredSlidesPerView: number | 'auto' =
+    !slidesPerView || slidesPerView === 'auto' ? 'auto' : parseFloat(slidesPerView as string)
+  const centeredSlideWidthPct = slideWidth ? String(slideWidth) : '80'
 
   React.useEffect(() => {
     if (!animation) {
@@ -70,20 +79,26 @@ export const Carousel: React.FC<Partial<NonNullable<Page['hero']>>> = ({
         className={cn(
           'relative',
           'min-h-[200px]',
-          fixedHeight ? 'h-[50vh] md:h-[80vh]' : 'h-[10vh]',
-          direction,
+          fixedHeight ? (isCentered ? '' : 'h-[50vh] md:h-[80vh]') : 'h-[10vh]',
+          !isCentered && direction,
           'flex items-center justify-center text-white',
         )}
         data-theme="dark"
+        style={
+          isCentered && centeredSlidesPerView === 'auto'
+            ? ({ '--ccp-slide-width': `${centeredSlideWidthPct}%` } as React.CSSProperties)
+            : undefined
+        }
       >
         <Swiper
-          effect={effect || 'fade'}
+          effect={isCentered ? 'slide' : effect || 'fade'}
           loop={true}
           speed={autoplayInterval || 2000}
-          direction={direction || 'vertical'}
-          fadeEffect={{
-            crossFade: true,
-          }}
+          direction={isCentered ? 'horizontal' : direction || 'vertical'}
+          centeredSlides={isCentered}
+          slidesPerView={isCentered ? centeredSlidesPerView : 1}
+          spaceBetween={isCentered ? 16 : 0}
+          fadeEffect={!isCentered ? { crossFade: true } : undefined}
           pagination={{
             clickable: true,
           }}
@@ -105,7 +120,11 @@ export const Carousel: React.FC<Partial<NonNullable<Page['hero']>>> = ({
                 }
               : false
           }
-          className={`mySwiper h-full w-full ${animation ? 'animation-enabled' : ''}`}
+          className={cn(
+            'mySwiper h-full w-full',
+            animation && 'animation-enabled',
+            isCentered && 'centered-mode',
+          )}
           style={
             {
               '--autoplay-duration': `${autoplayInterval || 2000}ms`,
@@ -117,21 +136,26 @@ export const Carousel: React.FC<Partial<NonNullable<Page['hero']>>> = ({
             return (
               <SwiperSlide
                 key={i}
-                className="relative h-full w-full"
-                data-zoom={i % 2 === 0 ? 'in' : 'out'}
+                className={cn('relative', isCentered ? 'centered-slide' : 'h-full w-full')}
+                data-zoom={!isCentered && i % 2 === 0 ? 'in' : 'out'}
               >
-                <div>
+                <div className={isCentered ? 'relative overflow-hidden rounded-lg' : undefined}>
                   {richText && (
                     <div
                       className={cn(
-                        'absolute inset-0 z-20 flex items-center justify-center pointer-events-none carousel-hero-text',
-                        animation ? 'transition-opacity' : '',
-                        showText ? 'opacity-100' : 'opacity-0',
+                        'z-20 flex items-center justify-center pointer-events-none carousel-hero-text',
+                        isCentered ? 'relative p-6' : 'absolute inset-0',
+                        animation && !isCentered ? 'transition-opacity' : '',
+                        !isCentered && (showText ? 'opacity-100' : 'opacity-0'),
                       )}
-                      style={{ transitionDuration: `${fadeDuration}ms` }}
+                      style={!isCentered ? { transitionDuration: `${fadeDuration}ms` } : undefined}
                     >
-                      <div className="container">
-                        <div className="max-w-[36.5rem] mx-auto md:text-center">
+                      <div className={isCentered ? undefined : 'container'}>
+                        <div
+                          className={
+                            isCentered ? undefined : 'max-w-[36.5rem] mx-auto md:text-center'
+                          }
+                        >
                           <RichText className="mb-6" data={richText} enableGutter={false} />
                         </div>
                       </div>
@@ -139,8 +163,10 @@ export const Carousel: React.FC<Partial<NonNullable<Page['hero']>>> = ({
                   )}
                   {media && typeof media === 'object' && (
                     <Media
-                      className="w-full h-full absolute inset-0"
-                      imgClassName="object-cover w-full h-full"
+                      className={isCentered ? 'w-full' : 'w-full h-full absolute inset-0'}
+                      imgClassName={
+                        isCentered ? 'object-cover w-full' : 'object-cover w-full h-full'
+                      }
                       priority
                       resource={media}
                     />

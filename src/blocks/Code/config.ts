@@ -1,6 +1,7 @@
 import type { Block } from 'payload'
 import { colorPickerField } from '@/fields/colorPicker'
 import { noVerticalSpacingField } from '@/fields/noVerticalSpacing'
+import { noHorizontalSpacingField } from '@/fields/noHorizontalSpacing'
 
 export const Code: Block = {
   slug: 'code',
@@ -8,6 +9,7 @@ export const Code: Block = {
   fields: [
     colorPickerField(),
     noVerticalSpacingField(),
+    noHorizontalSpacingField(),
     {
       name: 'language',
       type: 'select',

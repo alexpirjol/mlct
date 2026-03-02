@@ -68,7 +68,32 @@ export const hero: GroupField = {
           siblingData.type === 'carousel' && siblingData.autoplay === true,
       },
     },
-
+    {
+      name: 'centered',
+      type: 'checkbox',
+      defaultValue: false,
+      label: 'Centered slides (peek)',
+      admin: {
+        condition: (_, { type } = {}) => type === 'carousel',
+      },
+    },
+    {
+      name: 'slidesPerView',
+      type: 'select',
+      label: 'Slides per view',
+      defaultValue: 'auto',
+      options: [
+        { label: 'Auto (use slide width %)', value: 'auto' },
+        { label: '1.5', value: '1.5' },
+        { label: '2', value: '2' },
+        { label: '2.5', value: '2.5' },
+        { label: '3', value: '3' },
+        { label: '4', value: '4' },
+      ],
+      admin: {
+        condition: (_, { type, centered } = {}) => type === 'carousel' && centered,
+      },
+    },
     {
       name: 'direction',
       type: 'select',
@@ -98,7 +123,25 @@ export const hero: GroupField = {
         { label: 'Cards', value: 'cards' },
       ],
       admin: {
-        condition: (_, { type } = {}) => type === 'carousel',
+        condition: (_, { type, centered } = {}) => type === 'carousel' && !centered,
+      },
+    },
+
+    {
+      name: 'slideWidth',
+      type: 'select',
+      label: 'Slide width (% of viewport, for Auto mode)',
+      defaultValue: '80',
+      options: [
+        { label: '50%', value: '50' },
+        { label: '60%', value: '60' },
+        { label: '70%', value: '70' },
+        { label: '80%', value: '80' },
+        { label: '90%', value: '90' },
+      ],
+      admin: {
+        condition: (_, { type, centered, slidesPerView } = {}) =>
+          type === 'carousel' && centered && (slidesPerView === 'auto' || !slidesPerView),
       },
     },
     {
@@ -110,6 +153,9 @@ export const hero: GroupField = {
         },
       }),
       label: false,
+      admin: {
+        condition: (_, { type } = {}) => type !== 'carousel',
+      },
     },
     {
       name: 'slides',

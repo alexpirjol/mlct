@@ -16,6 +16,7 @@ type Props = MediaBlockProps & {
   imgClassName?: string
   staticImage?: StaticImageData
   disableInnerContainer?: boolean
+  noHorizontalSpacing?: boolean | null
 }
 
 export const MediaBlock: React.FC<Props> = (props) => {
@@ -27,6 +28,7 @@ export const MediaBlock: React.FC<Props> = (props) => {
     media,
     staticImage,
     disableInnerContainer,
+    noHorizontalSpacing,
   } = props
 
   let caption
@@ -37,7 +39,7 @@ export const MediaBlock: React.FC<Props> = (props) => {
       className={cn(
         '',
         {
-          container: enableGutter,
+          container: enableGutter && !noHorizontalSpacing,
         },
         className,
       )}
@@ -50,7 +52,7 @@ export const MediaBlock: React.FC<Props> = (props) => {
           className={cn(
             'mt-6',
             {
-              container: !disableInnerContainer,
+              container: !disableInnerContainer && !noHorizontalSpacing,
             },
             captionClassName,
           )}

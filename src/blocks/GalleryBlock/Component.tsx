@@ -31,10 +31,11 @@ type Props = GalleryBlockProps & {
   imgClassName?: string
   staticImage?: StaticImageData
   disableInnerContainer?: boolean
+  noHorizontalSpacing?: boolean | null
 }
 
 export const GalleryBlock: React.FC<Props> = (props) => {
-  const { captionClassName, className, enableGutter = true, media, disableInnerContainer } = props
+  const { captionClassName, className, enableGutter = true, media, disableInnerContainer, noHorizontalSpacing } = props
   const [index, setIndex] = useState(-1)
 
   const slides = Array.isArray(media)
@@ -51,7 +52,7 @@ export const GalleryBlock: React.FC<Props> = (props) => {
               <div
                 className={cn(
                   {
-                    container: !disableInnerContainer,
+                    container: !disableInnerContainer && !noHorizontalSpacing,
                   },
                   captionClassName,
                 )}
@@ -82,7 +83,7 @@ export const GalleryBlock: React.FC<Props> = (props) => {
     <div
       className={cn(
         {
-          container: enableGutter,
+          container: enableGutter && !noHorizontalSpacing,
         },
         className,
       )}

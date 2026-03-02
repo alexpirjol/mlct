@@ -1,6 +1,7 @@
 import type { Block } from 'payload'
 import { colorPickerField } from '@/fields/colorPicker'
 import { noVerticalSpacingField } from '@/fields/noVerticalSpacing'
+import { noHorizontalSpacingField } from '@/fields/noHorizontalSpacing'
 
 import {
   FixedToolbarFeature,
@@ -13,6 +14,7 @@ export const Banner: Block = {
   fields: [
     colorPickerField(),
     noVerticalSpacingField(),
+    noHorizontalSpacingField(),
     {
       name: 'style',
       type: 'select',

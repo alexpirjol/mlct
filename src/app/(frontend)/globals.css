@@ -184,6 +184,23 @@
       width: 100%;
     }
   }
+
+  /* HR — accent color everywhere, including Lexical/prose richtext */
+  hr,
+  .prose hr {
+    border: none;
+    border-top: 1px solid var(--accent) !important;
+    color: var(--accent);
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  /* Override Tailwind Typography's prose-hr color token */
+  .prose,
+  .prose-invert {
+    --tw-prose-hr: var(--accent);
+    --tw-prose-invert-hr: var(--accent);
+  }
 }
 
 @plugin "@tailwindcss/typography";

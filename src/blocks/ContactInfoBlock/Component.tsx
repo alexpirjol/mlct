@@ -8,16 +8,17 @@ type Props = {
   title?: string | null
   className?: string
   enableGutter?: boolean
+  noHorizontalSpacing?: boolean | null
 }
 
-export const ContactInfoBlock = async ({ title, className, enableGutter = true }: Props) => {
+export const ContactInfoBlock = async ({ title, className, enableGutter = true, noHorizontalSpacing }: Props) => {
   const settings: Setting = await getCachedGlobal('setting', 1)()
 
   return (
     <div
       className={cn(
         {
-          container: enableGutter,
+          container: enableGutter && !noHorizontalSpacing,
         },
         className,
       )}

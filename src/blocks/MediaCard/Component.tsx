@@ -13,6 +13,7 @@ type Props = MediaCardBlockProps & {
   disableInnerContainer?: boolean
   enableGutter?: boolean
   equalHeights?: number | string
+  noHorizontalSpacing?: boolean | null
 }
 
 export const MediaCardBlock: React.FC<Props> = ({
@@ -28,6 +29,7 @@ export const MediaCardBlock: React.FC<Props> = ({
   enableGutter = true,
   noBackground = false,
   equalHeights,
+  noHorizontalSpacing,
 }) => {
   const { card, link } = useClickableCard({})
 
@@ -93,6 +95,7 @@ export const MediaCardBlock: React.FC<Props> = ({
     // Don't apply container (horizontal padding) when noBackground with vertical layout
     const shouldApplyContainer =
       enableGutter &&
+      !noHorizontalSpacing &&
       !(noBackground && (displayType === 'imageTop' || displayType === 'imageBottom'))
 
     return (
@@ -130,7 +133,7 @@ export const MediaCardBlock: React.FC<Props> = ({
     <div
       className={cn(
         {
-          container: !disableInnerContainer,
+          container: !disableInnerContainer && !noHorizontalSpacing,
         },
         classNameProp,
       )}
@@ -151,10 +154,10 @@ export const MediaCardBlock: React.FC<Props> = ({
         )}
 
         {displayType === 'imageBottom' && (
-          <>
+          <div className="flex flex-col-reverse lg:flex-col">
             {renderContent()}
             {renderMedia()}
-          </>
+          </div>
         )}
 
         {displayType === 'imageLeft' && (
@@ -168,10 +171,16 @@ export const MediaCardBlock: React.FC<Props> = ({
 
         {displayType === 'imageRight' && (
           <div className="grid grid-cols-1 lg:grid-cols-12">
-            <div className={cn('col-span-12', contentRatioClasses[ratioKey])}>
+            <div
+              className={cn('col-span-12 order-last lg:order-first', contentRatioClasses[ratioKey])}
+            >
               {renderContent()}
             </div>
-            <div className={cn('col-span-12', imageRatioClasses[ratioKey])}>{renderMedia()}</div>
+            <div
+              className={cn('col-span-12 order-first lg:order-last', imageRatioClasses[ratioKey])}
+            >
+              {renderMedia()}
+            </div>
           </div>
         )}
       </article>

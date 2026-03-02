@@ -164,8 +164,11 @@ export interface Page {
     animation?: boolean | null;
     autoplay?: boolean | null;
     autoplayInterval?: number | null;
+    centered?: boolean | null;
+    slidesPerView?: ('auto' | '1.5' | '2' | '2.5' | '3' | '4') | null;
     direction?: ('vertical' | 'horizontal') | null;
     effect?: ('slide' | 'fade' | 'cube' | 'coverflow' | 'flip' | 'creative' | 'cards') | null;
+    slideWidth?: ('50' | '60' | '70' | '80' | '90') | null;
     richText?: {
       root: {
         type: string;
@@ -360,6 +363,7 @@ export interface FolderInterface {
 export interface CallToActionBlock {
   background?: string | null;
   noVerticalSpacing?: boolean | null;
+  noHorizontalSpacing?: boolean | null;
   richText?: {
     root: {
       type: string;
@@ -488,6 +492,7 @@ export interface Category {
 export interface ContentBlock {
   background?: string | null;
   noVerticalSpacing?: boolean | null;
+  noHorizontalSpacing?: boolean | null;
   columns?:
     | {
         size?: ('quarter' | 'oneThird' | 'half' | 'twoThirds' | 'threeQuarters' | 'full') | null;
@@ -540,6 +545,7 @@ export interface ContentBlock {
 export interface MediaBlock {
   background?: string | null;
   noVerticalSpacing?: boolean | null;
+  noHorizontalSpacing?: boolean | null;
   media: string | Media;
   id?: string | null;
   blockName?: string | null;
@@ -552,6 +558,7 @@ export interface MediaBlock {
 export interface ArchiveBlock {
   background?: string | null;
   noVerticalSpacing?: boolean | null;
+  noHorizontalSpacing?: boolean | null;
   introContent?: {
     root: {
       type: string;
@@ -594,6 +601,7 @@ export interface ArchiveBlock {
 export interface FormBlock {
   background?: string | null;
   noVerticalSpacing?: boolean | null;
+  noHorizontalSpacing?: boolean | null;
   form: string | Form;
   enableIntro?: boolean | null;
   introContent?: {
@@ -806,6 +814,7 @@ export interface Form {
 export interface GalleryBlock {
   background?: string | null;
   noVerticalSpacing?: boolean | null;
+  noHorizontalSpacing?: boolean | null;
   media: (string | Media)[];
   id?: string | null;
   blockName?: string | null;
@@ -818,6 +827,7 @@ export interface GalleryBlock {
 export interface MapBlock {
   background?: string | null;
   noVerticalSpacing?: boolean | null;
+  noHorizontalSpacing?: boolean | null;
   /**
    * Leave empty to use the location from Settings, or enter a custom address/coordinates
    */
@@ -835,6 +845,7 @@ export interface MapBlock {
 export interface MediaCardBlock {
   background?: string | null;
   noVerticalSpacing?: boolean | null;
+  noHorizontalSpacing?: boolean | null;
   displayType?: ('imageTop' | 'imageBottom' | 'imageLeft' | 'imageRight') | null;
   noBackground?: boolean | null;
   imageRatio?: ('quarter' | 'third' | 'half' | 'twoThirds' | 'threeQuarters') | null;
@@ -886,12 +897,16 @@ export interface MediaCardBlock {
 export interface Carousel {
   background?: string | null;
   noVerticalSpacing?: boolean | null;
+  noHorizontalSpacing?: boolean | null;
   type: string;
   animation?: boolean | null;
   autoplay?: boolean | null;
   autoplayInterval?: number | null;
+  centered?: boolean | null;
+  slidesPerView?: ('auto' | '1.5' | '2' | '2.5' | '3' | '4') | null;
   direction?: ('vertical' | 'horizontal') | null;
   effect?: ('slide' | 'fade' | 'cube' | 'coverflow' | 'flip' | 'creative' | 'cards') | null;
+  slideWidth?: ('50' | '60' | '70' | '80' | '90') | null;
   richText?: {
     root: {
       type: string;
@@ -940,6 +955,7 @@ export interface Carousel {
 export interface ContactInfoBlock {
   background?: string | null;
   noVerticalSpacing?: boolean | null;
+  noHorizontalSpacing?: boolean | null;
   title?: string | null;
   id?: string | null;
   blockName?: string | null;
@@ -1255,8 +1271,11 @@ export interface PagesSelect<T extends boolean = true> {
         animation?: T;
         autoplay?: T;
         autoplayInterval?: T;
+        centered?: T;
+        slidesPerView?: T;
         direction?: T;
         effect?: T;
+        slideWidth?: T;
         richText?: T;
         slides?:
           | T
@@ -1302,6 +1321,7 @@ export interface PagesSelect<T extends boolean = true> {
 export interface CallToActionBlockSelect<T extends boolean = true> {
   background?: T;
   noVerticalSpacing?: T;
+  noHorizontalSpacing?: T;
   richText?: T;
   links?:
     | T
@@ -1328,6 +1348,7 @@ export interface CallToActionBlockSelect<T extends boolean = true> {
 export interface ContentBlockSelect<T extends boolean = true> {
   background?: T;
   noVerticalSpacing?: T;
+  noHorizontalSpacing?: T;
   columns?:
     | T
     | {
@@ -1356,6 +1377,7 @@ export interface ContentBlockSelect<T extends boolean = true> {
 export interface MediaBlockSelect<T extends boolean = true> {
   background?: T;
   noVerticalSpacing?: T;
+  noHorizontalSpacing?: T;
   media?: T;
   id?: T;
   blockName?: T;
@@ -1367,6 +1389,7 @@ export interface MediaBlockSelect<T extends boolean = true> {
 export interface ArchiveBlockSelect<T extends boolean = true> {
   background?: T;
   noVerticalSpacing?: T;
+  noHorizontalSpacing?: T;
   introContent?: T;
   populateBy?: T;
   relationTo?: T;
@@ -1383,6 +1406,7 @@ export interface ArchiveBlockSelect<T extends boolean = true> {
 export interface FormBlockSelect<T extends boolean = true> {
   background?: T;
   noVerticalSpacing?: T;
+  noHorizontalSpacing?: T;
   form?: T;
   enableIntro?: T;
   introContent?: T;
@@ -1396,6 +1420,7 @@ export interface FormBlockSelect<T extends boolean = true> {
 export interface GalleryBlockSelect<T extends boolean = true> {
   background?: T;
   noVerticalSpacing?: T;
+  noHorizontalSpacing?: T;
   media?: T;
   id?: T;
   blockName?: T;
@@ -1407,6 +1432,7 @@ export interface GalleryBlockSelect<T extends boolean = true> {
 export interface MapBlockSelect<T extends boolean = true> {
   background?: T;
   noVerticalSpacing?: T;
+  noHorizontalSpacing?: T;
   location?: T;
   height?: T;
   width?: T;
@@ -1420,6 +1446,7 @@ export interface MapBlockSelect<T extends boolean = true> {
 export interface MediaCardBlockSelect<T extends boolean = true> {
   background?: T;
   noVerticalSpacing?: T;
+  noHorizontalSpacing?: T;
   displayType?: T;
   noBackground?: T;
   imageRatio?: T;
@@ -1447,6 +1474,7 @@ export interface MediaCardBlockSelect<T extends boolean = true> {
 export interface ContactInfoBlockSelect<T extends boolean = true> {
   background?: T;
   noVerticalSpacing?: T;
+  noHorizontalSpacing?: T;
   title?: T;
   id?: T;
   blockName?: T;
@@ -1458,12 +1486,16 @@ export interface ContactInfoBlockSelect<T extends boolean = true> {
 export interface CarouselSelect<T extends boolean = true> {
   background?: T;
   noVerticalSpacing?: T;
+  noHorizontalSpacing?: T;
   type?: T;
   animation?: T;
   autoplay?: T;
   autoplayInterval?: T;
+  centered?: T;
+  slidesPerView?: T;
   direction?: T;
   effect?: T;
+  slideWidth?: T;
   richText?: T;
   slides?:
     | T
@@ -2195,6 +2227,7 @@ export interface TaskSchedulePublish {
 export interface BannerBlock {
   background?: string | null;
   noVerticalSpacing?: boolean | null;
+  noHorizontalSpacing?: boolean | null;
   style: 'info' | 'warning' | 'error' | 'success';
   content: {
     root: {
@@ -2222,6 +2255,7 @@ export interface BannerBlock {
 export interface CodeBlock {
   background?: string | null;
   noVerticalSpacing?: boolean | null;
+  noHorizontalSpacing?: boolean | null;
   language?: ('typescript' | 'javascript' | 'css') | null;
   code: string;
   id?: string | null;

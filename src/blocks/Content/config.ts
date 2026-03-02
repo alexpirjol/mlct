@@ -17,6 +17,7 @@ import { MediaCardBlock } from '@/blocks/MediaCard/config'
 import { link } from '@/fields/link'
 import { colorPickerField } from '@/fields/colorPicker'
 import { noVerticalSpacingField } from '@/fields/noVerticalSpacing'
+import { noHorizontalSpacingField } from '@/fields/noHorizontalSpacing'
 
 const columnFields: Field[] = [
   {
@@ -89,6 +90,7 @@ export const Content: Block = {
   fields: [
     colorPickerField(),
     noVerticalSpacingField(),
+    noHorizontalSpacingField(),
 
     {
       name: 'columns',

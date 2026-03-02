@@ -10,6 +10,7 @@ import { CollectionArchive } from '@/components/CollectionArchive'
 export const ArchiveBlock: React.FC<
   ArchiveBlockProps & {
     id?: string
+    noHorizontalSpacing?: boolean | null
   }
 > = async (props) => {
   const {
@@ -20,6 +21,7 @@ export const ArchiveBlock: React.FC<
     populateBy,
     selectedDocs,
     relationTo,
+    noHorizontalSpacing,
   } = props
 
   const limit = limitFromProps || 3
@@ -79,7 +81,7 @@ export const ArchiveBlock: React.FC<
   const items = relationTo === 'categories' ? categoryDocs : projects
 
   return (
-    <div className="container" id={`block-${id}`}>
+    <div className={noHorizontalSpacing ? undefined : 'container'} id={`block-${id}`}>
       {introContent && (
         <div className=" mb-8">
           <RichText className="ms-0 " data={introContent} enableGutter={false} />

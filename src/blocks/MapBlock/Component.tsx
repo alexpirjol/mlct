@@ -5,10 +5,11 @@ import { cn } from '@/utilities/ui'
 
 type Props = MapBlockType & {
   disableInnerContainer?: boolean
+  noHorizontalSpacing?: boolean | null
 }
 
 export const MapBlock: React.FC<Props> = async (props) => {
-  const { location, height = '100', width = '100', disableInnerContainer } = props
+  const { location, height = '100', width = '100', disableInnerContainer, noHorizontalSpacing } = props
 
   const settings = await getSiteSettings()
   const settingsLocation = settings?.contact?.location || ''
@@ -25,7 +26,7 @@ export const MapBlock: React.FC<Props> = async (props) => {
   return (
     <div
       className={cn('', {
-        container: !disableInnerContainer,
+        container: !disableInnerContainer && !noHorizontalSpacing,
       })}
     >
       <div className="mx-auto" style={{ width: containerWidth }}>
