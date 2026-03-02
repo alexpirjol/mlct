@@ -1,6 +1,8 @@
 import React, { Fragment } from 'react'
 
 import type { Page } from '@/payload-types'
+import { cn } from '@/utilities/ui'
+import { getBlockBg } from '@/utilities/blockBackground'
 
 import { ArchiveBlock } from '@/blocks/ArchiveBlock/Component'
 import { CallToActionBlock } from '@/blocks/CallToAction/Component'
@@ -41,10 +43,11 @@ export const RenderBlocks: React.FC<{
 
           if (blockType && blockType in blockComponents) {
             const Block = blockComponents[blockType]
+            const bg = getBlockBg((block as { background?: string | null }).background)
 
             if (Block) {
               return (
-                <div className="py-8" key={index}>
+                <div className={cn('py-8', bg.className)} style={bg.style} key={index}>
                   {/* @ts-expect-error there may be some mismatch between the expected types here */}
                   <Block {...block} />
                 </div>
