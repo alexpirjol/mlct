@@ -12,8 +12,8 @@ export type IconSelection = {
 }
 
 type IconEntry = {
-  n: string   // icon name e.g. 'star'
-  l: string   // label e.g. 'Star'
+  n: string // icon name e.g. 'star'
+  l: string // label e.g. 'Star'
   t: string[] // search terms
   s: string[] // styles: 'solid'|'regular'|'brands'
   c: string[] // category keys
@@ -101,7 +101,9 @@ export function IconPickerContent({
   const pageIcons = filtered.slice((safePage - 1) * PAGE_SIZE, safePage * PAGE_SIZE)
 
   // Reset to page 1 on filter change
-  useEffect(() => { setPage(1) }, [search, activeCategory])
+  useEffect(() => {
+    setPage(1)
+  }, [search, activeCategory])
 
   const handleSelect = useCallback(
     (icon: IconEntry) => {
@@ -124,13 +126,17 @@ export function IconPickerContent({
 
   const selectedIcon = ICONS.find((i) => i.n === selectedIconName)
   const previewClass = selectedIconName
-    ? [STYLE_PREFIXES[selectedStyle], `fa-${selectedIconName}`, selectedSize].filter(Boolean).join(' ')
+    ? [STYLE_PREFIXES[selectedStyle], `fa-${selectedIconName}`, selectedSize]
+        .filter(Boolean)
+        .join(' ')
     : null
 
   return (
     <div
       className="flex flex-col h-full"
-      onKeyDown={(e) => { if (e.key === 'Enter' && selectedIconName) handleConfirm() }}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' && selectedIconName) handleConfirm()
+      }}
     >
       {/* Search bar */}
       <div className="px-4 py-3 border-b border-border">
@@ -231,7 +237,11 @@ export function IconPickerContent({
                           : 'hover:bg-secondary text-foreground'
                       }`}
                     >
-                      <i className={cls} style={{ fontSize: '1.25rem', lineHeight: 1 }} aria-hidden="true" />
+                      <i
+                        className={cls}
+                        style={{ fontSize: '1.25rem', lineHeight: 1 }}
+                        aria-hidden="true"
+                      />
                       <span className="truncate w-full text-center" style={{ fontSize: '0.58rem' }}>
                         {icon.n}
                       </span>
@@ -302,7 +312,9 @@ export function IconPickerContent({
 
         {/* Actions */}
         <div className="flex gap-2">
-          <Button buttonStyle="secondary" onClick={onClose} size="medium">Cancel</Button>
+          <Button buttonStyle="secondary" onClick={onClose} size="medium">
+            Cancel
+          </Button>
           <Button
             buttonStyle="primary"
             onClick={handleConfirm}
@@ -318,4 +330,3 @@ export function IconPickerContent({
 }
 
 export { IconPickerContent as IconPickerModal }
-
