@@ -88,13 +88,7 @@ export const MediaCardBlock: React.FC<Props> = ({
 
   const renderContent = () => {
     // Determine padding based on noBackground and displayType
-    let paddingClass = 'p-6'
-    if (noBackground) {
-      if (displayType === 'imageTop') paddingClass = 'pt-6'
-      else if (displayType === 'imageBottom') paddingClass = 'pb-6'
-      else if (displayType === 'imageLeft') paddingClass = 'pl-6'
-      else if (displayType === 'imageRight') paddingClass = 'pr-6'
-    }
+    const paddingClass = 'p-6'
 
     // Don't apply container (horizontal padding) when noBackground with vertical layout
     const shouldApplyContainer =
@@ -108,7 +102,7 @@ export const MediaCardBlock: React.FC<Props> = ({
         })}
       >
         {title && (
-          <h3 className="text-2xl font-semibold !text-white">
+          <h3 className="text-2xl font-semibold">
             {shouldLinkWholeCard ? (
               <Link href={wholeCardHref} ref={link.ref} className="hover:underline">
                 {title}

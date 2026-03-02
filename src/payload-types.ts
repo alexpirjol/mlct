@@ -166,6 +166,21 @@ export interface Page {
     autoplayInterval?: number | null;
     direction?: ('vertical' | 'horizontal') | null;
     effect?: ('slide' | 'fade' | 'cube' | 'coverflow' | 'flip' | 'creative' | 'cards') | null;
+    richText?: {
+      root: {
+        type: string;
+        children: {
+          type: any;
+          version: number;
+          [k: string]: unknown;
+        }[];
+        direction: ('ltr' | 'rtl') | null;
+        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+        indent: number;
+        version: number;
+      };
+      [k: string]: unknown;
+    } | null;
     slides?:
       | {
           richText?: {
@@ -187,21 +202,6 @@ export interface Page {
           id?: string | null;
         }[]
       | null;
-    richText?: {
-      root: {
-        type: string;
-        children: {
-          type: any;
-          version: number;
-          [k: string]: unknown;
-        }[];
-        direction: ('ltr' | 'rtl') | null;
-        format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-        indent: number;
-        version: number;
-      };
-      [k: string]: unknown;
-    } | null;
     media?: (string | Media)[] | null;
   };
   layout: (
@@ -874,6 +874,21 @@ export interface Carousel {
   autoplayInterval?: number | null;
   direction?: ('vertical' | 'horizontal') | null;
   effect?: ('slide' | 'fade' | 'cube' | 'coverflow' | 'flip' | 'creative' | 'cards') | null;
+  richText?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
   slides?:
     | {
         richText?: {
@@ -895,21 +910,6 @@ export interface Carousel {
         id?: string | null;
       }[]
     | null;
-  richText?: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
   media?: (string | Media)[] | null;
   id?: string | null;
   blockName?: string | null;
@@ -1237,6 +1237,7 @@ export interface PagesSelect<T extends boolean = true> {
         autoplayInterval?: T;
         direction?: T;
         effect?: T;
+        richText?: T;
         slides?:
           | T
           | {
@@ -1244,7 +1245,6 @@ export interface PagesSelect<T extends boolean = true> {
               media?: T;
               id?: T;
             };
-        richText?: T;
         media?: T;
       };
   layout?:
@@ -1424,6 +1424,7 @@ export interface CarouselSelect<T extends boolean = true> {
   autoplayInterval?: T;
   direction?: T;
   effect?: T;
+  richText?: T;
   slides?:
     | T
     | {
@@ -1431,7 +1432,6 @@ export interface CarouselSelect<T extends boolean = true> {
         media?: T;
         id?: T;
       };
-  richText?: T;
   media?: T;
   id?: T;
   blockName?: T;

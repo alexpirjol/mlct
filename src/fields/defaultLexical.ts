@@ -13,6 +13,7 @@ import {
   OrderedListFeature,
   StrikethroughFeature,
   UnorderedListFeature,
+  AlignFeature,
   type LinkFields,
 } from '@payloadcms/richtext-lexical'
 
@@ -57,5 +58,6 @@ export const defaultLexical = lexicalEditor({
     OrderedListFeature(),
     UnorderedListFeature(),
     StrikethroughFeature(),
+    AlignFeature(),
   ],
 })

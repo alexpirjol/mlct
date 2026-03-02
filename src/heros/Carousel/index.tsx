@@ -25,6 +25,7 @@ import { Media } from '@/components/Media'
 import type { Page } from '@/payload-types'
 
 export const Carousel: React.FC<Partial<NonNullable<Page['hero']>>> = ({
+  richText,
   slides,
   autoplay = true,
   animation = true,
@@ -59,91 +60,98 @@ export const Carousel: React.FC<Partial<NonNullable<Page['hero']>>> = ({
   }, [activeIndex, animation])
 
   return (
-    <div
-      className={cn(
-        'relative',
-        'min-h-[200px]',
-        fixedHeight ? 'h-[50vh] md:h-[80vh]' : 'h-[10vh]',
-        direction,
-        'flex items-center justify-center text-white',
+    <>
+      {richText && (
+        <div className="container ">
+          <RichText className="mb-6" data={richText} enableGutter={false} />
+        </div>
       )}
-      data-theme="dark"
-    >
-      <Swiper
-        effect={effect || 'fade'}
-        loop={true}
-        speed={autoplayInterval || 2000}
-        direction={direction || 'vertical'}
-        fadeEffect={{
-          crossFade: true,
-        }}
-        pagination={{
-          clickable: true,
-        }}
-        modules={[
-          Pagination,
-          Autoplay,
-          EffectFade,
-          EffectCards,
-          EffectCoverflow,
-          EffectCreative,
-          EffectCube,
-          EffectFlip,
-        ]}
-        autoplay={
-          autoplay
-            ? {
-                delay: autoplayInterval || 2000,
-                disableOnInteraction: false,
-              }
-            : false
-        }
-        className={`mySwiper h-full w-full ${animation ? 'animation-enabled' : ''}`}
-        style={
-          {
-            '--autoplay-duration': `${autoplayInterval || 2000}ms`,
-          } as React.CSSProperties
-        }
-        onSlideChange={(swiper) => setActiveIndex(swiper.realIndex)}
+      <div
+        className={cn(
+          'relative',
+          'min-h-[200px]',
+          fixedHeight ? 'h-[50vh] md:h-[80vh]' : 'h-[10vh]',
+          direction,
+          'flex items-center justify-center text-white',
+        )}
+        data-theme="dark"
       >
-        {slides?.map(({ media, richText }, i) => {
-          return (
-            <SwiperSlide
-              key={i}
-              className="relative h-full w-full"
-              data-zoom={i % 2 === 0 ? 'in' : 'out'}
-            >
-              <div>
-                {richText && (
-                  <div
-                    className={cn(
-                      'absolute inset-0 z-20 flex items-center justify-center pointer-events-none carousel-hero-text',
-                      animation ? 'transition-opacity' : '',
-                      showText ? 'opacity-100' : 'opacity-0',
-                    )}
-                    style={{ transitionDuration: `${fadeDuration}ms` }}
-                  >
-                    <div className="container">
-                      <div className="max-w-[36.5rem] mx-auto md:text-center">
-                        <RichText className="mb-6" data={richText} enableGutter={false} />
+        <Swiper
+          effect={effect || 'fade'}
+          loop={true}
+          speed={autoplayInterval || 2000}
+          direction={direction || 'vertical'}
+          fadeEffect={{
+            crossFade: true,
+          }}
+          pagination={{
+            clickable: true,
+          }}
+          modules={[
+            Pagination,
+            Autoplay,
+            EffectFade,
+            EffectCards,
+            EffectCoverflow,
+            EffectCreative,
+            EffectCube,
+            EffectFlip,
+          ]}
+          autoplay={
+            autoplay
+              ? {
+                  delay: autoplayInterval || 2000,
+                  disableOnInteraction: false,
+                }
+              : false
+          }
+          className={`mySwiper h-full w-full ${animation ? 'animation-enabled' : ''}`}
+          style={
+            {
+              '--autoplay-duration': `${autoplayInterval || 2000}ms`,
+            } as React.CSSProperties
+          }
+          onSlideChange={(swiper) => setActiveIndex(swiper.realIndex)}
+        >
+          {slides?.map(({ media, richText }, i) => {
+            return (
+              <SwiperSlide
+                key={i}
+                className="relative h-full w-full"
+                data-zoom={i % 2 === 0 ? 'in' : 'out'}
+              >
+                <div>
+                  {richText && (
+                    <div
+                      className={cn(
+                        'absolute inset-0 z-20 flex items-center justify-center pointer-events-none carousel-hero-text',
+                        animation ? 'transition-opacity' : '',
+                        showText ? 'opacity-100' : 'opacity-0',
+                      )}
+                      style={{ transitionDuration: `${fadeDuration}ms` }}
+                    >
+                      <div className="container">
+                        <div className="max-w-[36.5rem] mx-auto md:text-center">
+                          <RichText className="mb-6" data={richText} enableGutter={false} />
+                        </div>
                       </div>
                     </div>
-                  </div>
-                )}
-                {media && typeof media === 'object' && (
-                  <Media
-                    className="w-full h-full absolute inset-0"
-                    imgClassName="object-cover w-full h-full"
-                    priority
-                    resource={media}
-                  />
-                )}
-              </div>
-            </SwiperSlide>
-          )
-        })}
-      </Swiper>
-    </div>
+                  )}
+                  {media && typeof media === 'object' && (
+                    <Media
+                      className="w-full h-full absolute inset-0"
+                      imgClassName="object-cover w-full h-full"
+                      priority
+                      resource={media}
+                    />
+                  )}
+                </div>
+              </SwiperSlide>
+            )
+          })}
+        </Swiper>
+      </div>
+    </>
   )
 }
 

@@ -102,6 +102,16 @@ export const hero: GroupField = {
       },
     },
     {
+      name: 'richText',
+      type: 'richText',
+      editor: lexicalEditor({
+        features: ({ rootFeatures }) => {
+          return [...rootFeatures]
+        },
+      }),
+      label: false,
+    },
+    {
       name: 'slides',
       label: 'Slides',
       type: 'array',
@@ -125,19 +135,7 @@ export const hero: GroupField = {
         },
       ],
     },
-    {
-      name: 'richText',
-      type: 'richText',
-      editor: lexicalEditor({
-        features: ({ rootFeatures }) => {
-          return [...rootFeatures]
-        },
-      }),
-      label: false,
-      admin: {
-        condition: (_, { type } = {}) => type !== 'carousel',
-      },
-    },
+
     {
       name: 'media',
       type: 'upload',

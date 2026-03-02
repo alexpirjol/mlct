@@ -3,7 +3,6 @@ import type { Block, Field } from 'payload'
 import {
   BlocksFeature,
   FixedToolbarFeature,
-  HeadingFeature,
   HorizontalRuleFeature,
   InlineToolbarFeature,
   lexicalEditor,
