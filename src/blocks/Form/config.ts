@@ -1,4 +1,5 @@
 import type { Block } from 'payload'
+import { colorPickerField } from '@/fields/colorPicker'
 
 import {
   FixedToolbarFeature,
@@ -11,6 +12,7 @@ export const FormBlock: Block = {
   slug: 'formBlock',
   interfaceName: 'FormBlock',
   fields: [
+    colorPickerField(),
     {
       name: 'form',
       type: 'relationship',

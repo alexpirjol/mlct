@@ -1,4 +1,5 @@
 import type { Block } from 'payload'
+import { colorPickerField } from '@/fields/colorPicker'
 
 import {
   FixedToolbarFeature,
@@ -9,6 +10,7 @@ import {
 export const Banner: Block = {
   slug: 'banner',
   fields: [
+    colorPickerField(),
     {
       name: 'style',
       type: 'select',

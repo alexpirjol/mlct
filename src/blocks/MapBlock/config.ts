@@ -1,9 +1,11 @@
 import type { Block } from 'payload'
+import { colorPickerField } from '@/fields/colorPicker'
 
 export const MapBlock: Block = {
   slug: 'mapBlock',
   interfaceName: 'MapBlock',
   fields: [
+    colorPickerField(),
     {
       name: 'location',
       type: 'text',

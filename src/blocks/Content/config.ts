@@ -15,12 +15,13 @@ import { MapBlock } from '@/blocks/MapBlock/config'
 import { MediaCardBlock } from '@/blocks/MediaCard/config'
 
 import { link } from '@/fields/link'
+import { colorPickerField } from '@/fields/colorPicker'
 
 const columnFields: Field[] = [
   {
     name: 'size',
     type: 'select',
-    defaultValue: 'oneThird',
+    defaultValue: 'full',
     options: [
       {
         label: 'Quarter (25%)',
@@ -85,6 +86,8 @@ export const Content: Block = {
   slug: 'content',
   interfaceName: 'ContentBlock',
   fields: [
+    colorPickerField(),
+
     {
       name: 'columns',
       type: 'array',

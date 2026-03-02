@@ -1,4 +1,5 @@
 import type { Block } from 'payload'
+import { colorPickerField } from '@/fields/colorPicker'
 
 import {
   FixedToolbarFeature,
@@ -11,6 +12,7 @@ export const Archive: Block = {
   slug: 'archive',
   interfaceName: 'ArchiveBlock',
   fields: [
+    colorPickerField(),
     {
       name: 'introContent',
       type: 'richText',

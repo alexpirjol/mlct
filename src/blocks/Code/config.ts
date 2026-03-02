@@ -1,9 +1,11 @@
 import type { Block } from 'payload'
+import { colorPickerField } from '@/fields/colorPicker'
 
 export const Code: Block = {
   slug: 'code',
   interfaceName: 'CodeBlock',
   fields: [
+    colorPickerField(),
     {
       name: 'language',
       type: 'select',

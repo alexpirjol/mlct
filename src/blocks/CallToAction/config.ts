@@ -1,4 +1,5 @@
 import type { Block } from 'payload'
+import { colorPickerField } from '@/fields/colorPicker'
 
 import {
   FixedToolbarFeature,
@@ -13,6 +14,7 @@ export const CallToAction: Block = {
   slug: 'cta',
   interfaceName: 'CallToActionBlock',
   fields: [
+    colorPickerField(),
     {
       name: 'richText',
       type: 'richText',

@@ -358,6 +358,7 @@ export interface FolderInterface {
  * via the `definition` "CallToActionBlock".
  */
 export interface CallToActionBlock {
+  background?: string | null;
   richText?: {
     root: {
       type: string;
@@ -484,6 +485,7 @@ export interface Category {
  * via the `definition` "ContentBlock".
  */
 export interface ContentBlock {
+  background?: string | null;
   columns?:
     | {
         size?: ('quarter' | 'oneThird' | 'half' | 'twoThirds' | 'threeQuarters' | 'full') | null;
@@ -534,6 +536,7 @@ export interface ContentBlock {
  * via the `definition` "MediaBlock".
  */
 export interface MediaBlock {
+  background?: string | null;
   media: string | Media;
   id?: string | null;
   blockName?: string | null;
@@ -544,6 +547,7 @@ export interface MediaBlock {
  * via the `definition` "ArchiveBlock".
  */
 export interface ArchiveBlock {
+  background?: string | null;
   introContent?: {
     root: {
       type: string;
@@ -584,6 +588,7 @@ export interface ArchiveBlock {
  * via the `definition` "FormBlock".
  */
 export interface FormBlock {
+  background?: string | null;
   form: string | Form;
   enableIntro?: boolean | null;
   introContent?: {
@@ -794,6 +799,7 @@ export interface Form {
  * via the `definition` "galleryBlock".
  */
 export interface GalleryBlock {
+  background?: string | null;
   media: (string | Media)[];
   id?: string | null;
   blockName?: string | null;
@@ -804,6 +810,7 @@ export interface GalleryBlock {
  * via the `definition` "MapBlock".
  */
 export interface MapBlock {
+  background?: string | null;
   /**
    * Leave empty to use the location from Settings, or enter a custom address/coordinates
    */
@@ -819,6 +826,7 @@ export interface MapBlock {
  * via the `definition` "MediaCardBlock".
  */
 export interface MediaCardBlock {
+  background?: string | null;
   displayType?: ('imageTop' | 'imageBottom' | 'imageLeft' | 'imageRight') | null;
   imageRatio?: ('quarter' | 'third' | 'half' | 'twoThirds' | 'threeQuarters') | null;
   media: string | Media;
@@ -868,6 +876,7 @@ export interface MediaCardBlock {
  * via the `definition` "Carousel".
  */
 export interface Carousel {
+  background?: string | null;
   type: string;
   animation?: boolean | null;
   autoplay?: boolean | null;
@@ -920,6 +929,7 @@ export interface Carousel {
  * via the `definition` "ContactInfoBlock".
  */
 export interface ContactInfoBlock {
+  background?: string | null;
   title?: string | null;
   id?: string | null;
   blockName?: string | null;
@@ -1280,6 +1290,7 @@ export interface PagesSelect<T extends boolean = true> {
  * via the `definition` "CallToActionBlock_select".
  */
 export interface CallToActionBlockSelect<T extends boolean = true> {
+  background?: T;
   richText?: T;
   links?:
     | T
@@ -1304,6 +1315,7 @@ export interface CallToActionBlockSelect<T extends boolean = true> {
  * via the `definition` "ContentBlock_select".
  */
 export interface ContentBlockSelect<T extends boolean = true> {
+  background?: T;
   columns?:
     | T
     | {
@@ -1330,6 +1342,7 @@ export interface ContentBlockSelect<T extends boolean = true> {
  * via the `definition` "MediaBlock_select".
  */
 export interface MediaBlockSelect<T extends boolean = true> {
+  background?: T;
   media?: T;
   id?: T;
   blockName?: T;
@@ -1339,6 +1352,7 @@ export interface MediaBlockSelect<T extends boolean = true> {
  * via the `definition` "ArchiveBlock_select".
  */
 export interface ArchiveBlockSelect<T extends boolean = true> {
+  background?: T;
   introContent?: T;
   populateBy?: T;
   relationTo?: T;
@@ -1353,6 +1367,7 @@ export interface ArchiveBlockSelect<T extends boolean = true> {
  * via the `definition` "FormBlock_select".
  */
 export interface FormBlockSelect<T extends boolean = true> {
+  background?: T;
   form?: T;
   enableIntro?: T;
   introContent?: T;
@@ -1364,6 +1379,7 @@ export interface FormBlockSelect<T extends boolean = true> {
  * via the `definition` "galleryBlock_select".
  */
 export interface GalleryBlockSelect<T extends boolean = true> {
+  background?: T;
   media?: T;
   id?: T;
   blockName?: T;
@@ -1373,6 +1389,7 @@ export interface GalleryBlockSelect<T extends boolean = true> {
  * via the `definition` "MapBlock_select".
  */
 export interface MapBlockSelect<T extends boolean = true> {
+  background?: T;
   location?: T;
   height?: T;
   width?: T;
@@ -1384,6 +1401,7 @@ export interface MapBlockSelect<T extends boolean = true> {
  * via the `definition` "MediaCardBlock_select".
  */
 export interface MediaCardBlockSelect<T extends boolean = true> {
+  background?: T;
   displayType?: T;
   imageRatio?: T;
   media?: T;
@@ -1409,6 +1427,7 @@ export interface MediaCardBlockSelect<T extends boolean = true> {
  * via the `definition` "ContactInfoBlock_select".
  */
 export interface ContactInfoBlockSelect<T extends boolean = true> {
+  background?: T;
   title?: T;
   id?: T;
   blockName?: T;
@@ -1418,6 +1437,7 @@ export interface ContactInfoBlockSelect<T extends boolean = true> {
  * via the `definition` "Carousel_select".
  */
 export interface CarouselSelect<T extends boolean = true> {
+  background?: T;
   type?: T;
   animation?: T;
   autoplay?: T;
@@ -2153,6 +2173,7 @@ export interface TaskSchedulePublish {
  * via the `definition` "BannerBlock".
  */
 export interface BannerBlock {
+  background?: string | null;
   style: 'info' | 'warning' | 'error' | 'success';
   content: {
     root: {
@@ -2178,6 +2199,7 @@ export interface BannerBlock {
  * via the `definition` "CodeBlock".
  */
 export interface CodeBlock {
+  background?: string | null;
   language?: ('typescript' | 'javascript' | 'css') | null;
   code: string;
   id?: string | null;

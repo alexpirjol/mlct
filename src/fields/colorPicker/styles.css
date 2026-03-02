@@ -1,0 +1,88 @@
+.custom-color-picker {
+  display: block;
+}
+
+.ccp-list {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.ccp-item {
+  display: inline-flex;
+}
+
+.ccp-chip-wrap {
+  position: relative;
+  display: inline-flex;
+}
+
+.ccp-delete {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: none;
+  background: var(--theme-error-500, #ef4444);
+  color: #fff;
+  font-size: 8px;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+
+.ccp-item:hover .ccp-delete {
+  opacity: 1;
+}
+
+.ccp-chip {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  /* reset browser default button background so inline style shows correctly */
+  appearance: none;
+  -webkit-appearance: none;
+  background: transparent;
+  padding: 0;
+}
+
+.ccp-chip--selected {
+  outline: 2px solid var(--theme-success-500, #3b82f6);
+  outline-offset: 2px;
+}
+
+.ccp-chip--transparent {
+  background-image: repeating-conic-gradient(#ccc 0% 25%, #fff 0% 50%) !important;
+  background-size: 10px 10px !important;
+}
+
+.ccp-input {
+  padding: 6px 8px;
+  border-radius: 4px;
+  border: 1px solid #ddd;
+}
+
+.ccp-cell {
+  width: 24px;
+  height: 16px;
+  border-radius: 4px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.ccp-add {
+  display: flex;
+  gap: 8px;
+  align-items: center
+}
