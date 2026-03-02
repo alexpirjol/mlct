@@ -1,5 +1,6 @@
 import type { Block } from 'payload'
 import { colorPickerField } from '@/fields/colorPicker'
+import { noVerticalSpacingField } from '@/fields/noVerticalSpacing'
 
 import {
   FixedToolbarFeature,
@@ -15,6 +16,7 @@ export const MediaCardBlock: Block = {
   interfaceName: 'MediaCardBlock',
   fields: [
     colorPickerField(),
+    noVerticalSpacingField(),
     {
       name: 'displayType',
       type: 'radio',
@@ -40,6 +42,12 @@ export const MediaCardBlock: Block = {
       admin: {
         layout: 'horizontal',
       },
+    },
+    {
+      name: 'noBackground',
+      type: 'checkbox',
+      label: 'No Background',
+      defaultValue: false,
     },
     {
       name: 'imageRatio',
@@ -94,12 +102,7 @@ export const MediaCardBlock: Block = {
         },
       }),
     },
-    {
-      name: 'noBackground',
-      type: 'checkbox',
-      label: 'No Background',
-      defaultValue: false,
-    },
+
     {
       name: 'enableCTA',
       type: 'checkbox',

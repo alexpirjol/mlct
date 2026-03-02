@@ -44,10 +44,16 @@ export const RenderBlocks: React.FC<{
           if (blockType && blockType in blockComponents) {
             const Block = blockComponents[blockType]
             const bg = getBlockBg((block as { background?: string | null }).background)
+            const noVerticalSpacing = (block as { noVerticalSpacing?: boolean | null })
+              .noVerticalSpacing
 
             if (Block) {
               return (
-                <div className={cn('py-8', bg.className)} style={bg.style} key={index}>
+                <div
+                  className={cn({ 'py-8': !noVerticalSpacing }, bg.className)}
+                  style={bg.style}
+                  key={index}
+                >
                   {/* @ts-expect-error there may be some mismatch between the expected types here */}
                   <Block {...block} />
                 </div>

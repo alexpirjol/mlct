@@ -1,5 +1,6 @@
 import type { Block } from 'payload'
 import { colorPickerField } from '@/fields/colorPicker'
+import { noVerticalSpacingField } from '@/fields/noVerticalSpacing'
 
 import {
   FixedToolbarFeature,
@@ -15,6 +16,7 @@ export const CallToAction: Block = {
   interfaceName: 'CallToActionBlock',
   fields: [
     colorPickerField(),
+    noVerticalSpacingField(),
     {
       name: 'richText',
       type: 'richText',

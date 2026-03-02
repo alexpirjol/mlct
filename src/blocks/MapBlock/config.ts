@@ -1,11 +1,13 @@
 import type { Block } from 'payload'
 import { colorPickerField } from '@/fields/colorPicker'
+import { noVerticalSpacingField } from '@/fields/noVerticalSpacing'
 
 export const MapBlock: Block = {
   slug: 'mapBlock',
   interfaceName: 'MapBlock',
   fields: [
     colorPickerField(),
+    noVerticalSpacingField(),
     {
       name: 'location',
       type: 'text',

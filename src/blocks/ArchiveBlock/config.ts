@@ -1,5 +1,6 @@
 import type { Block } from 'payload'
 import { colorPickerField } from '@/fields/colorPicker'
+import { noVerticalSpacingField } from '@/fields/noVerticalSpacing'
 
 import {
   FixedToolbarFeature,
@@ -13,6 +14,7 @@ export const Archive: Block = {
   interfaceName: 'ArchiveBlock',
   fields: [
     colorPickerField(),
+    noVerticalSpacingField(),
     {
       name: 'introContent',
       type: 'richText',

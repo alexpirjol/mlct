@@ -1,5 +1,6 @@
 import type { Block } from 'payload'
 import { colorPickerField } from '@/fields/colorPicker'
+import { noVerticalSpacingField } from '@/fields/noVerticalSpacing'
 
 import {
   FixedToolbarFeature,
@@ -13,6 +14,7 @@ export const FormBlock: Block = {
   interfaceName: 'FormBlock',
   fields: [
     colorPickerField(),
+    noVerticalSpacingField(),
     {
       name: 'form',
       type: 'relationship',
