@@ -25,6 +25,7 @@ import { BannerBlock } from '@/blocks/Banner/Component'
 import { CallToActionBlock } from '@/blocks/CallToAction/Component'
 import { MediaCardBlock } from '@/blocks/MediaCard/Component'
 import { cn } from '@/utilities/ui'
+import { hasRichText } from '@/utilities/hasRichText'
 
 type NodeTypes =
   | DefaultNodeTypes
@@ -91,7 +92,9 @@ type Props = {
 } & React.HTMLAttributes<HTMLDivElement>
 
 export default function RichText(props: Props) {
-  const { className, enableProse = true, enableGutter = true, ...rest } = props
+  const { className, enableProse = true, enableGutter = true, data, ...rest } = props
+
+  if (!hasRichText(data)) return null
 
   return (
     <ConvertRichText
@@ -105,6 +108,7 @@ export default function RichText(props: Props) {
         },
         className,
       )}
+      data={data}
       {...rest}
     />
   )
