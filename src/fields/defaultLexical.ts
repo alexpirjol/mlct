@@ -17,6 +17,7 @@ import {
   HorizontalRuleFeature,
   type LinkFields,
 } from '@payloadcms/richtext-lexical'
+import { IconFeature } from '@/features/icons'
 
 export const defaultLexical = lexicalEditor({
   features: [
@@ -61,5 +62,6 @@ export const defaultLexical = lexicalEditor({
     StrikethroughFeature(),
     AlignFeature(),
     HorizontalRuleFeature(),
+    IconFeature(),
   ],
 })

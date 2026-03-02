@@ -6,6 +6,7 @@ import {
   SerializedLinkNode,
   type DefaultTypedEditorState,
 } from '@payloadcms/richtext-lexical'
+import type { SerializedIconNode } from '@/features/icons/server/nodes/IconNode'
 import {
   JSXConvertersFunction,
   LinkJSXConverter,
@@ -28,6 +29,7 @@ import { cn } from '@/utilities/ui'
 
 type NodeTypes =
   | DefaultNodeTypes
+  | SerializedIconNode
   | SerializedBlockNode<
       | CTABlockProps
       | MediaBlockProps
@@ -49,6 +51,11 @@ const internalDocToHref = ({ linkNode }: { linkNode: SerializedLinkNode }) => {
 const jsxConverters: JSXConvertersFunction<NodeTypes> = ({ defaultConverters }) => ({
   ...defaultConverters,
   ...LinkJSXConverter({ internalDocToHref }),
+  icon: ({ node }) => {
+    const n = node as unknown as SerializedIconNode
+    const cls = [n.iconClass, n.size].filter(Boolean).join(' ')
+    return <i className={cls} aria-hidden="true" style={{ display: 'inline-block' }} />
+  },
   blocks: {
     banner: ({ node }) => <BannerBlock className="col-start-2 mb-4" {...node.fields} />,
     mediaBlock: ({ node }) => (
