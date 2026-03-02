@@ -25,7 +25,6 @@ import { Media } from '@/components/Media'
 import type { Page } from '@/payload-types'
 
 export const Carousel: React.FC<Partial<NonNullable<Page['hero']>>> = ({
-  richText,
   slides,
   autoplay = true,
   animation = true,
@@ -70,11 +69,6 @@ export const Carousel: React.FC<Partial<NonNullable<Page['hero']>>> = ({
 
   return (
     <>
-      {richText && (
-        <div className="container ">
-          <RichText className="mb-6" data={richText} enableGutter={false} />
-        </div>
-      )}
       <div
         className={cn(
           'relative',
