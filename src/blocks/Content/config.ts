@@ -7,12 +7,12 @@ import {
   InlineToolbarFeature,
   lexicalEditor,
 } from '@payloadcms/richtext-lexical'
-import { Banner } from '../../blocks/Banner/config'
-import { Code } from '../../blocks/Code/config'
-import { MediaBlock } from '../../blocks/MediaBlock/config'
-import { GalleryBlock } from '@/blocks/GalleryBlock/config'
-import { MapBlock } from '@/blocks/MapBlock/config'
-import { MediaCardBlock } from '@/blocks/MediaCard/config'
+import { BannerForLexical } from '../../blocks/Banner/config'
+import { CodeForLexical } from '../../blocks/Code/config'
+import { MediaBlockForLexical } from '../../blocks/MediaBlock/config'
+import { GalleryBlockForLexical } from '@/blocks/GalleryBlock/config'
+import { MapBlockForLexical } from '@/blocks/MapBlock/config'
+import { MediaCardBlockForLexical } from '@/blocks/MediaCard/config'
 
 import { link } from '@/fields/link'
 import { colorPickerField } from '@/fields/colorPicker'
@@ -59,7 +59,7 @@ const columnFields: Field[] = [
         return [
           ...rootFeatures,
           BlocksFeature({
-            blocks: [Banner, Code, MediaBlock, GalleryBlock, MapBlock, MediaCardBlock],
+            blocks: [BannerForLexical, CodeForLexical, MediaBlockForLexical, GalleryBlockForLexical, MapBlockForLexical, MediaCardBlockForLexical],
           }),
           FixedToolbarFeature(),
           InlineToolbarFeature(),

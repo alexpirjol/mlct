@@ -83,9 +83,7 @@ const iconStyleGroup = {
   type: 'dropdown' as const,
   key: 'iconStyle',
   order: 31,
-  ChildComponent: () => (
-    <StateIcon css={{ color: 'var(--theme-elevation-600)' }} />
-  ),
+  ChildComponent: () => <StateIcon css={{ color: 'var(--theme-elevation-600)' }} />,
   isEnabled: ({ selection }: { selection: BaseSelection }) => getSelectedIcon(selection) !== null,
   items: [
     // ── Clear all icon formatting ──────────────────────────────────────────

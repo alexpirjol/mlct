@@ -9,12 +9,11 @@ import {
   lexicalEditor,
 } from '@payloadcms/richtext-lexical'
 
-export const Banner: Block = {
+const buildBanner = (opts: { forLexical?: boolean } = {}): Block => ({
   slug: 'banner',
+  interfaceName: 'BannerBlock',
   fields: [
-    colorPickerField(),
-    noVerticalSpacingField(),
-    noHorizontalSpacingField(),
+    ...(opts.forLexical ? [] : [colorPickerField(), noVerticalSpacingField(), noHorizontalSpacingField()]),
     {
       name: 'style',
       type: 'select',
@@ -39,5 +38,7 @@ export const Banner: Block = {
       required: true,
     },
   ],
-  interfaceName: 'BannerBlock',
-}
+})
+
+export const Banner = buildBanner()
+export const BannerForLexical = buildBanner({ forLexical: true })

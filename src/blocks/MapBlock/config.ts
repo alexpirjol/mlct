@@ -3,13 +3,11 @@ import { colorPickerField } from '@/fields/colorPicker'
 import { noVerticalSpacingField } from '@/fields/noVerticalSpacing'
 import { noHorizontalSpacingField } from '@/fields/noHorizontalSpacing'
 
-export const MapBlock: Block = {
+const buildMapBlock = (opts: { forLexical?: boolean } = {}): Block => ({
   slug: 'mapBlock',
   interfaceName: 'MapBlock',
   fields: [
-    colorPickerField(),
-    noVerticalSpacingField(),
-    noHorizontalSpacingField(),
+    ...(opts.forLexical ? [] : [colorPickerField(), noVerticalSpacingField(), noHorizontalSpacingField()]),
     {
       name: 'location',
       type: 'text',
@@ -50,4 +48,7 @@ export const MapBlock: Block = {
       ],
     },
   ],
-}
+})
+
+export const MapBlock = buildMapBlock()
+export const MapBlockForLexical = buildMapBlock({ forLexical: true })

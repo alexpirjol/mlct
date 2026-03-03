@@ -953,9 +953,6 @@ export interface Carousel {
  * via the `definition` "ContactInfoBlock".
  */
 export interface ContactInfoBlock {
-  background?: string | null;
-  noVerticalSpacing?: boolean | null;
-  noHorizontalSpacing?: boolean | null;
   title?: string | null;
   id?: string | null;
   blockName?: string | null;
@@ -2225,9 +2222,6 @@ export interface TaskSchedulePublish {
  * via the `definition` "BannerBlock".
  */
 export interface BannerBlock {
-  background?: string | null;
-  noVerticalSpacing?: boolean | null;
-  noHorizontalSpacing?: boolean | null;
   style: 'info' | 'warning' | 'error' | 'success';
   content: {
     root: {
@@ -2253,9 +2247,6 @@ export interface BannerBlock {
  * via the `definition` "CodeBlock".
  */
 export interface CodeBlock {
-  background?: string | null;
-  noVerticalSpacing?: boolean | null;
-  noHorizontalSpacing?: boolean | null;
   language?: ('typescript' | 'javascript' | 'css') | null;
   code: string;
   id?: string | null;

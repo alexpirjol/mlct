@@ -3,13 +3,11 @@ import { colorPickerField } from '@/fields/colorPicker'
 import { noVerticalSpacingField } from '@/fields/noVerticalSpacing'
 import { noHorizontalSpacingField } from '@/fields/noHorizontalSpacing'
 
-export const MediaBlock: Block = {
+const buildMediaBlock = (opts: { forLexical?: boolean } = {}): Block => ({
   slug: 'mediaBlock',
   interfaceName: 'MediaBlock',
   fields: [
-    colorPickerField(),
-    noVerticalSpacingField(),
-    noHorizontalSpacingField(),
+    ...(opts.forLexical ? [] : [colorPickerField(), noVerticalSpacingField(), noHorizontalSpacingField()]),
     {
       name: 'media',
       type: 'upload',
@@ -17,4 +15,7 @@ export const MediaBlock: Block = {
       required: true,
     },
   ],
-}
+})
+
+export const MediaBlock = buildMediaBlock()
+export const MediaBlockForLexical = buildMediaBlock({ forLexical: true })

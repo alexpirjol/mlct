@@ -3,13 +3,11 @@ import { colorPickerField } from '@/fields/colorPicker'
 import { noVerticalSpacingField } from '@/fields/noVerticalSpacing'
 import { noHorizontalSpacingField } from '@/fields/noHorizontalSpacing'
 
-export const Code: Block = {
+const buildCode = (opts: { forLexical?: boolean } = {}): Block => ({
   slug: 'code',
   interfaceName: 'CodeBlock',
   fields: [
-    colorPickerField(),
-    noVerticalSpacingField(),
-    noHorizontalSpacingField(),
+    ...(opts.forLexical ? [] : [colorPickerField(), noVerticalSpacingField(), noHorizontalSpacingField()]),
     {
       name: 'language',
       type: 'select',
@@ -36,4 +34,7 @@ export const Code: Block = {
       required: true,
     },
   ],
-}
+})
+
+export const Code = buildCode()
+export const CodeForLexical = buildCode({ forLexical: true })

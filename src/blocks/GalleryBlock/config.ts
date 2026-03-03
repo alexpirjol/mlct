@@ -3,13 +3,11 @@ import { colorPickerField } from '@/fields/colorPicker'
 import { noVerticalSpacingField } from '@/fields/noVerticalSpacing'
 import { noHorizontalSpacingField } from '@/fields/noHorizontalSpacing'
 
-export const GalleryBlock: Block = {
+const buildGalleryBlock = (opts: { forLexical?: boolean } = {}): Block => ({
   slug: 'galleryBlock',
   interfaceName: 'galleryBlock',
   fields: [
-    colorPickerField(),
-    noVerticalSpacingField(),
-    noHorizontalSpacingField(),
+    ...(opts.forLexical ? [] : [colorPickerField(), noVerticalSpacingField(), noHorizontalSpacingField()]),
     {
       name: 'media',
       type: 'upload',
@@ -18,4 +16,7 @@ export const GalleryBlock: Block = {
       hasMany: true,
     },
   ],
-}
+})
+
+export const GalleryBlock = buildGalleryBlock()
+export const GalleryBlockForLexical = buildGalleryBlock({ forLexical: true })

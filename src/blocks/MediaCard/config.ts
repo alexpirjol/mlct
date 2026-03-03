@@ -12,13 +12,11 @@ import {
 
 import { link } from '../../fields/link'
 
-export const MediaCardBlock: Block = {
+const buildMediaCardBlock = (opts: { forLexical?: boolean } = {}): Block => ({
   slug: 'mediaCard',
   interfaceName: 'MediaCardBlock',
   fields: [
-    colorPickerField(),
-    noVerticalSpacingField(),
-    noHorizontalSpacingField(),
+    ...(opts.forLexical ? [] : [colorPickerField(), noVerticalSpacingField(), noHorizontalSpacingField()]),
     {
       name: 'displayType',
       type: 'radio',
@@ -120,4 +118,7 @@ export const MediaCardBlock: Block = {
       },
     }),
   ],
-}
+})
+
+export const MediaCardBlock = buildMediaCardBlock()
+export const MediaCardBlockForLexical = buildMediaCardBlock({ forLexical: true })
