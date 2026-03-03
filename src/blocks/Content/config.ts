@@ -59,7 +59,14 @@ const columnFields: Field[] = [
         return [
           ...rootFeatures,
           BlocksFeature({
-            blocks: [BannerForLexical, CodeForLexical, MediaBlockForLexical, GalleryBlockForLexical, MapBlockForLexical, MediaCardBlockForLexical],
+            blocks: [
+              BannerForLexical,
+              CodeForLexical,
+              MediaBlockForLexical,
+              GalleryBlockForLexical,
+              MapBlockForLexical,
+              MediaCardBlockForLexical,
+            ],
           }),
           FixedToolbarFeature(),
           InlineToolbarFeature(),

@@ -7,7 +7,9 @@ const buildContactInfoBlock = (opts: { forLexical?: boolean } = {}): Block => ({
   slug: 'contactInfo',
   interfaceName: 'ContactInfoBlock',
   fields: [
-    ...(opts.forLexical ? [] : [colorPickerField(), noVerticalSpacingField(), noHorizontalSpacingField()]),
+    ...(opts.forLexical
+      ? []
+      : [colorPickerField(), noVerticalSpacingField(), noHorizontalSpacingField()]),
     {
       name: 'title',
       type: 'text',

@@ -13,7 +13,9 @@ const buildBanner = (opts: { forLexical?: boolean } = {}): Block => ({
   slug: 'banner',
   interfaceName: 'BannerBlock',
   fields: [
-    ...(opts.forLexical ? [] : [colorPickerField(), noVerticalSpacingField(), noHorizontalSpacingField()]),
+    ...(opts.forLexical
+      ? []
+      : [colorPickerField(), noVerticalSpacingField(), noHorizontalSpacingField()]),
     {
       name: 'style',
       type: 'select',

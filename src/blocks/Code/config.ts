@@ -7,7 +7,9 @@ const buildCode = (opts: { forLexical?: boolean } = {}): Block => ({
   slug: 'code',
   interfaceName: 'CodeBlock',
   fields: [
-    ...(opts.forLexical ? [] : [colorPickerField(), noVerticalSpacingField(), noHorizontalSpacingField()]),
+    ...(opts.forLexical
+      ? []
+      : [colorPickerField(), noVerticalSpacingField(), noHorizontalSpacingField()]),
     {
       name: 'language',
       type: 'select',

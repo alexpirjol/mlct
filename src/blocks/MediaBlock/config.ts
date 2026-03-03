@@ -7,7 +7,9 @@ const buildMediaBlock = (opts: { forLexical?: boolean } = {}): Block => ({
   slug: 'mediaBlock',
   interfaceName: 'MediaBlock',
   fields: [
-    ...(opts.forLexical ? [] : [colorPickerField(), noVerticalSpacingField(), noHorizontalSpacingField()]),
+    ...(opts.forLexical
+      ? []
+      : [colorPickerField(), noVerticalSpacingField(), noHorizontalSpacingField()]),
     {
       name: 'media',
       type: 'upload',

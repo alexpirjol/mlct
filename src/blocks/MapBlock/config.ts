@@ -7,7 +7,9 @@ const buildMapBlock = (opts: { forLexical?: boolean } = {}): Block => ({
   slug: 'mapBlock',
   interfaceName: 'MapBlock',
   fields: [
-    ...(opts.forLexical ? [] : [colorPickerField(), noVerticalSpacingField(), noHorizontalSpacingField()]),
+    ...(opts.forLexical
+      ? []
+      : [colorPickerField(), noVerticalSpacingField(), noHorizontalSpacingField()]),
     {
       name: 'location',
       type: 'text',

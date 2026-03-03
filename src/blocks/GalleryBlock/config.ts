@@ -7,7 +7,9 @@ const buildGalleryBlock = (opts: { forLexical?: boolean } = {}): Block => ({
   slug: 'galleryBlock',
   interfaceName: 'galleryBlock',
   fields: [
-    ...(opts.forLexical ? [] : [colorPickerField(), noVerticalSpacingField(), noHorizontalSpacingField()]),
+    ...(opts.forLexical
+      ? []
+      : [colorPickerField(), noVerticalSpacingField(), noHorizontalSpacingField()]),
     {
       name: 'media',
       type: 'upload',
