@@ -16,6 +16,7 @@ export const EDIT_ICON_COMMAND = createCommand<EditIconPayload>('EDIT_ICON_COMMA
 export type InsertIconPayload = {
   iconClass: string
   size?: string
+  color?: string
 }
 
 export type EditIconPayload = {
@@ -29,6 +30,9 @@ export type SerializedIconNode = Spread<
     type: 'icon'
     iconClass: string
     size: string
+    color?: string
+    bgColor?: string
+    fontSize?: string
   },
   SerializedLexicalNode
 >
@@ -36,19 +40,45 @@ export type SerializedIconNode = Spread<
 export class IconServerNode extends DecoratorNode<ReactElement | null> {
   __iconClass: string
   __size: string
+  __color: string
+  __bgColor: string
+  __fontSize: string
 
-  constructor(iconClass: string = '', size: string = '', key?: NodeKey) {
+  constructor(
+    iconClass: string = '',
+    size: string = '',
+    color: string = '',
+    bgColor: string = '',
+    fontSize: string = '',
+    key?: NodeKey,
+  ) {
     super(key)
     this.__iconClass = iconClass
     this.__size = size
+    this.__color = color
+    this.__bgColor = bgColor
+    this.__fontSize = fontSize
   }
 
   static clone(node: IconServerNode): IconServerNode {
-    return new this(node.__iconClass, node.__size, node.__key)
+    return new this(
+      node.__iconClass,
+      node.__size,
+      node.__color,
+      node.__bgColor,
+      node.__fontSize,
+      node.__key,
+    )
   }
 
   static importJSON(serializedNode: SerializedIconNode): IconServerNode {
-    return new this(serializedNode.iconClass, serializedNode.size ?? '')
+    return new this(
+      serializedNode.iconClass,
+      serializedNode.size ?? '',
+      serializedNode.color ?? '',
+      serializedNode.bgColor ?? '',
+      serializedNode.fontSize ?? '',
+    )
   }
 
   static getType(): string {
@@ -63,7 +93,7 @@ export class IconServerNode extends DecoratorNode<ReactElement | null> {
         if (cls.includes('fa-')) {
           return {
             conversion: () => ({
-              node: new IconServerNode(cls, ''),
+              node: new IconServerNode(cls, '', '', '', ''),
             }),
             priority: 1,
           }
@@ -99,6 +129,9 @@ export class IconServerNode extends DecoratorNode<ReactElement | null> {
       version: 1,
       iconClass: this.__iconClass,
       size: this.__size,
+      ...(this.__color ? { color: this.__color } : {}),
+      ...(this.__bgColor ? { bgColor: this.__bgColor } : {}),
+      ...(this.__fontSize ? { fontSize: this.__fontSize } : {}),
     }
   }
 
@@ -107,8 +140,14 @@ export class IconServerNode extends DecoratorNode<ReactElement | null> {
   }
 }
 
-export function $createIconServerNode(iconClass: string, size = ''): IconServerNode {
-  return $applyNodeReplacement(new IconServerNode(iconClass, size))
+export function $createIconServerNode(
+  iconClass: string,
+  size = '',
+  color = '',
+  bgColor = '',
+  fontSize = '',
+): IconServerNode {
+  return $applyNodeReplacement(new IconServerNode(iconClass, size, color, bgColor, fontSize))
 }
 
 export function $isIconServerNode(node: LexicalNode | null | undefined): node is IconServerNode {

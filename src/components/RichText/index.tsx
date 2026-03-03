@@ -12,6 +12,8 @@ import {
   LinkJSXConverter,
   RichText as ConvertRichText,
 } from '@payloadcms/richtext-lexical/react'
+import type React from 'react'
+import { textStateCSSMap } from '@/features/textStateConfig'
 
 import { CodeBlock, CodeBlockProps } from '@/blocks/Code/Component'
 
@@ -51,10 +53,33 @@ const internalDocToHref = ({ linkNode }: { linkNode: SerializedLinkNode }) => {
 const jsxConverters: JSXConvertersFunction<NodeTypes> = ({ defaultConverters }) => ({
   ...defaultConverters,
   ...LinkJSXConverter({ internalDocToHref }),
+  // Apply TextStateFeature inline styles on text nodes
+  // TextState serializes under the '$' key in Lexical's NodeState JSON:
+  // { type: 'text', version: 1, '$': { color: 'text-red', ... } }
+  text: (args) => {
+    const { node } = args
+    const n = node as unknown as Record<string, unknown>
+    const nodeState = (n['$'] as Record<string, string> | undefined) ?? {}
+    const stateStyle: React.CSSProperties = {}
+    for (const [stateKey, stateValues] of Object.entries(textStateCSSMap)) {
+      const activeVal = nodeState[stateKey]
+      if (activeVal && stateValues[activeVal]) {
+        Object.assign(stateStyle, stateValues[activeVal])
+      }
+    }
+    const textConverter = defaultConverters.text
+    const base = typeof textConverter === 'function' ? textConverter(args) : null
+    if (Object.keys(stateStyle).length === 0) return base
+    return <span style={stateStyle}>{base}</span>
+  },
   icon: ({ node }) => {
     const n = node as unknown as SerializedIconNode
     const cls = [n.iconClass, n.size].filter(Boolean).join(' ')
-    return <i className={cls} aria-hidden="true" style={{ display: 'inline-block' }} />
+    const style: React.CSSProperties = { display: 'inline-block' }
+    if (n.color) style.color = n.color
+    if (n.bgColor) style.backgroundColor = n.bgColor
+    if (n.fontSize) style.fontSize = n.fontSize
+    return <i className={cls} aria-hidden="true" style={style} />
   },
   blocks: {
     banner: ({ node }) => <BannerBlock className="col-start-2 mb-4" {...node.fields} />,

@@ -8,7 +8,14 @@ import { IconComponent } from '../components/IconComponent'
 
 export class IconNode extends IconServerNode {
   static clone(node: IconNode): IconNode {
-    return new IconNode(node.__iconClass, node.__size, node.__key)
+    return new IconNode(
+      node.__iconClass,
+      node.__size,
+      node.__color,
+      node.__bgColor,
+      node.__fontSize,
+      node.__key,
+    )
   }
 
   static getType(): string {
@@ -16,7 +23,13 @@ export class IconNode extends IconServerNode {
   }
 
   static importJSON(serializedNode: SerializedIconNode): IconNode {
-    return new IconNode(serializedNode.iconClass, serializedNode.size ?? '')
+    return new IconNode(
+      serializedNode.iconClass,
+      serializedNode.size ?? '',
+      serializedNode.color ?? '',
+      serializedNode.bgColor ?? '',
+      serializedNode.fontSize ?? '',
+    )
   }
 
   exportJSON(): SerializedIconNode {
@@ -24,12 +37,27 @@ export class IconNode extends IconServerNode {
   }
 
   decorate(): React.ReactElement {
-    return <IconComponent iconClass={this.__iconClass} size={this.__size} nodeKey={this.__key} />
+    return (
+      <IconComponent
+        iconClass={this.__iconClass}
+        size={this.__size}
+        color={this.__color}
+        bgColor={this.__bgColor}
+        fontSize={this.__fontSize}
+        nodeKey={this.__key}
+      />
+    )
   }
 }
 
-export function $createIconNode(iconClass: string, size = ''): IconNode {
-  return $applyNodeReplacement(new IconNode(iconClass, size))
+export function $createIconNode(
+  iconClass: string,
+  size = '',
+  color = '',
+  bgColor = '',
+  fontSize = '',
+): IconNode {
+  return $applyNodeReplacement(new IconNode(iconClass, size, color, bgColor, fontSize))
 }
 
 export function $isIconNode(node: LexicalNode | null | undefined): node is IconNode {

@@ -15,9 +15,9 @@ import {
   AlignFeature,
   HorizontalRuleFeature,
   TextStateFeature,
-  defaultColors,
   type LinkFields,
 } from '@payloadcms/richtext-lexical'
+import { textStateForPayload } from '@/features/textStateConfig'
 import { IconFeature } from '@/features/icons'
 
 export const defaultLexical = lexicalEditor({
@@ -63,27 +63,6 @@ export const defaultLexical = lexicalEditor({
     AlignFeature(),
     HorizontalRuleFeature(),
     IconFeature(),
-    TextStateFeature({
-      state: {
-        color: {
-          ...defaultColors.text,
-        },
-        highlight: {
-          ...defaultColors.background,
-        },
-        transform: {
-          uppercase: { label: 'Uppercase', css: { 'text-transform': 'uppercase' } },
-          lowercase: { label: 'Lowercase', css: { 'text-transform': 'lowercase' } },
-          capitalize: { label: 'Capitalize', css: { 'text-transform': 'capitalize' } },
-        },
-        fontSize: {
-          xs: { label: 'XS', css: { 'font-size': '0.75em', 'line-height': '1rem' } },
-          small: { label: 'Small', css: { 'font-size': '0.875em', 'line-height': '1.25rem' } },
-          large: { label: 'Large', css: { 'font-size': '1.25em', 'line-height': '1.75rem' } },
-          xl: { label: 'XL', css: { 'font-size': '1.5em', 'line-height': '2rem' } },
-          '2xl': { label: '2XL', css: { 'font-size': '2em', 'line-height': '2.5rem' } },
-        },
-      },
-    }),
+    TextStateFeature({ state: textStateForPayload }),
   ],
 })

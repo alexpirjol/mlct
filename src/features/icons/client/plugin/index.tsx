@@ -27,7 +27,13 @@ type SavedPoint = { key: string; offset: number; type: 'element' | 'text' }
 
 type DrawerState =
   | { mode: 'insert'; openKey: number }
-  | { mode: 'edit'; nodeKey: string; iconClass: string; size: string; openKey: number }
+  | {
+      mode: 'edit'
+      nodeKey: string
+      iconClass: string
+      size: string
+      openKey: number
+    }
 
 export function IconPlugin() {
   const [editor] = useLexicalComposerContext()

@@ -11,10 +11,13 @@ import { $isIconNode } from '../nodes/IconNode'
 type Props = {
   iconClass: string
   size: string
+  color: string
+  bgColor: string
+  fontSize: string
   nodeKey: string
 }
 
-export function IconComponent({ iconClass, size, nodeKey }: Props) {
+export function IconComponent({ iconClass, size, color, bgColor, fontSize, nodeKey }: Props) {
   const [editor] = useLexicalComposerContext()
 
   const handleMouseDown = useCallback(
@@ -40,10 +43,15 @@ export function IconComponent({ iconClass, size, nodeKey }: Props) {
         }
       })
     },
-    [editor, nodeKey, iconClass, size],
+    [editor, nodeKey, iconClass, size, color, bgColor, fontSize],
   )
 
   const classNames = [iconClass, size].filter(Boolean).join(' ')
+
+  const iconStyle: React.CSSProperties = {}
+  if (color) iconStyle.color = color
+  if (bgColor) iconStyle.backgroundColor = bgColor
+  if (fontSize) iconStyle.fontSize = fontSize
 
   return (
     <span
@@ -52,7 +60,11 @@ export function IconComponent({ iconClass, size, nodeKey }: Props) {
       title="Click to position cursor · Double-click to edit"
       style={{ cursor: 'default', userSelect: 'none', display: 'inline-block' }}
     >
-      <i className={classNames} aria-hidden="true" />
+      <i
+        className={classNames}
+        aria-hidden="true"
+        style={Object.keys(iconStyle).length ? iconStyle : undefined}
+      />
     </span>
   )
 }
