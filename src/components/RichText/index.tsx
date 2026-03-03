@@ -19,13 +19,11 @@ import { CodeBlock, CodeBlockProps } from '@/blocks/Code/Component'
 
 import type {
   BannerBlock as BannerBlockProps,
-  CallToActionBlock as CTABlockProps,
   MediaBlock as MediaBlockProps,
   GalleryBlock as GalleryBlockProps,
   MediaCardBlock as MediaCardBlockProps,
 } from '@/payload-types'
 import { BannerBlock } from '@/blocks/Banner/Component'
-import { CallToActionBlock } from '@/blocks/CallToAction/Component'
 import { MediaCardBlock } from '@/blocks/MediaCard/Component'
 import { cn } from '@/utilities/ui'
 
@@ -33,12 +31,7 @@ type NodeTypes =
   | DefaultNodeTypes
   | SerializedIconNode
   | SerializedBlockNode<
-      | CTABlockProps
-      | MediaBlockProps
-      | BannerBlockProps
-      | CodeBlockProps
-      | GalleryBlockProps
-      | MediaCardBlockProps
+      MediaBlockProps | BannerBlockProps | CodeBlockProps | GalleryBlockProps | MediaCardBlockProps
     >
 
 const internalDocToHref = ({ linkNode }: { linkNode: SerializedLinkNode }) => {
@@ -112,7 +105,6 @@ const jsxConverters: JSXConvertersFunction<NodeTypes> = ({ defaultConverters }) 
     ),
 
     code: ({ node }) => <CodeBlock className="col-start-2" {...node.fields} />,
-    cta: ({ node }) => <CallToActionBlock {...node.fields} />,
   },
 })
 
