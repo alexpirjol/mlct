@@ -45,40 +45,34 @@ function applyIconField(
 }
 
 // ─── UI Components ────────────────────────────────────────────────────────────
+// Mirrors Payload's internal TextStateIcon: an "A" badge with the option's CSS applied.
+// This matches exactly what the TextStateFeature dropdown shows for text options.
 
-const ColorSwatch = ({ color }: { color?: string }) => (
-  <span
-    style={{
-      display: 'inline-block',
-      width: '0.875rem',
-      height: '0.875rem',
-      borderRadius: '50%',
-      background: color ?? 'var(--theme-elevation-150)',
-      border: '1px solid var(--theme-border-color)',
-      verticalAlign: 'middle',
-    }}
-  />
-)
+function hyphenToCamel(s: string): string {
+  return s.replace(/-([a-z])/g, (_, c: string) => c.toUpperCase())
+}
 
-const BgSwatch = ({ color }: { color: string }) => (
-  <span
-    style={{
-      display: 'inline-block',
-      width: '0.875rem',
-      height: '0.875rem',
-      borderRadius: '2px',
-      background: color,
-      border: '1px solid var(--theme-border-color)',
-      verticalAlign: 'middle',
-    }}
-  />
-)
-
-const SizePreview = ({ fontSize }: { fontSize: string }) => (
-  <span style={{ fontSize, lineHeight: 1, verticalAlign: 'middle', display: 'inline-block' }}>
-    A
-  </span>
-)
+const StateIcon = ({ css }: { css?: Record<string, string> }) => {
+  const camelCss = css
+    ? Object.fromEntries(Object.entries(css).map(([k, v]) => [hyphenToCamel(k), v]))
+    : {}
+  return (
+    <span
+      style={{
+        ...camelCss,
+        alignItems: 'center',
+        borderRadius: '4px',
+        display: 'flex',
+        fontSize: '16px',
+        height: '20px',
+        justifyContent: 'center',
+        width: '20px',
+      }}
+    >
+      A
+    </span>
+  )
+}
 
 // ─── Icon style dropdown ──────────────────────────────────────────────────────
 // Separate group (key: 'iconStyle') shown only when an icon is selected.
@@ -90,14 +84,13 @@ const iconStyleGroup = {
   key: 'iconStyle',
   order: 31,
   ChildComponent: () => (
-    <i className="fa-solid fa-palette" aria-hidden="true" style={{ fontSize: '0.875rem' }} />
+    <StateIcon css={{ color: 'var(--theme-elevation-600)' }} />
   ),
-  isEnabled: ({ selection }: { selection: BaseSelection }) =>
-    getSelectedIcon(selection) !== null,
+  isEnabled: ({ selection }: { selection: BaseSelection }) => getSelectedIcon(selection) !== null,
   items: [
     // ── Clear all icon formatting ──────────────────────────────────────────
     {
-      ChildComponent: () => <ColorSwatch />,
+      ChildComponent: () => <StateIcon />,
       key: 'icon-clear-style',
       label: 'Default style',
       order: 1,
@@ -121,8 +114,8 @@ const iconStyleGroup = {
       },
     },
     // ── Color (→ __color) ─────────────────────────────────────────────────
-    ...iconColorOptions.map(({ key, label, cssValue }) => ({
-      ChildComponent: () => <ColorSwatch color={cssValue} />,
+    ...iconColorOptions.map(({ key, label, cssValue, css }) => ({
+      ChildComponent: () => <StateIcon css={css} />,
       key: `icon-color-${key}`,
       label,
       isActive: ({ selection }: { selection: BaseSelection }) => {
@@ -133,8 +126,8 @@ const iconStyleGroup = {
         applyIconField(editor, '__color', cssValue, isActive),
     })),
     // ── Background (→ __bgColor) ──────────────────────────────────────────
-    ...iconBgColorOptions.map(({ key, label, cssValue }) => ({
-      ChildComponent: () => <BgSwatch color={cssValue} />,
+    ...iconBgColorOptions.map(({ key, label, cssValue, css }) => ({
+      ChildComponent: () => <StateIcon css={css} />,
       key: `icon-bg-${key}`,
       label,
       isActive: ({ selection }: { selection: BaseSelection }) => {
@@ -145,8 +138,8 @@ const iconStyleGroup = {
         applyIconField(editor, '__bgColor', cssValue, isActive),
     })),
     // ── Font size (→ __fontSize) ──────────────────────────────────────────
-    ...iconFontSizeOptions.map(({ key, label, cssValue }) => ({
-      ChildComponent: () => <SizePreview fontSize={cssValue} />,
+    ...iconFontSizeOptions.map(({ key, label, cssValue, css }) => ({
+      ChildComponent: () => <StateIcon css={css} />,
       key: `icon-size-${key}`,
       label,
       isActive: ({ selection }: { selection: BaseSelection }) => {

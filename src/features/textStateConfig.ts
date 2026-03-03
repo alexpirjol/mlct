@@ -88,6 +88,7 @@ export const iconColorOptions = Object.entries(defaultColors.text).map(([key, { 
   key,
   label,
   cssValue: (css as Record<string, string>).color,
+  css: css as Record<string, string>,
 }))
 
 export const iconBgColorOptions = Object.entries(defaultColors.background).map(
@@ -95,6 +96,7 @@ export const iconBgColorOptions = Object.entries(defaultColors.background).map(
     key,
     label,
     cssValue: (css as Record<string, string>)['background-color'],
+    css: css as Record<string, string>,
   }),
 )
 
@@ -103,5 +105,6 @@ export const iconFontSizeOptions = Object.entries(textStateForPayload.fontSize).
     key,
     label,
     cssValue: (css as Record<string, string>)['font-size'],
+    css: css as Record<string, string>,
   }),
 )
