@@ -57,7 +57,7 @@ export const hero: GroupField = {
       name: 'centered',
       type: 'checkbox',
       defaultValue: false,
-      label: 'Centered slides (peek)',
+      label: 'Multiple visible slides',
       admin: {
         condition: (_, { type } = {}) => type === 'carousel',
       },

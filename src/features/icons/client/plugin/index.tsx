@@ -91,25 +91,23 @@ export function IconPlugin() {
   const handleConfirm = useCallback(
     (sel: IconSelection) => {
       if (drawerState.mode === 'insert') {
-        // Close drawer FIRST so useLexicalDrawer's useEffect can restore the
-        // editor selection asynchronously before we insert the node.
         closeDrawer()
         const saved = savedAnchorRef.current
         setTimeout(() => {
           editor.update(() => {
             const iconNode = $createIconNode(sel.iconClass, sel.size)
-            // useLexicalDrawer will have restored selection by now; try it first
             const current = $getSelection()
             if ($isRangeSelection(current)) {
               current.insertNodes([iconNode])
             } else if (saved) {
-              // Fallback: manually restore from saved anchor
               const restored = $createRangeSelection()
               restored.anchor.set(saved.key, saved.offset, saved.type)
               restored.focus.set(saved.key, saved.offset, saved.type)
               $setSelection(restored)
               restored.insertNodes([iconNode])
             }
+            // Place cursor after the icon so the user can type immediately
+            iconNode.selectNext(0, 0)
           })
         }, 0)
       } else if (drawerState.mode === 'edit') {
