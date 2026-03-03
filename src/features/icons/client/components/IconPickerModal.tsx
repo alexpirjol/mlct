@@ -1,7 +1,7 @@
 'use client'
 
 import '@fortawesome/fontawesome-free/css/all.min.css'
-import { Button, SelectInput, TextInput } from '@payloadcms/ui'
+import { Pagination, TextInput } from '@payloadcms/ui'
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import categoryData from '../../iconCategories.json'
 import iconData from '../../iconList.json'
@@ -27,16 +27,7 @@ type Category = {
 const ICONS = iconData as IconEntry[]
 const CATEGORIES = categoryData as Category[]
 
-const PAGE_SIZE = 48
-
-const SIZES = [
-  { label: 'Default', value: '' },
-  { label: 'XS', value: 'fa-xs' },
-  { label: 'SM', value: 'fa-sm' },
-  { label: 'LG', value: 'fa-lg' },
-  { label: 'XL', value: 'fa-xl' },
-  { label: '2XL', value: 'fa-2xl' },
-]
+const PAGE_SIZE = 100
 
 const STYLE_PREFIXES: Record<string, string> = {
   solid: 'fa-solid',
@@ -44,44 +35,47 @@ const STYLE_PREFIXES: Record<string, string> = {
   brands: 'fa-brands',
 }
 
+type GridItem = {
+  icon: IconEntry
+  style: string
+  key: string
+  iconClass: string
+}
+
 type Props = {
   initialIconClass?: string
   initialSize?: string
   isEditing?: boolean
+  openKey?: number
   onConfirm: (sel: IconSelection) => void
   onClose: () => void
 }
 
-export function IconPickerContent({
-  initialIconClass,
-  initialSize,
-  isEditing = false,
-  onConfirm,
-  onClose,
-}: Props) {
+export function IconPickerContent({ initialIconClass, openKey, onConfirm, onClose }: Props) {
   const [search, setSearch] = useState('')
   const [activeCategory, setActiveCategory] = useState<string | null>(null)
-  const [selectedIconName, setSelectedIconName] = useState<string | null>(null)
-  const [selectedStyle, setSelectedStyle] = useState<'solid' | 'regular' | 'brands'>('solid')
-  const [selectedSize, setSelectedSize] = useState(initialSize ?? '')
   const [page, setPage] = useState(1)
+  const [highlightKey, setHighlightKey] = useState<string | null>(null)
   const searchRef = useRef<HTMLInputElement>(null)
 
-  // Parse initial iconClass on mount
+  // Reset all state and re-parse initialIconClass every time the drawer is opened
   useEffect(() => {
+    setSearch('')
+    setActiveCategory(null)
+    setPage(1)
     if (initialIconClass) {
       const parts = initialIconClass.split(' ')
       const styleEntry = Object.entries(STYLE_PREFIXES).find(([, p]) => parts.includes(p))
       const namePart = parts.find((p) => p.startsWith('fa-') && p !== styleEntry?.[1])
       const iconName = namePart?.replace('fa-', '') ?? null
-      const iconStyle = (styleEntry?.[0] ?? 'solid') as 'solid' | 'regular' | 'brands'
-      setSelectedIconName(iconName)
-      setSelectedStyle(iconStyle)
+      const styleName = styleEntry?.[0] ?? 'solid'
+      setHighlightKey(iconName ? `${iconName}_${styleName}` : null)
+    } else {
+      setHighlightKey(null)
     }
-    setSelectedSize(initialSize ?? '')
     setTimeout(() => searchRef.current?.focus(), 80)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [openKey])
 
   const filtered = useMemo(() => {
     const q = search.toLowerCase().trim()
@@ -96,50 +90,48 @@ export function IconPickerContent({
     })
   }, [search, activeCategory])
 
-  const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE))
+  // Expand: one tile per (icon, style) combination
+  const expandedItems = useMemo<GridItem[]>(
+    () =>
+      filtered.flatMap((icon) =>
+        icon.s.map((s) => ({
+          icon,
+          style: s,
+          key: `${icon.n}_${s}`,
+          iconClass: `${STYLE_PREFIXES[s]} fa-${icon.n}`,
+        })),
+      ),
+    [filtered],
+  )
+
+  const totalPages = Math.max(1, Math.ceil(expandedItems.length / PAGE_SIZE))
   const safePage = Math.min(page, totalPages)
-  const pageIcons = filtered.slice((safePage - 1) * PAGE_SIZE, safePage * PAGE_SIZE)
+  const pageItems = expandedItems.slice((safePage - 1) * PAGE_SIZE, safePage * PAGE_SIZE)
 
   // Reset to page 1 on filter change
   useEffect(() => {
     setPage(1)
   }, [search, activeCategory])
 
-  const handleSelect = useCallback(
-    (icon: IconEntry) => {
-      setSelectedIconName(icon.n)
-      const bestStyle = icon.s.includes(selectedStyle)
-        ? selectedStyle
-        : (icon.s[0] as 'solid' | 'regular' | 'brands')
-      setSelectedStyle(bestStyle)
+  const handlePick = useCallback(
+    (item: GridItem) => {
+      setHighlightKey(item.key)
+      onConfirm({ iconClass: item.iconClass, size: '' })
+      onClose()
     },
-    [selectedStyle],
+    [onConfirm, onClose],
   )
 
-  const handleConfirm = useCallback(() => {
-    if (!selectedIconName) return
-    const prefix = STYLE_PREFIXES[selectedStyle]
-    const iconClass = `${prefix} fa-${selectedIconName}`
-    onConfirm({ iconClass, size: selectedSize })
-    onClose()
-  }, [selectedIconName, selectedStyle, selectedSize, onConfirm, onClose])
-
-  const selectedIcon = ICONS.find((i) => i.n === selectedIconName)
-  const previewClass = selectedIconName
-    ? [STYLE_PREFIXES[selectedStyle], `fa-${selectedIconName}`, selectedSize]
-        .filter(Boolean)
-        .join(' ')
-    : null
-
   return (
-    <div
-      className="flex flex-col h-full"
-      onKeyDown={(e) => {
-        if (e.key === 'Enter' && selectedIconName) handleConfirm()
-      }}
-    >
+    <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
       {/* Search bar */}
-      <div className="px-4 py-3 border-b border-border">
+      <div
+        style={{
+          paddingBottom: '16px',
+          borderBottom: '1px solid var(--theme-border-color)',
+          flexShrink: 0,
+        }}
+      >
         <TextInput
           inputRef={searchRef as React.RefObject<HTMLInputElement>}
           path="icon-search"
@@ -150,101 +142,134 @@ export function IconPickerContent({
       </div>
 
       {/* Body: sidebar + grid */}
-      <div className="flex flex-1 min-h-0">
+      <div style={{ display: 'flex', flex: 1, minHeight: 0, overflow: 'hidden' }}>
         {/* Category sidebar */}
-        <div className="w-44 flex-shrink-0 overflow-y-auto border-r border-border py-2">
-          <button
-            type="button"
-            onClick={() => setActiveCategory(null)}
-            className={`w-full text-left px-4 py-1.5 text-sm transition-colors ${
-              activeCategory === null
-                ? 'bg-accent text-accent-foreground font-semibold'
-                : 'hover:bg-secondary text-foreground'
-            }`}
-          >
-            All Icons
-          </button>
-          {CATEGORIES.map((cat) => (
-            <button
-              key={cat.k}
-              type="button"
-              onClick={() => setActiveCategory(cat.k)}
-              className={`w-full text-left px-4 py-1.5 text-sm transition-colors ${
-                activeCategory === cat.k
-                  ? 'bg-accent text-accent-foreground font-semibold'
-                  : 'hover:bg-secondary text-foreground'
-              }`}
-            >
-              {cat.l}
-            </button>
-          ))}
+        <div
+          style={{
+            width: 168,
+            flexShrink: 0,
+            overflowY: 'auto',
+            borderRight: '1px solid var(--theme-border-color)',
+            padding: 'calc(var(--base) * 0.5) 0',
+          }}
+        >
+          {[{ k: null as string | null, l: 'All Icons' }, ...CATEGORIES].map((cat) => {
+            const isActive = activeCategory === cat.k
+            return (
+              <button
+                key={cat.k ?? '__all__'}
+                type="button"
+                onClick={() => setActiveCategory(cat.k)}
+                style={{
+                  display: 'block',
+                  width: '100%',
+                  textAlign: 'left',
+                  fontSize: '0.85rem',
+                  background: isActive ? 'var(--theme-elevation-150)' : 'transparent',
+                  color: isActive ? 'var(--theme-elevation-900)' : 'var(--theme-elevation-700)',
+                  fontWeight: isActive ? 600 : 400,
+                  border: 'none',
+                  cursor: 'pointer',
+                }}
+              >
+                {cat.l}
+              </button>
+            )
+          })}
         </div>
 
-        {/* Icon grid */}
-        <div className="flex flex-col flex-1 min-w-0">
-          {/* Count + pagination */}
-          <div className="flex items-center justify-between px-4 py-2 border-b border-border text-xs text-muted-foreground">
-            <span>
-              {filtered.length === 0
-                ? 'No icons found'
-                : `${(safePage - 1) * PAGE_SIZE + 1}–${Math.min(safePage * PAGE_SIZE, filtered.length)} of ${filtered.length}`}
-            </span>
-            {totalPages > 1 && (
-              <div className="flex items-center gap-1">
-                <Button
-                  buttonStyle="subtle"
-                  size="small"
-                  disabled={safePage === 1}
-                  onClick={() => setPage((p) => Math.max(1, p - 1))}
-                >
-                  ‹
-                </Button>
-                <span>
-                  {safePage} / {totalPages}
-                </span>
-                <Button
-                  buttonStyle="subtle"
-                  size="small"
-                  disabled={safePage === totalPages}
-                  onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
-                >
-                  ›
-                </Button>
-              </div>
-            )}
+        {/* Icon grid panel */}
+        <div style={{ display: 'flex', flexDirection: 'column', flex: 1, minWidth: 0 }}>
+          {/* Result count */}
+          <div
+            style={{
+              padding: 'calc(var(--base) * 0.4) var(--gutter-h)',
+              borderBottom: '1px solid var(--theme-border-color)',
+              fontSize: '0.8rem',
+              color: 'var(--theme-elevation-500)',
+              flexShrink: 0,
+            }}
+          >
+            {expandedItems.length === 0
+              ? 'No icons found'
+              : `${expandedItems.length} variant${expandedItems.length !== 1 ? 's' : ''}`}
           </div>
 
           {/* Icons */}
-          <div className="flex-1 overflow-y-auto p-3">
-            {filtered.length === 0 ? (
-              <p className="text-muted-foreground text-sm text-center py-12">No icons found</p>
+          <div style={{ flex: 1, overflowY: 'auto', padding: 'calc(var(--base) * 0.5)' }}>
+            {pageItems.length === 0 ? (
+              <p
+                style={{
+                  textAlign: 'center',
+                  color: 'var(--theme-elevation-500)',
+                  fontSize: '0.85rem',
+                  paddingTop: 'calc(var(--base) * 3)',
+                }}
+              >
+                No icons found
+              </p>
             ) : (
-              <div className="grid grid-cols-[repeat(auto-fill,minmax(60px,1fr))] gap-1">
-                {pageIcons.map((icon) => {
-                  const isSelected = selectedIconName === icon.n
-                  const style = icon.s.includes(selectedStyle) ? selectedStyle : icon.s[0]!
-                  const cls = `${STYLE_PREFIXES[style]} fa-${icon.n}`
+              <div
+                style={{
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(auto-fill, minmax(80px, 1fr))',
+                  gap: 6,
+                }}
+              >
+                {pageItems.map((item) => {
+                  const isHighlighted = highlightKey === item.key
                   return (
                     <button
-                      key={icon.n}
+                      key={item.key}
                       type="button"
-                      title={icon.l}
-                      onClick={() => handleSelect(icon)}
-                      onDoubleClick={handleConfirm}
-                      className={`flex flex-col items-center justify-center gap-1 p-2 text-xs transition-colors min-h-[56px] rounded ${
-                        isSelected
-                          ? 'bg-accent text-accent-foreground'
-                          : 'hover:bg-secondary text-foreground'
-                      }`}
+                      title={`${item.icon.l} (${item.style})`}
+                      onClick={() => handlePick(item)}
+                      style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        gap: 6,
+                        padding: 'calc(var(--base) * 0.6)',
+                        minHeight: 80,
+                        border: isHighlighted
+                          ? '1px solid var(--theme-elevation-500)'
+                          : '1px solid transparent',
+                        borderRadius: 'var(--style-radius-s)',
+                        background: isHighlighted ? 'var(--theme-elevation-150)' : 'transparent',
+                        color: 'var(--theme-elevation-800)',
+                        cursor: 'pointer',
+                      }}
                     >
                       <i
-                        className={cls}
-                        style={{ fontSize: '1.25rem', lineHeight: 1 }}
+                        className={item.iconClass}
+                        style={{ fontSize: '1.75rem', lineHeight: 1 }}
                         aria-hidden="true"
                       />
-                      <span className="truncate w-full text-center" style={{ fontSize: '0.58rem' }}>
-                        {icon.n}
+                      <span
+                        style={{
+                          fontSize: '0.6rem',
+                          overflow: 'hidden',
+                          textOverflow: 'ellipsis',
+                          whiteSpace: 'nowrap',
+                          width: '100%',
+                          textAlign: 'center',
+                          color: 'var(--theme-elevation-600)',
+                        }}
+                      >
+                        {item.icon.n}
                       </span>
+                      {item.icon.s.length > 1 && (
+                        <span
+                          style={{
+                            fontSize: '0.55rem',
+                            color: 'var(--theme-elevation-400)',
+                            lineHeight: 1,
+                          }}
+                        >
+                          {item.style}
+                        </span>
+                      )}
                     </button>
                   )
                 })}
@@ -254,76 +279,24 @@ export function IconPickerContent({
         </div>
       </div>
 
-      {/* Footer: preview + style + size + actions */}
-      <div className="flex items-center gap-3 px-4 py-3 border-t border-border flex-wrap">
-        {/* Preview */}
-        <div className="flex items-center gap-3 flex-1 min-w-0">
-          <div className="w-10 h-10 flex-shrink-0 flex items-center justify-center bg-secondary rounded">
-            {previewClass ? (
-              <i className={previewClass} style={{ fontSize: '1.5rem' }} aria-hidden="true" />
-            ) : (
-              <span className="text-muted-foreground text-xs">—</span>
-            )}
-          </div>
-          <div className="text-sm min-w-0">
-            {selectedIcon ? (
-              <>
-                <p className="font-semibold truncate">{selectedIcon.l}</p>
-                <p className="text-muted-foreground text-xs truncate">{previewClass}</p>
-              </>
-            ) : (
-              <p className="text-muted-foreground text-xs">Select an icon</p>
-            )}
-          </div>
-        </div>
-
-        {/* Style pills when icon has multiple styles */}
-        {selectedIcon && selectedIcon.s.length > 1 && (
-          <div className="flex gap-1">
-            {selectedIcon.s.map((s) => (
-              <button
-                key={s}
-                type="button"
-                onClick={() => setSelectedStyle(s as 'solid' | 'regular' | 'brands')}
-                className={`px-2.5 py-1 text-xs rounded font-medium transition-colors ${
-                  selectedStyle === s
-                    ? 'bg-accent text-accent-foreground'
-                    : 'bg-secondary text-secondary-foreground hover:bg-accent/20'
-                }`}
-              >
-                {s}
-              </button>
-            ))}
-          </div>
-        )}
-
-        {/* Size */}
-        <div style={{ minWidth: 130 }}>
-          <SelectInput
-            name="icon-size"
-            path="icon-size"
-            label="Size"
-            value={selectedSize || undefined}
-            options={SIZES}
-            onChange={(opt) => setSelectedSize((opt as { value: string } | null)?.value ?? '')}
-            isClearable={false}
-          />
-        </div>
-
-        {/* Actions */}
-        <div className="flex gap-2">
-          <Button buttonStyle="secondary" onClick={onClose} size="medium">
-            Cancel
-          </Button>
-          <Button
-            buttonStyle="primary"
-            onClick={handleConfirm}
-            disabled={!selectedIconName}
-            size="medium"
-          >
-            {isEditing ? 'Update' : 'Insert'}
-          </Button>
-        </div>
+      {/* Footer: pagination */}
+      <div
+        style={{
+          padding: 'calc(var(--base) * 0.6) var(--gutter-h)',
+          borderTop: '1px solid var(--theme-border-color)',
+          flexShrink: 0,
+        }}
+      >
+        <Pagination
+          page={safePage}
+          totalPages={totalPages}
+          hasNextPage={safePage < totalPages}
+          hasPrevPage={safePage > 1}
+          nextPage={safePage < totalPages ? safePage + 1 : undefined}
+          prevPage={safePage > 1 ? safePage - 1 : undefined}
+          onChange={setPage}
+          numberOfNeighbors={1}
+        />
       </div>
     </div>
   )

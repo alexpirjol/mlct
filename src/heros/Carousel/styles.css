@@ -49,11 +49,11 @@
   animation: none;
 }
 
-.mySwiper.autoplay-enabled .swiper-slide-active[data-zoom='in'] img {
+.mySwiper.animation-enabled .swiper-slide-active[data-zoom='in'] img {
   animation: zoomIn 20s linear infinite;
 }
 
-.mySwiper.autoplay-enabled .swiper-slide-active[data-zoom='out'] img {
+.mySwiper.animation-enabled .swiper-slide-active[data-zoom='out'] img {
   animation: zoomOut 20s linear infinite;
 }
 

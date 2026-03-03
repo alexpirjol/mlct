@@ -161,13 +161,13 @@ export interface Page {
   title: string;
   hero?: {
     type?: ('none' | 'highImpact' | 'mediumImpact' | 'lowImpact' | 'carousel') | null;
+    direction?: ('vertical' | 'horizontal') | null;
+    centered?: boolean | null;
+    effect?: ('none' | 'slide' | 'fade' | 'cube' | 'coverflow' | 'flip' | 'creative' | 'cards') | null;
     animation?: boolean | null;
     autoplay?: boolean | null;
     autoplayInterval?: number | null;
-    centered?: boolean | null;
     slidesPerView?: ('auto' | '1.5' | '2' | '2.5' | '3' | '4') | null;
-    direction?: ('vertical' | 'horizontal') | null;
-    effect?: ('slide' | 'fade' | 'cube' | 'coverflow' | 'flip' | 'creative' | 'cards') | null;
     slideWidth?: ('50' | '60' | '70' | '80' | '90') | null;
     richText?: {
       root: {
@@ -899,13 +899,13 @@ export interface Carousel {
   noVerticalSpacing?: boolean | null;
   noHorizontalSpacing?: boolean | null;
   type: string;
+  direction?: ('vertical' | 'horizontal') | null;
+  centered?: boolean | null;
+  effect?: ('none' | 'slide' | 'fade' | 'cube' | 'coverflow' | 'flip' | 'creative' | 'cards') | null;
   animation?: boolean | null;
   autoplay?: boolean | null;
   autoplayInterval?: number | null;
-  centered?: boolean | null;
   slidesPerView?: ('auto' | '1.5' | '2' | '2.5' | '3' | '4') | null;
-  direction?: ('vertical' | 'horizontal') | null;
-  effect?: ('slide' | 'fade' | 'cube' | 'coverflow' | 'flip' | 'creative' | 'cards') | null;
   slideWidth?: ('50' | '60' | '70' | '80' | '90') | null;
   richText?: {
     root: {
@@ -1268,13 +1268,13 @@ export interface PagesSelect<T extends boolean = true> {
     | T
     | {
         type?: T;
+        direction?: T;
+        centered?: T;
+        effect?: T;
         animation?: T;
         autoplay?: T;
         autoplayInterval?: T;
-        centered?: T;
         slidesPerView?: T;
-        direction?: T;
-        effect?: T;
         slideWidth?: T;
         richText?: T;
         slides?:
@@ -1488,13 +1488,13 @@ export interface CarouselSelect<T extends boolean = true> {
   noVerticalSpacing?: T;
   noHorizontalSpacing?: T;
   type?: T;
+  direction?: T;
+  centered?: T;
+  effect?: T;
   animation?: T;
   autoplay?: T;
   autoplayInterval?: T;
-  centered?: T;
   slidesPerView?: T;
-  direction?: T;
-  effect?: T;
   slideWidth?: T;
   richText?: T;
   slides?:

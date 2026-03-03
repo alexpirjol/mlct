@@ -41,12 +41,54 @@ export const hero: GroupField = {
       required: false,
     },
     {
-      name: 'animation',
-      type: 'checkbox',
-      defaultValue: true,
-      label: 'Animation',
+      name: 'direction',
+      type: 'select',
+      label: 'Direction',
+      defaultValue: 'vertical',
+      options: [
+        { label: 'Vertical', value: 'vertical' },
+        { label: 'Horizontal', value: 'horizontal' },
+      ],
       admin: {
         condition: (_, { type } = {}) => type === 'carousel',
+      },
+    },
+    {
+      name: 'centered',
+      type: 'checkbox',
+      defaultValue: false,
+      label: 'Centered slides (peek)',
+      admin: {
+        condition: (_, { type } = {}) => type === 'carousel',
+      },
+    },
+    {
+      name: 'effect',
+      type: 'select',
+      label: 'Effect',
+      defaultValue: 'none',
+      required: true,
+      options: [
+        { label: 'None', value: 'none' },
+        { label: 'Slide', value: 'slide' },
+        { label: 'Fade', value: 'fade' },
+        { label: 'Cube', value: 'cube' },
+        { label: 'Coverflow', value: 'coverflow' },
+        { label: 'Flip', value: 'flip' },
+        { label: 'Creative', value: 'creative' },
+        { label: 'Cards', value: 'cards' },
+      ],
+      admin: {
+        condition: (_, { type, centered } = {}) => type === 'carousel' && !centered,
+      },
+    },
+    {
+      name: 'animation',
+      type: 'checkbox',
+      defaultValue: false,
+      label: 'Animation',
+      admin: {
+        condition: (_, { type, effect } = {}) => type === 'carousel' && effect === 'fade',
       },
     },
     {
@@ -68,15 +110,7 @@ export const hero: GroupField = {
           siblingData.type === 'carousel' && siblingData.autoplay === true,
       },
     },
-    {
-      name: 'centered',
-      type: 'checkbox',
-      defaultValue: false,
-      label: 'Centered slides (peek)',
-      admin: {
-        condition: (_, { type } = {}) => type === 'carousel',
-      },
-    },
+
     {
       name: 'slidesPerView',
       type: 'select',
@@ -92,38 +126,6 @@ export const hero: GroupField = {
       ],
       admin: {
         condition: (_, { type, centered } = {}) => type === 'carousel' && centered,
-      },
-    },
-    {
-      name: 'direction',
-      type: 'select',
-      label: 'Direction',
-      defaultValue: 'vertical',
-      options: [
-        { label: 'Vertical', value: 'vertical' },
-        { label: 'Horizontal', value: 'horizontal' },
-      ],
-      admin: {
-        condition: (_, { type } = {}) => type === 'carousel',
-      },
-    },
-    {
-      name: 'effect',
-      type: 'select',
-      label: 'Effect',
-      defaultValue: 'fade',
-      required: true,
-      options: [
-        { label: 'Slide', value: 'slide' },
-        { label: 'Fade', value: 'fade' },
-        { label: 'Cube', value: 'cube' },
-        { label: 'Coverflow', value: 'coverflow' },
-        { label: 'Flip', value: 'flip' },
-        { label: 'Creative', value: 'creative' },
-        { label: 'Cards', value: 'cards' },
-      ],
-      admin: {
-        condition: (_, { type, centered } = {}) => type === 'carousel' && !centered,
       },
     },
 

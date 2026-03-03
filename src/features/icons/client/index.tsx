@@ -2,7 +2,7 @@
 
 import {
   createClientFeature,
-  toolbarFeatureButtonsGroupWithItems,
+  toolbarAddDropdownGroupWithItems,
 } from '@payloadcms/richtext-lexical/client'
 
 import { INSERT_ICON_COMMAND } from '../server/nodes/IconNode'
@@ -20,7 +20,7 @@ export const IconFeatureClient = createClientFeature({
   ],
   toolbarFixed: {
     groups: [
-      toolbarFeatureButtonsGroupWithItems([
+      toolbarAddDropdownGroupWithItems([
         {
           ChildComponent: IconFeatureIcon,
           key: 'insertIcon',
@@ -36,7 +36,7 @@ export const IconFeatureClient = createClientFeature({
   },
   toolbarInline: {
     groups: [
-      toolbarFeatureButtonsGroupWithItems([
+      toolbarAddDropdownGroupWithItems([
         {
           ChildComponent: IconFeatureIcon,
           key: 'insertIcon',

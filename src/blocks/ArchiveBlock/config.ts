@@ -5,7 +5,6 @@ import { noHorizontalSpacingField } from '@/fields/noHorizontalSpacing'
 
 import {
   FixedToolbarFeature,
-  HeadingFeature,
   InlineToolbarFeature,
   lexicalEditor,
 } from '@payloadcms/richtext-lexical'
