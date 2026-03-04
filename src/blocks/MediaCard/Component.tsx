@@ -93,7 +93,10 @@ export const MediaCardBlock: React.FC<Props> = ({
         )}
         {shouldLinkWholeCard && (
           <div className="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center pointer-events-none">
-            <i className="fa-solid fa-magnifying-glass text-3xl" style={{ color: 'var(--accent)' }} />
+            <i
+              className="fa-solid fa-magnifying-glass text-3xl"
+              style={{ color: 'var(--accent)' }}
+            />
           </div>
         )}
       </picture>
