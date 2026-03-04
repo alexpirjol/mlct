@@ -110,9 +110,11 @@ const buildMediaCardBlock = (opts: { forLexical?: boolean } = {}): Block => ({
       label: 'Enable Call to Action',
     },
     link({
+      labelRequired: false,
       overrides: {
         name: 'ctaLink',
         label: 'CTA Link',
+        required: false,
         admin: {
           condition: (data, siblingData) => siblingData?.enableCTA,
         },

@@ -163,7 +163,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
   console.log('show', showPhoneNumber)
 
   return (
-    <header className={styles['header-root']}>
+    <header className={cn(styles['header-root'], 'relative')}>
       <div
         className={cn(
           styles['header-inner'],
@@ -191,18 +191,20 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
         </div>
       </div>
       {/* Mobile nav dropdown */}
-      <nav
-        className={cn(
-          styles['header-mobile-nav'],
-          'lg:hidden overflow-hidden transition-all duration-300 ease-in-out',
-          mobileOpen ? 'max-h-[800px] opacity-100 py-2' : 'max-h-0 opacity-0 py-0',
-        )}
-        aria-hidden={!mobileOpen}
-      >
-        <ul>
-          <NavItems navItems={navItems} pathname={pathname} isMobile />
-        </ul>
-      </nav>
+      <div className="lg:hidden absolute top-full left-0 right-0 z-50 overflow-hidden">
+        <nav
+          className={cn(
+            styles['header-mobile-nav'],
+            'transition-all duration-300 ease-in-out',
+            mobileOpen ? 'translate-y-0 opacity-100' : '-translate-y-full opacity-0',
+          )}
+          aria-hidden={!mobileOpen}
+        >
+          <ul>
+            <NavItems navItems={navItems} pathname={pathname} isMobile />
+          </ul>
+        </nav>
+      </div>
     </header>
   )
 }

@@ -34,8 +34,11 @@ export const MediaCardBlock: React.FC<Props> = ({
   const { card, link } = useClickableCard({})
 
   // Determine if we should link the whole card
-  // Link whole card if CTA is enabled, has a link, but no label
-  const shouldLinkWholeCard = enableCTA && ctaLink?.url && !ctaLink?.label
+  // Link whole card if CTA is enabled, has a link target, but no label
+  const hasLinkTarget =
+    (ctaLink?.type === 'custom' && !!ctaLink?.url) ||
+    (ctaLink?.type === 'reference' && !!ctaLink?.reference?.value)
+  const shouldLinkWholeCard = enableCTA && hasLinkTarget && !ctaLink?.label
 
   // Determine the href for whole card linking
   let wholeCardHref = ''

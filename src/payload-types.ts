@@ -818,7 +818,7 @@ export interface MediaCardBlock {
           value: string | Project;
         } | null);
     url?: string | null;
-    label: string;
+    label?: string | null;
     /**
      * Choose how the link should be rendered.
      */
