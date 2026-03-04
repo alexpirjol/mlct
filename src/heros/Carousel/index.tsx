@@ -115,7 +115,8 @@ export const Carousel: React.FC<Partial<NonNullable<Page['hero']>>> = ({
               : false
           }
           className={cn(
-            'mySwiper h-full w-full',
+            'mySwiper w-full',
+            !isCentered && 'h-full',
             animation && 'animation-enabled',
             isCentered && 'centered-mode',
           )}
