@@ -200,87 +200,75 @@
   .prose-invert {
     --tw-prose-hr: var(--accent);
     --tw-prose-invert-hr: var(--accent);
+    --tw-prose-headings: var(--accent);
   }
 }
 
 @plugin "@tailwindcss/typography";
 
-/* Heading styles - placed after typography plugin to ensure priority */
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-weight: 400 !important;
-  color: var(--accent) !important;
+/* Base heading color/weight — in @layer base so Tailwind utilities can override */
+@layer base {
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-weight: 400;
+    color: var(--accent);
+  }
 }
 
+/* Heading sizes & spacing — placed after typography plugin so combined selectors win by cascade */
 h1,
 .prose h1,
 .md\:prose-md h1 {
-  font-size: 4.6875rem !important;
-
-  font-weight: 400 !important;
-  margin-top: 0 !important;
-  margin-bottom: 0.5rem !important;
+  font-size: 4.6875rem;
+  font-weight: 400;
+  margin-top: 0;
+  margin-bottom: 0.5rem;
 }
 
 h2,
 .prose h2,
 .md\:prose-md h2 {
-  font-size: 3.75rem !important;
-
-  font-weight: 400 !important;
-  margin-top: 0 !important;
-  margin-bottom: 0.5rem !important;
+  font-size: 3.75rem;
+  font-weight: 400;
+  margin-top: 0;
+  margin-bottom: 0.5rem;
 }
 
 h3,
 .prose h3,
 .md\:prose-md h3 {
-  font-size: 1.75rem !important;
-  margin-top: 0 !important;
-  margin-bottom: 0.5rem !important;
+  font-size: 1.75rem;
+  margin-top: 0;
+  margin-bottom: 0.5rem;
 }
 
 h4,
 .prose h4,
 .md\:prose-md h4 {
-  font-size: 1.5rem !important;
-  margin-top: 0 !important;
-  margin-bottom: 0.5rem !important;
+  font-size: 1.5rem;
+  margin-top: 0;
+  margin-bottom: 0.5rem;
 }
 
 h5,
 .prose h5,
 .md\:prose-md h5 {
-  font-size: 1.25rem !important;
-  margin-top: 0 !important;
-  margin-bottom: 0.5rem !important;
+  font-size: 1.25rem;
+  margin-top: 0;
+  margin-bottom: 0.5rem;
 }
 
 h6,
 .prose h6,
 .md\:prose-md h6 {
-  font-size: 1rem !important;
-  margin-top: 0 !important;
-  margin-bottom: 0.5rem !important;
-}
-
-.prose h1,
-.prose h2,
-.prose h3,
-.prose h4,
-.prose h5,
-.prose h6,
-.md\:prose-md h1,
-.md\:prose-md h2,
-.md\:prose-md h3,
-.md\:prose-md h4,
-.md\:prose-md h5,
-.md\:prose-md h6 {
-  color: var(--accent) !important;
+  font-size: 1rem;
+  margin-top: 0;
+  margin-bottom: 0.5rem;
 }
 
 @media (max-width: 768px) {
@@ -288,25 +276,25 @@ h6,
   h1,
   .prose h1,
   .md\:prose-md h1 {
-    font-size: 2.5rem !important;
+    font-size: 2.5rem;
   }
 
   h2,
   .prose h2,
   .md\:prose-md h2 {
-    font-size: 2rem !important;
+    font-size: 2rem;
   }
 
   h3,
   .prose h3,
   .md\:prose-md h3 {
-    font-size: 1.5rem !important;
+    font-size: 1.5rem;
   }
 
   h4,
   .prose h4,
   .md\:prose-md h4 {
-    font-size: 1.25rem !important;
+    font-size: 1.25rem;
   }
 }
 

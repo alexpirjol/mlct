@@ -93,10 +93,15 @@ export const MediaCardBlock: React.FC<Props> = ({
         )}
         {shouldLinkWholeCard && (
           <div className="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center pointer-events-none">
-            <i
-              className="fa-solid fa-magnifying-glass text-3xl"
-              style={{ color: 'var(--accent)' }}
-            />
+            <div
+              className="flex items-center justify-center rounded-full w-14 h-14"
+              style={{ backgroundColor: 'var(--color-secondary)' }}
+            >
+              <i
+                className="fa-solid fa-magnifying-glass text-xl"
+                style={{ color: 'var(--accent)' }}
+              />
+            </div>
           </div>
         )}
       </picture>
@@ -105,7 +110,9 @@ export const MediaCardBlock: React.FC<Props> = ({
 
   const renderContent = () => {
     // Determine padding based on noBackground and displayType
-    const paddingClass = 'p-6'
+    const noVerticalBgLayout =
+      noBackground && (displayType === 'imageTop' || displayType === 'imageBottom')
+    const paddingClass = noVerticalBgLayout ? 'pt-4 pb-4 pr-4' : 'p-6'
 
     // Don't apply container (horizontal padding) when noBackground with vertical layout
     const shouldApplyContainer =
@@ -119,17 +126,7 @@ export const MediaCardBlock: React.FC<Props> = ({
           container: shouldApplyContainer,
         })}
       >
-        {title && (
-          <h3 className="text-2xl font-semibold">
-            {shouldLinkWholeCard ? (
-              <Link href={wholeCardHref} ref={link.ref} className="hover:underline">
-                {title}
-              </Link>
-            ) : (
-              title
-            )}
-          </h3>
-        )}
+        {title && <h3 className="text-2xl font-semibold text-white">{title}</h3>}
         {richText && (
           <div className="prose dark:prose-invert max-w-none">
             <RichText data={richText} enableGutter={false} />
@@ -161,6 +158,11 @@ export const MediaCardBlock: React.FC<Props> = ({
         )}
         ref={shouldLinkWholeCard ? card.ref : undefined}
       >
+        {shouldLinkWholeCard && (
+          <Link href={wholeCardHref} ref={link.ref} className="sr-only" tabIndex={-1} aria-hidden>
+            {title}
+          </Link>
+        )}
         {displayType === 'imageTop' && (
           <>
             {renderMedia()}
