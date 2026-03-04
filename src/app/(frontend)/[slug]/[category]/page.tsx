@@ -36,9 +36,7 @@ export default async function Page({ params: paramsPromise }: Args) {
       <PayloadRedirects disableNotFound url={url} />
       {draft && <LivePreviewListener />}
       <PostHero project={categoryDoc} />
-      <div className="container">
-        {categoryDoc.layout && <RenderBlocks blocks={categoryDoc.layout} />}
-      </div>
+      {categoryDoc.layout && <RenderBlocks blocks={categoryDoc.layout} />}
     </article>
   )
 }

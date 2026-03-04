@@ -9,10 +9,6 @@ export const PostHero: React.FC<{
 }> = ({ project }) => {
   const { heroImage, title } = project || {}
 
-  if (!heroImage) {
-    return null
-  }
-
   return (
     <div className="relative -mt-[10.4rem] flex items-end">
       <div className="container z-10 relative lg:grid lg:grid-cols-[1fr_48rem_1fr] text-white pb-8 hero-text">

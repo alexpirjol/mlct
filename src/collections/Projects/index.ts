@@ -1,25 +1,19 @@
 import type { CollectionConfig } from 'payload'
 
-import {
-  BlocksFeature,
-  FixedToolbarFeature,
-  HeadingFeature,
-  HorizontalRuleFeature,
-  InlineToolbarFeature,
-  lexicalEditor,
-} from '@payloadcms/richtext-lexical'
-
 import { authenticated } from '../../access/authenticated'
 import { authenticatedOrPublished } from '../../access/authenticatedOrPublished'
-import { BannerForLexical } from '../../blocks/Banner/config'
-import { CodeForLexical } from '../../blocks/Code/config'
-import { MediaBlockForLexical } from '../../blocks/MediaBlock/config'
-import { GalleryBlockForLexical } from '@/blocks/GalleryBlock/config'
-import { MapBlockForLexical } from '@/blocks/MapBlock/config'
-import { MediaCardBlockForLexical } from '@/blocks/MediaCard/config'
-import { ContactInfoBlockForLexical } from '@/blocks/ContactInfoBlock/config'
 import { generatePreviewPath } from '../../utilities/generatePreviewPath'
 import { revalidateDelete, revalidateProject } from './hooks/revalidateProject'
+import { autoInsertProjectBlocks } from './hooks/autoInsertProjectBlocks'
+
+import { Archive } from '../../blocks/ArchiveBlock/config'
+import { Content } from '../../blocks/Content/config'
+import { FormBlock } from '../../blocks/Form/config'
+import { MediaBlock } from '../../blocks/MediaBlock/config'
+import { GalleryBlock } from '@/blocks/GalleryBlock/config'
+import { MapBlock } from '@/blocks/MapBlock/config'
+import { MediaCardBlock } from '@/blocks/MediaCard/config'
+import { Carousel } from '@/blocks/CarouselBlock/config'
 
 import {
   MetaDescriptionField,
@@ -86,29 +80,27 @@ export const Projects: CollectionConfig<'projects'> = {
               type: 'upload',
               relationTo: 'media',
             },
+          ],
+          label: 'Hero',
+        },
+        {
+          fields: [
             {
-              name: 'content',
-              type: 'richText',
-              editor: lexicalEditor({
-                features: ({ rootFeatures }) => {
-                  return [
-                    ...rootFeatures,
-                    BlocksFeature({
-                      blocks: [
-                        BannerForLexical,
-                        CodeForLexical,
-                        MediaBlockForLexical,
-                        GalleryBlockForLexical,
-                        MapBlockForLexical,
-                        MediaCardBlockForLexical,
-                        ContactInfoBlockForLexical,
-                      ],
-                    }),
-                  ]
-                },
-              }),
-              label: false,
-              required: true,
+              name: 'layout',
+              type: 'blocks',
+              blocks: [
+                Content,
+                MediaBlock,
+                Archive,
+                FormBlock,
+                GalleryBlock,
+                MapBlock,
+                MediaCardBlock,
+                Carousel,
+              ],
+              admin: {
+                initCollapsed: false,
+              },
             },
           ],
           label: 'Content',
@@ -160,6 +152,7 @@ export const Projects: CollectionConfig<'projects'> = {
     slugField(),
   ],
   hooks: {
+    beforeChange: [autoInsertProjectBlocks],
     afterChange: [revalidateProject],
     afterDelete: [revalidateDelete],
   },

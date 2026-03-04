@@ -150,11 +150,14 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
   )
 
   const PhoneNumber = () => (
-    <div className="flex-1 flex justify-center items-center gap-2">
-      <span className="icon-wrapper circle-no">
+    <div className="flex-1 flex justify-center items-center gap-2 group">
+      <span className="icon-wrapper circle-no text-white group-hover:text-yellow-400 transition-colors">
         <i className={`fa fa-mobile-alt fas text-xl`} aria-hidden="true"></i>
       </span>
-      <a className="text-xl" href={`tel:${phoneNumber}`}>
+      <a
+        className="text-xl text-white group-hover:text-yellow-400 transition-colors"
+        href={`tel:${phoneNumber}`}
+      >
         {phoneNumber && formatPhoneNumber(phoneNumber)}
       </a>
     </div>

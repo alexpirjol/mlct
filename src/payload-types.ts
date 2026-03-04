@@ -416,21 +416,9 @@ export interface Project {
   id: string;
   title: string;
   heroImage?: (string | null) | Media;
-  content: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  };
+  layout?:
+    | (ContentBlock | MediaBlock | ArchiveBlock | FormBlock | GalleryBlock | MapBlock | MediaCardBlock | Carousel)[]
+    | null;
   category: string | Category;
   meta?: {
     title?: string | null;
@@ -448,33 +436,6 @@ export interface Project {
   updatedAt: string;
   createdAt: string;
   _status?: ('draft' | 'published') | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "categories".
- */
-export interface Category {
-  id: string;
-  title: string;
-  heroImage?: (string | null) | Media;
-  layout?:
-    | (ContentBlock | MediaBlock | ArchiveBlock | FormBlock | GalleryBlock | MapBlock | MediaCardBlock | Carousel)[]
-    | null;
-  meta?: {
-    title?: string | null;
-    /**
-     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
-     */
-    image?: (string | null) | Media;
-    description?: string | null;
-  };
-  /**
-   * When enabled, the slug will auto-generate from the title field on save and autosave.
-   */
-  generateSlug?: boolean | null;
-  slug: string;
-  updatedAt: string;
-  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -531,6 +492,33 @@ export interface ArchiveBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'archive';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "categories".
+ */
+export interface Category {
+  id: string;
+  title: string;
+  heroImage?: (string | null) | Media;
+  layout?:
+    | (ContentBlock | MediaBlock | ArchiveBlock | FormBlock | GalleryBlock | MapBlock | MediaCardBlock | Carousel)[]
+    | null;
+  meta?: {
+    title?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (string | null) | Media;
+    description?: string | null;
+  };
+  /**
+   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   */
+  generateSlug?: boolean | null;
+  slug: string;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -891,6 +879,9 @@ export interface Carousel {
  * via the `definition` "ContactInfoBlock".
  */
 export interface ContactInfoBlock {
+  background?: string | null;
+  noVerticalSpacing?: boolean | null;
+  noHorizontalSpacing?: boolean | null;
   title?: string | null;
   id?: string | null;
   blockName?: string | null;
@@ -1422,7 +1413,18 @@ export interface CarouselSelect<T extends boolean = true> {
 export interface ProjectsSelect<T extends boolean = true> {
   title?: T;
   heroImage?: T;
-  content?: T;
+  layout?:
+    | T
+    | {
+        content?: T | ContentBlockSelect<T>;
+        mediaBlock?: T | MediaBlockSelect<T>;
+        archive?: T | ArchiveBlockSelect<T>;
+        formBlock?: T | FormBlockSelect<T>;
+        galleryBlock?: T | GalleryBlockSelect<T>;
+        mapBlock?: T | MapBlockSelect<T>;
+        mediaCard?: T | MediaCardBlockSelect<T>;
+        carousel?: T | CarouselSelect<T>;
+      };
   category?: T;
   meta?:
     | T

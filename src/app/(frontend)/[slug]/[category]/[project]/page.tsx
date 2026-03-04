@@ -6,6 +6,7 @@ import { getPayload } from 'payload'
 import { draftMode } from 'next/headers'
 import React, { cache } from 'react'
 import RichText from '@/components/RichText'
+import { RenderBlocks } from '@/blocks/RenderBlocks'
 
 import type { Project } from '@/payload-types'
 
@@ -68,9 +69,7 @@ export default async function Project({ params: paramsPromise }: Args) {
 
       <PostHero project={projectDoc} />
 
-      <div className="container mt-16">
-        <RichText className=" mx-auto" data={projectDoc?.content} enableGutter={false} />
-      </div>
+      {projectDoc.layout && <RenderBlocks blocks={projectDoc.layout} />}
     </article>
   )
 }

@@ -5,6 +5,7 @@ import { authenticated } from '../../access/authenticated'
 import { slugField } from 'payload'
 import { generatePreviewPath } from '../../utilities/generatePreviewPath'
 import { Archive } from '../../blocks/ArchiveBlock/config'
+import { autoInsertCategoryArchive } from './hooks/autoInsertArchive'
 import { Content } from '../../blocks/Content/config'
 import { FormBlock } from '../../blocks/Form/config'
 import { MediaBlock } from '../../blocks/MediaBlock/config'
@@ -32,10 +33,6 @@ export const Categories: CollectionConfig = {
   defaultPopulate: {
     title: true,
     slug: true,
-    meta: {
-      image: true,
-      description: true,
-    },
   },
   admin: {
     useAsTitle: 'title',
@@ -125,4 +122,7 @@ export const Categories: CollectionConfig = {
     },
     slugField(),
   ],
+  hooks: {
+    afterChange: [autoInsertCategoryArchive],
+  },
 }
