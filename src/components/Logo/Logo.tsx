@@ -1,5 +1,5 @@
-import clsx from 'clsx'
 import React from 'react'
+import { cn } from '@/utilities/ui'
 
 interface Props {
   className?: string
@@ -23,7 +23,7 @@ export const Logo = (props: Props) => {
       loading={loading}
       fetchPriority={priority}
       decoding="async"
-      className={clsx(' w-full h-[70px]', className)}
+      className={cn('w-auto h-[70px]', className)}
       src={url as string}
     />
   )

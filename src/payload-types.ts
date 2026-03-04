@@ -1877,6 +1877,7 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
  */
 export interface Header {
   id: string;
+  showPhoneNumber?: boolean | null;
   navItems?:
     | {
         link: {
@@ -2000,6 +2001,7 @@ export interface Setting {
  * via the `definition` "header_select".
  */
 export interface HeaderSelect<T extends boolean = true> {
+  showPhoneNumber?: T;
   navItems?:
     | T
     | {

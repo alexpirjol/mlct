@@ -7,6 +7,7 @@ import styles from './Component.module.css'
 import { cn } from '@/utilities/ui'
 import { Logo } from '@/components/Logo/Logo'
 import { CMSLink } from '@/components/Link'
+import { formatPhoneNumber } from '@/utilities/formatPhoneNumber'
 
 import type { Header as HeaderType, Setting as SettingsType } from '@/payload-types'
 
@@ -113,6 +114,8 @@ const NavItems: React.FC<NavItemsProps> = ({ navItems, pathname, isMobile = fals
 export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
   const pathname = usePathname()
   const navItems = data.navItems || []
+  const phoneNumber = data.contact?.phone
+  const showPhoneNumber = data.showPhoneNumber
   const [mobileOpen, setMobileOpen] = useState(false)
 
   useEffect(() => {
@@ -146,12 +149,31 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
     </button>
   )
 
+  const PhoneNumber = () => (
+    <div className="flex-1 flex justify-center items-center gap-2">
+      <span className="icon-wrapper circle-no">
+        <i className={`fa fa-mobile-alt fas text-xl`} aria-hidden="true"></i>
+      </span>
+      <a className="text-xl" href={`tel:${phoneNumber}`}>
+        {phoneNumber && formatPhoneNumber(phoneNumber)}
+      </a>
+    </div>
+  )
+
+  console.log('show', showPhoneNumber)
+
   return (
     <header className={styles['header-root']}>
-      <div className={cn(styles['header-inner'], 'p-4 lg:px-10 lg:py-0 min-h-[70px] lg:min-h-0')}>
+      <div
+        className={cn(
+          styles['header-inner'],
+          'p-4 lg:px-10 lg:py-0 min-h-[70px] lg:min-h-0 items-center justify-between',
+        )}
+      >
         <Link href="/" className={styles['header-logo']}>
-          <Logo loading="eager" priority="high" url={(data as any)?.generalSttings.logo?.url} />
+          <Logo loading="eager" priority="high" url={(data as any)?.generalSttings.logo?.url} className="h-[45px] lg:h-[70px]" />
         </Link>
+        {showPhoneNumber && <PhoneNumber />}
         {/* Desktop nav */}
         <nav className={cn(styles['header-desktop-nav'], 'hidden lg:flex')}>
           <ul className={styles['header-nav']}>

@@ -10,6 +10,11 @@ export const Header: GlobalConfig = {
   },
   fields: [
     {
+      name: 'showPhoneNumber',
+      type: 'checkbox',
+      defaultValue: true,
+    },
+    {
       name: 'navItems',
       type: 'array',
       fields: [
