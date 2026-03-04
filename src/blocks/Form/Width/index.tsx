@@ -19,7 +19,7 @@ export const Width: React.FC<{
 
   return (
     <div
-      className={className}
+      className={`form-field-width${className ? ` ${className}` : ''}`}
       style={{
         flex: `0 0 ${calculateWidth()}`,
         maxWidth: calculateWidth(),

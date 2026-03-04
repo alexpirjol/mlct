@@ -6,7 +6,6 @@ import { getPayload } from 'payload'
 import React from 'react'
 import { Search } from '@/search/Component'
 import PageClient from './page.client'
-import { CardPostData } from '@/components/ProjectCard'
 
 type Args = {
   searchParams: Promise<{

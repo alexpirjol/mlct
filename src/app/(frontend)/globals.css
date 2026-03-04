@@ -482,6 +482,14 @@ html[data-theme='light'] {
   margin-bottom: 0;
 }
 
+/* Form field widths collapse to 100% on mobile portrait */
+@media (max-width: 767px) and (orientation: portrait) {
+  .form-field-width {
+    flex: 0 0 100% !important;
+    max-width: 100% !important;
+  }
+}
+
 /* Hero text should be white */
 .hero-text h1,
 .hero-text h2,
