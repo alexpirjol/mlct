@@ -1,4 +1,5 @@
 import type { Block, Field } from 'payload'
+import { normalizeRichText } from '@/hooks/normalizeRichText'
 
 import {
   BlocksFeature,
@@ -54,6 +55,7 @@ const columnFields: Field[] = [
   {
     name: 'richText',
     type: 'richText',
+    hooks: { beforeChange: [normalizeRichText] },
     editor: lexicalEditor({
       features: ({ rootFeatures }) => {
         return [

@@ -1,4 +1,5 @@
 import type { CollectionConfig } from 'payload'
+import { normalizeRichText } from '@/hooks/normalizeRichText'
 
 import {
   FixedToolbarFeature,
@@ -31,6 +32,7 @@ export const Media: CollectionConfig = {
     {
       name: 'caption',
       type: 'richText',
+      hooks: { beforeChange: [normalizeRichText] },
       editor: lexicalEditor({
         features: ({ rootFeatures }) => {
           return [...rootFeatures, FixedToolbarFeature(), InlineToolbarFeature()]

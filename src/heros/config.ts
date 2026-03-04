@@ -1,4 +1,5 @@
 import type { GroupField } from 'payload'
+import { normalizeRichText } from '@/hooks/normalizeRichText'
 
 import {
   FixedToolbarFeature,
@@ -155,6 +156,7 @@ export const hero: GroupField = {
         },
       }),
       label: false,
+      hooks: { beforeChange: [normalizeRichText] },
       admin: {
         condition: (_, { type } = {}) => type !== 'carousel',
       },
@@ -170,6 +172,7 @@ export const hero: GroupField = {
           type: 'richText',
           label: false,
           required: false,
+          hooks: { beforeChange: [normalizeRichText] },
           editor: lexicalEditor({
             features: ({ rootFeatures }) => [...rootFeatures],
           }),

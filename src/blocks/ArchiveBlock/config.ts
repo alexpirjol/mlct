@@ -1,4 +1,5 @@
 import type { Block } from 'payload'
+import { normalizeRichText } from '@/hooks/normalizeRichText'
 import { colorPickerField } from '@/fields/colorPicker'
 import { noVerticalSpacingField } from '@/fields/noVerticalSpacing'
 import { noHorizontalSpacingField } from '@/fields/noHorizontalSpacing'
@@ -19,6 +20,7 @@ export const Archive: Block = {
     {
       name: 'introContent',
       type: 'richText',
+      hooks: { beforeChange: [normalizeRichText] },
       editor: lexicalEditor({
         features: ({ rootFeatures }) => {
           return [...rootFeatures, FixedToolbarFeature(), InlineToolbarFeature()]

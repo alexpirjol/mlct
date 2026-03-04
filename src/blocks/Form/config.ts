@@ -1,4 +1,5 @@
 import type { Block } from 'payload'
+import { normalizeRichText } from '@/hooks/normalizeRichText'
 import { colorPickerField } from '@/fields/colorPicker'
 import { noVerticalSpacingField } from '@/fields/noVerticalSpacing'
 import { noHorizontalSpacingField } from '@/fields/noHorizontalSpacing'
@@ -31,6 +32,7 @@ export const FormBlock: Block = {
     {
       name: 'introContent',
       type: 'richText',
+      hooks: { beforeChange: [normalizeRichText] },
       admin: {
         condition: (_, { enableIntro }) => Boolean(enableIntro),
       },
