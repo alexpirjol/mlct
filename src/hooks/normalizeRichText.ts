@@ -1,26 +1,45 @@
 import type { FieldHook } from 'payload'
 
+const emptyLexical = {
+  root: {
+    children: [
+      {
+        children: [],
+        direction: null,
+        format: '',
+        indent: 0,
+        type: 'paragraph',
+        version: 1,
+      },
+    ],
+    direction: null,
+    format: '',
+    indent: 0,
+    type: 'root',
+    version: 1,
+  },
+}
+
 /**
  * Payload beforeChange hook for richText fields.
  *
- * Lexical always leaves `{ root: { children: [{ type: 'paragraph', children: [] }] } }`
- * when the user clears all content instead of setting the value to null.
- * This hook normalises that back to null so that `{richText && …}` guards work correctly.
+ * Returning null crashes Payload's afterRead traversal, so we normalise
+ * empty/null content to a safe empty-paragraph structure before saving.
+ * The frontend uses isEmptyLexical() to detect and hide this state at render time.
  */
 export const normalizeRichText: FieldHook = ({ value }) => {
-  if (!value) return null
+  if (!value) return emptyLexical
 
   const children = value?.root?.children
-  if (!Array.isArray(children) || children.length === 0) return null
+  if (!Array.isArray(children) || children.length === 0) return emptyLexical
 
-  // Single childless paragraph = effectively empty
   if (
     children.length === 1 &&
     children[0].type === 'paragraph' &&
     Array.isArray(children[0].children) &&
     children[0].children.length === 0
   ) {
-    return null
+    return emptyLexical
   }
 
   return value

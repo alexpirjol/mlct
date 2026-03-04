@@ -19,6 +19,7 @@ import {
   EffectFlip,
 } from 'swiper/modules'
 import RichText from '@/components/RichText'
+import { isEmptyLexical } from '@/utilities/isEmptyLexical'
 
 import { Media } from '@/components/Media'
 
@@ -135,7 +136,7 @@ export const Carousel: React.FC<Partial<NonNullable<Page['hero']>>> = ({
                 data-zoom={!isCentered && i % 2 === 0 ? 'in' : 'out'}
               >
                 <div className={isCentered ? 'relative overflow-hidden rounded-lg' : undefined}>
-                  {richText && (
+                  {!isEmptyLexical(richText) && (
                     <div
                       className={cn(
                         'z-20 flex items-center justify-center pointer-events-none carousel-hero-text',
@@ -151,7 +152,7 @@ export const Carousel: React.FC<Partial<NonNullable<Page['hero']>>> = ({
                             isCentered ? undefined : 'max-w-[36.5rem] mx-auto md:text-center'
                           }
                         >
-                          <RichText className="mb-6" data={richText} enableGutter={false} />
+                          <RichText className="mb-6" data={richText!} enableGutter={false} />
                         </div>
                       </div>
                     </div>

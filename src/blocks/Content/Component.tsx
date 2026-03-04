@@ -1,6 +1,7 @@
 import { cn } from '@/utilities/ui'
 import React from 'react'
 import RichText from '@/components/RichText'
+import { isEmptyLexical } from '@/utilities/isEmptyLexical'
 
 import type { ContentBlock as ContentBlockProps } from '@/payload-types'
 
@@ -35,7 +36,7 @@ export const ContentBlock: React.FC<
                 })}
                 key={index}
               >
-                {richText && <RichText data={richText} enableGutter={false} />}
+                {!isEmptyLexical(richText) && <RichText data={richText!} enableGutter={false} />}
 
                 {enableLink && <CMSLink {...link} />}
               </div>

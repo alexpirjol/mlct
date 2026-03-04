@@ -4,6 +4,7 @@ import { cn } from '@/utilities/ui'
 import useClickableCard from '@/utilities/useClickableCard'
 import Link from 'next/link'
 import RichText from '@/components/RichText'
+import { isEmptyLexical } from '@/utilities/isEmptyLexical'
 import { CMSLink } from '@/components/Link'
 
 import type { MediaCardBlock as MediaCardBlockProps } from '@/payload-types'
@@ -126,10 +127,17 @@ export const MediaCardBlock: React.FC<Props> = ({
           container: shouldApplyContainer,
         })}
       >
-        {title && <h3 className="text-2xl font-semibold text-white">{title}</h3>}
-        {richText && (
+        {title && (
+          <h3
+            className="text-2xl font-semibold"
+            style={noBackground ? { color: 'white' } : undefined}
+          >
+            {title}
+          </h3>
+        )}
+        {!isEmptyLexical(richText) && (
           <div className="prose dark:prose-invert max-w-none">
-            <RichText data={richText} enableGutter={false} />
+            <RichText data={richText!} enableGutter={false} />
           </div>
         )}
         {enableCTA && ctaLink?.label && ctaLink && (

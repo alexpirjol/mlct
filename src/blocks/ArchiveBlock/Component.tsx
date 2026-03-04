@@ -4,6 +4,7 @@ import configPromise from '@payload-config'
 import { getPayload } from 'payload'
 import React from 'react'
 import RichText from '@/components/RichText'
+import { isEmptyLexical } from '@/utilities/isEmptyLexical'
 
 import { CollectionArchive } from '@/components/CollectionArchive'
 
@@ -82,9 +83,9 @@ export const ArchiveBlock: React.FC<
 
   return (
     <div className={noHorizontalSpacing ? undefined : 'container'} id={`block-${id}`}>
-      {introContent && (
+      {!isEmptyLexical(introContent) && (
         <div className=" mb-8">
-          <RichText className="ms-0 " data={introContent} enableGutter={false} />
+          <RichText className="ms-0 " data={introContent!} enableGutter={false} />
         </div>
       )}
       <CollectionArchive items={items} relationTo={relationTo || 'projects'} />

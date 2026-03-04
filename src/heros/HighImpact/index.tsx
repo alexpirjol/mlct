@@ -6,6 +6,7 @@ import type { Page } from '@/payload-types'
 
 import { Media } from '@/components/Media'
 import RichText from '@/components/RichText'
+import { isEmptyLexical } from '@/utilities/isEmptyLexical'
 
 export const HighImpactHero: React.FC<Partial<NonNullable<Page['hero']>>> = ({
   media,
@@ -24,7 +25,9 @@ export const HighImpactHero: React.FC<Partial<NonNullable<Page['hero']>>> = ({
     >
       <div className="container mb-8 z-10 relative flex items-center justify-center hero-text">
         <div className="max-w-[36.5rem] md:text-center">
-          {richText && <RichText className="mb-6" data={richText} enableGutter={false} />}
+          {!isEmptyLexical(richText) && (
+            <RichText className="mb-6" data={richText!} enableGutter={false} />
+          )}
         </div>
       </div>
       <div className="min-h-[50vh] md:min-h-[80vh] select-none">

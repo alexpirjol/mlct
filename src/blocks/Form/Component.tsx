@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import React, { useCallback, useState } from 'react'
 import { useForm, FormProvider } from 'react-hook-form'
 import RichText from '@/components/RichText'
+import { isEmptyLexical } from '@/utilities/isEmptyLexical'
 import { Button } from '@/components/ui/button'
 import type { DefaultTypedEditorState } from '@payloadcms/richtext-lexical'
 
@@ -117,8 +118,8 @@ export const FormBlock: React.FC<
 
   return (
     <div className={noHorizontalSpacing ? undefined : 'container lg:max-w-[48rem]'}>
-      {enableIntro && introContent && !hasSubmitted && (
-        <RichText className="mb-8 lg:mb-12" data={introContent} enableGutter={false} />
+      {enableIntro && !isEmptyLexical(introContent) && !hasSubmitted && (
+        <RichText className="mb-8 lg:mb-12" data={introContent!} enableGutter={false} />
       )}
       <div>
         <FormProvider {...formMethods}>
