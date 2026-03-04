@@ -171,7 +171,12 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
         )}
       >
         <Link href="/" className={styles['header-logo']}>
-          <Logo loading="eager" priority="high" url={(data as any)?.generalSttings.logo?.url} className="h-[45px] lg:h-[70px]" />
+          <Logo
+            loading="eager"
+            priority="high"
+            url={(data as any)?.generalSttings.logo?.url}
+            className="h-[45px] lg:h-[70px]"
+          />
         </Link>
         {showPhoneNumber && <PhoneNumber />}
         {/* Desktop nav */}
