@@ -1,7 +1,7 @@
 'use client'
 import type { StaticImageData } from 'next/image'
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 import Lightbox from 'yet-another-react-lightbox'
 import Captions from 'yet-another-react-lightbox/plugins/captions'
@@ -44,6 +44,16 @@ export const GalleryBlock: React.FC<Props> = (props) => {
     noHorizontalSpacing,
   } = props
   const [index, setIndex] = useState(-1)
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    // Disable thumbnails only on mobile landscape (portrait mobile and desktop keep them)
+    const mq = window.matchMedia('(orientation: landscape) and (max-width: 1024px)')
+    const check = () => setIsMobile(mq.matches)
+    check()
+    mq.addEventListener('change', check)
+    return () => mq.removeEventListener('change', check)
+  }, [])
 
   const slides = Array.isArray(media)
     ? media
@@ -106,7 +116,7 @@ export const GalleryBlock: React.FC<Props> = (props) => {
         slides={slides}
         open={index >= 0}
         close={() => setIndex(-1)}
-        plugins={[Captions, Fullscreen, Slideshow, Thumbnails, Video, Zoom, Share]}
+        plugins={[Captions, Fullscreen, Slideshow, ...(isMobile ? [] : [Thumbnails]), Video, Zoom, Share]}
       />
     </div>
   )
