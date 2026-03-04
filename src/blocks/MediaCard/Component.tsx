@@ -85,7 +85,16 @@ export const MediaCardBlock: React.FC<Props> = ({
     return (
       <picture className={pictureClasses} style={fixedHeightStyle}>
         {media && typeof media === 'object' && media?.url && (
-          <img className="w-full h-full object-cover" src={media.url} alt={title ?? 'Media'} />
+          <img
+            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+            src={media.url}
+            alt={title ?? 'Media'}
+          />
+        )}
+        {shouldLinkWholeCard && (
+          <div className="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center pointer-events-none">
+            <i className="fa-solid fa-magnifying-glass text-3xl" style={{ color: 'var(--accent)' }} />
+          </div>
         )}
       </picture>
     )
@@ -145,7 +154,7 @@ export const MediaCardBlock: React.FC<Props> = ({
         className={cn(
           'overflow-hidden',
           !noBackground && 'bg-card',
-          shouldLinkWholeCard && 'hover:cursor-pointer',
+          shouldLinkWholeCard && 'hover:cursor-pointer group',
         )}
         ref={shouldLinkWholeCard ? card.ref : undefined}
       >
