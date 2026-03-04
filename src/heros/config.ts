@@ -187,7 +187,7 @@ export const hero: GroupField = {
     {
       name: 'media',
       type: 'upload',
-      hasMany: true,
+      hasMany: false,
       admin: {
         condition: (_, { type } = {}) => ['highImpact', 'mediumImpact'].includes(type),
       },

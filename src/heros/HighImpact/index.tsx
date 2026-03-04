@@ -29,7 +29,7 @@ export const HighImpactHero: React.FC<Partial<NonNullable<Page['hero']>>> = ({
       </div>
       <div className="min-h-[50vh] md:min-h-[80vh] select-none">
         {media && typeof media === 'object' && (
-          <Media fill imgClassName="-z-10 object-cover" priority resource={media[0]} />
+          <Media fill imgClassName="-z-10 object-cover" priority resource={media} />
         )}
       </div>
     </div>

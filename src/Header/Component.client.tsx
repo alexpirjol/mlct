@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import styles from './Component.module.css'
 import { cn } from '@/utilities/ui'
 import { Logo } from '@/components/Logo/Logo'
@@ -117,6 +117,18 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
   const phoneNumber = data.contact?.phone
   const showPhoneNumber = data.showPhoneNumber
   const [mobileOpen, setMobileOpen] = useState(false)
+  const headerRef = useRef<HTMLElement>(null)
+
+  // Close menu when clicking outside the header
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (mobileOpen && headerRef.current && !headerRef.current.contains(e.target as Node)) {
+        setMobileOpen(false)
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => document.removeEventListener('mousedown', handleClickOutside)
+  }, [mobileOpen])
 
   useEffect(() => {
     setMobileOpen(false)
@@ -163,10 +175,8 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
     </div>
   )
 
-  console.log('show', showPhoneNumber)
-
   return (
-    <header className={cn(styles['header-root'], 'relative')}>
+    <header ref={headerRef} className={cn(styles['header-root'], 'relative')}>
       <div
         className={cn(
           styles['header-inner'],

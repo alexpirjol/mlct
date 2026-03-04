@@ -205,7 +205,7 @@ export interface Page {
           id?: string | null;
         }[]
       | null;
-    media?: (string | Media)[] | null;
+    media?: (string | null) | Media;
   };
   layout: (
     | ContentBlock
@@ -869,7 +869,7 @@ export interface Carousel {
         id?: string | null;
       }[]
     | null;
-  media?: (string | Media)[] | null;
+  media?: (string | null) | Media;
   id?: string | null;
   blockName?: string | null;
   blockType: 'carousel';

@@ -9,7 +9,7 @@ export const MediumImpactHero: React.FC<Partial<NonNullable<Page['hero']>>> = ({
   media,
   richText,
 }) => {
-  const heroImage = media?.[0] ?? undefined
+  const heroImage = media ?? undefined
   return (
     <div className="">
       <div className="container mb-8 hero-text">

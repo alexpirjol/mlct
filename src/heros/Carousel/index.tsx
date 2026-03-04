@@ -72,8 +72,8 @@ export const Carousel: React.FC<Partial<NonNullable<Page['hero']>>> = ({
       <div
         className={cn(
           'relative',
-          'min-h-[200px]',
-          fixedHeight ? (isCentered ? '' : 'h-[50vh] md:h-[80vh]') : 'h-[10vh]',
+          // 'min-h-[200px]',
+          !isCentered ? 'aspect-video' : '',
           !isCentered && direction,
           'flex items-center justify-center text-white',
         )}
@@ -89,6 +89,7 @@ export const Carousel: React.FC<Partial<NonNullable<Page['hero']>>> = ({
           loop={true}
           speed={autoplayInterval || 2000}
           direction={isCentered ? 'horizontal' : direction || 'vertical'}
+          autoHeight={isCentered}
           centeredSlides={isCentered}
           slidesPerView={isCentered ? centeredSlidesPerView : 1}
           spaceBetween={isCentered ? 16 : 0}

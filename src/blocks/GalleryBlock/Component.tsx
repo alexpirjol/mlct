@@ -116,7 +116,15 @@ export const GalleryBlock: React.FC<Props> = (props) => {
         slides={slides}
         open={index >= 0}
         close={() => setIndex(-1)}
-        plugins={[Captions, Fullscreen, Slideshow, ...(isMobile ? [] : [Thumbnails]), Video, Zoom, Share]}
+        plugins={[
+          Captions,
+          Fullscreen,
+          Slideshow,
+          ...(isMobile ? [] : [Thumbnails]),
+          Video,
+          Zoom,
+          Share,
+        ]}
       />
     </div>
   )
