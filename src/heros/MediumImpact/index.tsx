@@ -12,31 +12,19 @@ export const MediumImpactHero: React.FC<Partial<NonNullable<Page['hero']>>> = ({
 }) => {
   const heroImage = media ?? undefined
   return (
-    <div className="">
-      <div className="container mb-8 hero-text">
-        {!isEmptyLexical(richText) && (
-          <RichText className="mb-6" data={richText!} enableGutter={false} />
-        )}
-      </div>
-      <div className="container ">
-        {heroImage &&
-          (typeof heroImage === 'string' ||
-            typeof heroImage === 'number' ||
-            (typeof heroImage === 'object' && heroImage !== null)) && (
-            <div>
-              <Media
-                className="-mx-4 md:-mx-8 2xl:-mx-16"
-                imgClassName=""
-                priority
-                resource={heroImage}
-              />
-              {typeof heroImage === 'object' && heroImage?.caption && (
-                <div className="mt-3">
-                  <RichText data={heroImage.caption} enableGutter={false} />
-                </div>
-              )}
-            </div>
+    <div className="relative -mt-[10.4rem] flex items-end text-white" data-theme="dark">
+      <div className="container z-10 relative lg:grid lg:grid-cols-[1fr_48rem_1fr] pb-8 hero-text">
+        <div className="col-start-1 col-span-1 md:col-span-2">
+          {!isEmptyLexical(richText) && (
+            <RichText className="mb-6" data={richText!} enableGutter={false} />
           )}
+        </div>
+      </div>
+      <div className="min-h-[50vh] md:min-h-[80vh] select-none">
+        {heroImage && typeof heroImage === 'object' && heroImage !== null && (
+          <Media fill imgClassName="-z-10 object-cover" priority resource={heroImage} />
+        )}
+        <div className="absolute pointer-events-none left-0 bottom-0 w-full h-1/2 bg-linear-to-t from-black to-transparent" />
       </div>
     </div>
   )
