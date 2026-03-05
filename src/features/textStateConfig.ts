@@ -25,21 +25,18 @@ function toReact(css: Record<string, string>): React.CSSProperties {
 // ── Theme color palette (shared by text, highlight, and icon pickers) ─────────
 
 const themeColors = {
-  accent:          { label: 'Accent',         hex: '#d4b804' },
-  destructive:     { label: 'Destructive',     hex: '#dc2626' },
-  mutedForeground: { label: 'Muted',           hex: '#737373' },
-  chart1:          { label: 'Chart 1 (Coral)', hex: '#e76f51' },
-  chart2:          { label: 'Chart 2 (Teal)',  hex: '#2a9d8f' },
-  chart3:          { label: 'Chart 3 (Dark)',  hex: '#264653' },
-  chart4:          { label: 'Chart 4 (Sand)',  hex: '#e9c46a' },
-  chart5:          { label: 'Chart 5 (Amber)', hex: '#f4a261' },
+  accent: { label: 'Accent', hex: '#d4b804' },
+  destructive: { label: 'Destructive', hex: '#dc2626' },
+  mutedForeground: { label: 'Muted', hex: '#737373' },
+  chart1: { label: 'Chart 1 (Coral)', hex: '#e76f51' },
+  chart2: { label: 'Chart 2 (Teal)', hex: '#2a9d8f' },
+  chart3: { label: 'Chart 3 (Dark)', hex: '#264653' },
+  chart4: { label: 'Chart 4 (Sand)', hex: '#e9c46a' },
+  chart5: { label: 'Chart 5 (Amber)', hex: '#f4a261' },
 } as const
 
 const themeTextColors = Object.fromEntries(
-  Object.entries(themeColors).map(([key, { label, hex }]) => [
-    key,
-    { label, css: { color: hex } },
-  ]),
+  Object.entries(themeColors).map(([key, { label, hex }]) => [key, { label, css: { color: hex } }]),
 )
 
 const themeBgColors = Object.fromEntries(
@@ -116,14 +113,12 @@ export const iconColorOptions = Object.entries(themeTextColors).map(([key, { lab
   css: css as Record<string, string>,
 }))
 
-export const iconBgColorOptions = Object.entries(themeBgColors).map(
-  ([key, { label, css }]) => ({
-    key,
-    label,
-    cssValue: (css as Record<string, string>)['background-color'],
-    css: css as Record<string, string>,
-  }),
-)
+export const iconBgColorOptions = Object.entries(themeBgColors).map(([key, { label, css }]) => ({
+  key,
+  label,
+  cssValue: (css as Record<string, string>)['background-color'],
+  css: css as Record<string, string>,
+}))
 
 export const iconFontSizeOptions = Object.entries(textStateForPayload.fontSize).map(
   ([key, { label, css }]) => ({
