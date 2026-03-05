@@ -169,6 +169,30 @@ export interface Page {
     autoplayInterval?: number | null;
     slidesPerView?: ('auto' | '1.5' | '2' | '2.5' | '3' | '4') | null;
     slideWidth?: ('50' | '60' | '70' | '80' | '90') | null;
+    carouselHeight?:
+      | (
+          | '5vh'
+          | '10vh'
+          | '15vh'
+          | '20vh'
+          | '25vh'
+          | '30vh'
+          | '35vh'
+          | '40vh'
+          | '45vh'
+          | '50vh'
+          | '55vh'
+          | '60vh'
+          | '65vh'
+          | '70vh'
+          | '75vh'
+          | '80vh'
+          | '85vh'
+          | '90vh'
+          | '95vh'
+          | '100vh'
+        )
+      | null;
     richText?: {
       root: {
         type: string;
@@ -833,6 +857,30 @@ export interface Carousel {
   autoplayInterval?: number | null;
   slidesPerView?: ('auto' | '1.5' | '2' | '2.5' | '3' | '4') | null;
   slideWidth?: ('50' | '60' | '70' | '80' | '90') | null;
+  carouselHeight?:
+    | (
+        | '5vh'
+        | '10vh'
+        | '15vh'
+        | '20vh'
+        | '25vh'
+        | '30vh'
+        | '35vh'
+        | '40vh'
+        | '45vh'
+        | '50vh'
+        | '55vh'
+        | '60vh'
+        | '65vh'
+        | '70vh'
+        | '75vh'
+        | '80vh'
+        | '85vh'
+        | '90vh'
+        | '95vh'
+        | '100vh'
+      )
+    | null;
   richText?: {
     root: {
       type: string;
@@ -1202,6 +1250,7 @@ export interface PagesSelect<T extends boolean = true> {
         autoplayInterval?: T;
         slidesPerView?: T;
         slideWidth?: T;
+        carouselHeight?: T;
         richText?: T;
         slides?:
           | T
@@ -1394,6 +1443,7 @@ export interface CarouselSelect<T extends boolean = true> {
   autoplayInterval?: T;
   slidesPerView?: T;
   slideWidth?: T;
+  carouselHeight?: T;
   richText?: T;
   slides?:
     | T

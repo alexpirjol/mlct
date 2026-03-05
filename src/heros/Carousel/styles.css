@@ -129,20 +129,26 @@
 }
 
 /* ── Centered (peek) mode ─────────────────────────────────────────── */
-.mySwiper.centered-mode {
-  overflow: visible;
-}
+
 
 .mySwiper.centered-mode .swiper-slide.centered-slide {
   /* Width for slidesPerView='auto'; numeric values are set by Swiper itself */
   width: var(--ccp-slide-width, 80%);
   transition: transform 0.4s ease, opacity 0.4s ease;
+  transform-origin: center center;
+}
+
+/* Mobile portrait: wider slide width (fewer visible slides) */
+@media (max-width: 430px) {
+  .mySwiper.centered-mode .swiper-slide.centered-slide {
+    width: var(--ccp-slide-width-sm, var(--ccp-slide-width, 95%));
+  }
 }
 
 /* Dim non-active slides */
 .mySwiper.centered-mode .swiper-slide:not(.swiper-slide-active) {
-  opacity: 0.55;
-  transform: scale(0.95);
+  opacity: 0.4;
+  transform: scale(0.85);
 }
 
 .mySwiper.centered-mode .swiper-slide-active {

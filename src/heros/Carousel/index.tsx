@@ -35,18 +35,30 @@ export const Carousel: React.FC<Partial<NonNullable<Page['hero']>>> = ({
   centered = false,
   slidesPerView,
   slideWidth,
+  carouselHeight,
 }) => {
   const [activeIndex, setActiveIndex] = React.useState(0)
   const [showText, setShowText] = React.useState(!animation)
   const hasMovedPastFirstSlide = React.useRef(false)
   const fadeDuration = (autoplayInterval || 2000) + 1000
-  const fixedHeight = slides && slides.some((s) => Boolean(s?.media))
+  const heightStyle: React.CSSProperties | undefined = carouselHeight
+    ? { height: carouselHeight }
+    : { height: '80vh' }
 
   // Centered-mode derived values
   const isCentered = Boolean(centered)
   const centeredSlidesPerView: number | 'auto' =
     !slidesPerView || slidesPerView === 'auto' ? 'auto' : parseFloat(slidesPerView as string)
   const centeredSlideWidthPct = slideWidth ? String(slideWidth) : '80'
+
+  // Mobile portrait: ~50% lower slidesPerView (min 1)
+  const mobileSlidesPerView: number | 'auto' =
+    centeredSlidesPerView === 'auto' ? 'auto' : Math.max(1, centeredSlidesPerView * 0.5)
+  // For auto mode, wider slide width on mobile compensates for fewer visible slides
+  const mobileSlideWidthPct =
+    centeredSlidesPerView === 'auto'
+      ? String(Math.min(95, Math.round(parseFloat(centeredSlideWidthPct) * 1.5)))
+      : centeredSlideWidthPct
 
   React.useEffect(() => {
     if (!animation) {
@@ -73,16 +85,20 @@ export const Carousel: React.FC<Partial<NonNullable<Page['hero']>>> = ({
       <div
         className={cn(
           'relative',
-          'min-h-[250px]',
-          fixedHeight ? (isCentered ? '' : 'h-[50vh] md:h-[80vh]') : 'h-[20vh]',
           !isCentered && direction,
           'flex items-center justify-center text-white',
         )}
         data-theme="dark"
         style={
-          isCentered && centeredSlidesPerView === 'auto'
-            ? ({ '--ccp-slide-width': `${centeredSlideWidthPct}%` } as React.CSSProperties)
-            : undefined
+          {
+            ...(heightStyle ?? {}),
+            ...(isCentered
+              ? {
+                  '--ccp-slide-width': `${centeredSlideWidthPct}%`,
+                  '--ccp-slide-width-sm': `${mobileSlideWidthPct}%`,
+                }
+              : {}),
+          } as React.CSSProperties
         }
       >
         <Swiper
@@ -93,6 +109,24 @@ export const Carousel: React.FC<Partial<NonNullable<Page['hero']>>> = ({
           centeredSlides={isCentered}
           slidesPerView={isCentered ? centeredSlidesPerView : 1}
           spaceBetween={isCentered ? 16 : 0}
+          breakpoints={
+            isCentered
+              ? {
+                  0: {
+                    spaceBetween: 4,
+                    ...(centeredSlidesPerView !== 'auto' && {
+                      slidesPerView: mobileSlidesPerView as number,
+                    }),
+                  },
+                  431: {
+                    spaceBetween: 16,
+                    ...(centeredSlidesPerView !== 'auto' && {
+                      slidesPerView: centeredSlidesPerView as number,
+                    }),
+                  },
+                }
+              : undefined
+          }
           fadeEffect={!isCentered ? { crossFade: true } : undefined}
           pagination={{
             clickable: true,
