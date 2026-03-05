@@ -33,6 +33,7 @@ export const Categories: CollectionConfig = {
   defaultPopulate: {
     title: true,
     slug: true,
+    heroImage: true,
   },
   admin: {
     useAsTitle: 'title',

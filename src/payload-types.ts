@@ -501,6 +501,7 @@ export interface ArchiveBlock {
   populateBy?: ('collection' | 'selection') | null;
   relationTo?: ('categories' | 'projects') | null;
   categories?: (string | Category)[] | null;
+  projects?: (string | Project)[] | null;
   limit?: number | null;
   selectedDocs?:
     | (
@@ -1343,6 +1344,7 @@ export interface ArchiveBlockSelect<T extends boolean = true> {
   populateBy?: T;
   relationTo?: T;
   categories?: T;
+  projects?: T;
   limit?: T;
   selectedDocs?: T;
   id?: T;

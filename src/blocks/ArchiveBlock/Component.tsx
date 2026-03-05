@@ -12,11 +12,13 @@ export const ArchiveBlock: React.FC<
   ArchiveBlockProps & {
     id?: string
     noHorizontalSpacing?: boolean | null
+    projects?: (string | Project)[] | null
   }
 > = async (props) => {
   const {
     id,
     categories,
+    projects: projectsFromProps,
     introContent,
     limit: limitFromProps,
     populateBy,
@@ -25,61 +27,46 @@ export const ArchiveBlock: React.FC<
     noHorizontalSpacing,
   } = props
 
-  const limit = limitFromProps || 3
+  const limit = limitFromProps || 100
 
-  let projects: Project[] = []
-  let categoryDocs: Category[] = []
+  let items: (Project | Category)[] = []
 
   if (populateBy === 'collection') {
-    const payload = await getPayload({ config: configPromise })
-
-    if (relationTo === 'projects') {
-      const flattenedCategories = categories?.map((category) => {
-        if (typeof category === 'object') return category.id
-        else return category
-      })
-
-      const fetchedProjects = await payload.find({
-        collection: 'projects',
-        depth: 1,
-        limit,
-        ...(flattenedCategories && flattenedCategories.length > 0
-          ? {
-              where: {
-                category: {
-                  in: flattenedCategories,
-                },
-              },
-            }
-          : {}),
-      })
-
-      projects = fetchedProjects.docs
-    } else if (relationTo === 'categories') {
-      const fetchedCategories = await payload.find({
-        collection: 'categories',
-        depth: 1,
-        limit,
-      })
-
-      categoryDocs = fetchedCategories.docs
+    if (relationTo === 'categories') {
+      // Use the categories array directly — order is preserved from the admin UI.
+      // If no categories are selected, fall back to a full fetch.
+      if (categories?.length) {
+        items = categories.filter((c): c is Category => typeof c === 'object')
+      } else {
+        const payload = await getPayload({ config: configPromise })
+        const fetched = await payload.find({ collection: 'categories', depth: 1, limit })
+        items = fetched.docs
+      }
+    } else if (relationTo === 'projects') {
+      // If projects are manually ordered, use that list directly.
+      // Otherwise fetch all projects, optionally filtered by selected categories.
+      if (projectsFromProps?.length) {
+        items = projectsFromProps.filter((p): p is Project => typeof p === 'object')
+      } else {
+        const flattenedCategories = categories?.map((c) => (typeof c === 'object' ? c.id : c))
+        const payload = await getPayload({ config: configPromise })
+        const fetched = await payload.find({
+          collection: 'projects',
+          depth: 1,
+          limit,
+          ...(flattenedCategories?.length
+            ? { where: { category: { in: flattenedCategories } } }
+            : {}),
+        })
+        items = fetched.docs
+      }
     }
   } else {
-    if (selectedDocs?.length) {
-      const filteredDocs = selectedDocs
-        .map((doc) => {
-          if (typeof doc.value === 'object') return doc.value
-          return null
-        })
-        .filter(Boolean)
-
-      // Separate by type
-      projects = filteredDocs.filter((doc) => doc && 'category' in doc) as Project[]
-      categoryDocs = filteredDocs.filter((doc) => doc && !('category' in doc)) as Category[]
-    }
+    // Individual selection — the array order is exactly what the editor saved.
+    items = (selectedDocs ?? [])
+      .map((doc) => (typeof doc.value === 'object' ? (doc.value as Project | Category) : null))
+      .filter(Boolean) as (Project | Category)[]
   }
-
-  const items = relationTo === 'categories' ? categoryDocs : projects
 
   return (
     <div className={noHorizontalSpacing ? undefined : 'container'} id={`block-${id}`}>
