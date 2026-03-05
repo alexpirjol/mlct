@@ -5,11 +5,9 @@
  *  - `src/fields/defaultLexical.ts`  (server) – passed directly to TextStateFeature
  *  - `src/components/RichText/index.tsx` (frontend) – used to map state keys → React inline styles
  *
- * IMPORTANT: This file uses `defaultColors` from `@payloadcms/richtext-lexical`, which is a
- * plain JS object with no Node.js APIs, so it can be used in both server and RSC contexts.
+ * IMPORTANT: This file has no Node.js dependencies and can be safely used in both server and RSC contexts.
  */
 
-import { defaultColors } from '@payloadcms/richtext-lexical'
 import type React from 'react'
 
 // ── Helpers ──────────────────────────────────────────────────────────────────
@@ -24,11 +22,38 @@ function toReact(css: Record<string, string>): React.CSSProperties {
   ) as React.CSSProperties
 }
 
+// ── Theme color palette (shared by text, highlight, and icon pickers) ─────────
+
+const themeColors = {
+  accent:          { label: 'Accent',         hex: '#d4b804' },
+  destructive:     { label: 'Destructive',     hex: '#dc2626' },
+  mutedForeground: { label: 'Muted',           hex: '#737373' },
+  chart1:          { label: 'Chart 1 (Coral)', hex: '#e76f51' },
+  chart2:          { label: 'Chart 2 (Teal)',  hex: '#2a9d8f' },
+  chart3:          { label: 'Chart 3 (Dark)',  hex: '#264653' },
+  chart4:          { label: 'Chart 4 (Sand)',  hex: '#e9c46a' },
+  chart5:          { label: 'Chart 5 (Amber)', hex: '#f4a261' },
+} as const
+
+const themeTextColors = Object.fromEntries(
+  Object.entries(themeColors).map(([key, { label, hex }]) => [
+    key,
+    { label, css: { color: hex } },
+  ]),
+)
+
+const themeBgColors = Object.fromEntries(
+  Object.entries(themeColors).map(([key, { label, hex }]) => [
+    key,
+    { label, css: { 'background-color': hex } },
+  ]),
+)
+
 // ── Payload config object (hyphen-case CSS, as required by TextStateFeature) ─
 
 export const textStateForPayload = {
-  color: defaultColors.text,
-  highlight: defaultColors.background,
+  color: themeTextColors,
+  highlight: themeBgColors,
   transform: {
     uppercase: { label: 'Uppercase', css: { 'text-transform': 'uppercase' as const } },
     lowercase: { label: 'Lowercase', css: { 'text-transform': 'lowercase' as const } },
@@ -55,13 +80,13 @@ export const textStateForPayload = {
 
 export const textStateCSSMap: Record<string, Record<string, React.CSSProperties>> = {
   color: Object.fromEntries(
-    Object.entries(defaultColors.text).map(([k, { css }]) => [
+    Object.entries(themeTextColors).map(([k, { css }]) => [
       k,
       toReact(css as Record<string, string>),
     ]),
   ),
   highlight: Object.fromEntries(
-    Object.entries(defaultColors.background).map(([k, { css }]) => [
+    Object.entries(themeBgColors).map(([k, { css }]) => [
       k,
       toReact(css as Record<string, string>),
     ]),
@@ -84,14 +109,14 @@ export const textStateCSSMap: Record<string, Record<string, React.CSSProperties>
 // Used by the icon feature client to build toolbar colour/bg/size pickers.
 // Each entry provides the CSS value to store directly on the icon node.
 
-export const iconColorOptions = Object.entries(defaultColors.text).map(([key, { label, css }]) => ({
+export const iconColorOptions = Object.entries(themeTextColors).map(([key, { label, css }]) => ({
   key,
   label,
   cssValue: (css as Record<string, string>).color,
   css: css as Record<string, string>,
 }))
 
-export const iconBgColorOptions = Object.entries(defaultColors.background).map(
+export const iconBgColorOptions = Object.entries(themeBgColors).map(
   ([key, { label, css }]) => ({
     key,
     label,
