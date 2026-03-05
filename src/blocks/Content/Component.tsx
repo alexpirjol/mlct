@@ -27,13 +27,19 @@ export const ContentBlock: React.FC<
         {columns &&
           columns.length > 0 &&
           columns.map((col, index) => {
-            const { enableLink, link, richText, size } = col
+            const { enableLink, link, richText, size, borderColor } = col
+
+            const borderStyle =
+              borderColor && borderColor !== 'none'
+                ? { border: `2px solid ${borderColor}`, padding: '1rem' }
+                : undefined
 
             return (
               <div
                 className={cn(`col-span-4 lg:col-span-${colsSpanClasses[size!]}`, {
                   'md:col-span-2': size !== 'full',
                 })}
+                style={borderStyle}
                 key={index}
               >
                 {!isEmptyLexical(richText) && <RichText data={richText!} enableGutter={false} />}

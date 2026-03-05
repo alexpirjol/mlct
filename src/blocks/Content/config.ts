@@ -20,7 +20,24 @@ import { colorPickerField } from '@/fields/colorPicker'
 import { noVerticalSpacingField } from '@/fields/noVerticalSpacing'
 import { noHorizontalSpacingField } from '@/fields/noHorizontalSpacing'
 
+const BORDER_COLORS = [
+  { value: 'none', preview: 'none' },
+  { value: '#1b1b1b' },
+  { value: '#292c30' },
+  { value: '#ffffff' },
+  { value: '#e9ce05' },
+  { value: '#dc2626' },
+  { value: '#737373' },
+  { value: '#e76f51' },
+  { value: '#2a9d8f' },
+]
+
 const columnFields: Field[] = [
+  colorPickerField({
+    name: 'borderColor',
+    label: 'Border color',
+    defaultColors: BORDER_COLORS,
+  }),
   {
     name: 'size',
     type: 'select',

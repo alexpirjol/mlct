@@ -68,6 +68,25 @@
   background-size: 10px 10px !important;
 }
 
+/* Crossed-out square = "no border" sentinel */
+.ccp-chip--none {
+  background: #fff !important;
+  position: relative;
+  overflow: hidden;
+}
+.ccp-chip--none::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom right,
+    transparent calc(50% - 1px),
+    #dc2626 calc(50% - 1px),
+    #dc2626 calc(50% + 1px),
+    transparent calc(50% + 1px)
+  );
+}
+
 .ccp-input {
   padding: 6px 8px;
   border-radius: 4px;

@@ -389,6 +389,7 @@ export interface ContentBlock {
   noHorizontalSpacing?: boolean | null;
   columns?:
     | {
+        borderColor?: string | null;
         size?: ('quarter' | 'oneThird' | 'half' | 'twoThirds' | 'threeQuarters' | 'full') | null;
         richText?: {
           root: {
@@ -1299,6 +1300,7 @@ export interface ContentBlockSelect<T extends boolean = true> {
   columns?:
     | T
     | {
+        borderColor?: T;
         size?: T;
         richText?: T;
         enableLink?: T;
