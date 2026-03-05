@@ -108,7 +108,11 @@ const Field: React.FC<ColorPickerFieldProps> = ({
                         'ccp-chip--transparent': opt.value === 'transparent',
                         'ccp-chip--none': opt.value === 'none',
                       })}
-                      style={opt.value !== 'transparent' && opt.value !== 'none' ? { backgroundColor: bg } : undefined}
+                      style={
+                        opt.value !== 'transparent' && opt.value !== 'none'
+                          ? { backgroundColor: bg }
+                          : undefined
+                      }
                       aria-label={opt.value}
                       title={opt.value}
                       onClick={() => setValue(opt.value)}
