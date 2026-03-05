@@ -40,7 +40,29 @@ export const Carousel: React.FC<Partial<NonNullable<Page['hero']>>> = ({
   const [activeIndex, setActiveIndex] = React.useState(0)
   const [showText, setShowText] = React.useState(!animation)
   const hasMovedPastFirstSlide = React.useRef(false)
+  const isMounted = React.useRef(false)
   const fadeDuration = (autoplayInterval || 2000) + 1000
+
+  React.useEffect(() => {
+    // Mark as mounted after a tick so Swiper's internal loop-init slide changes are ignored
+    const t = setTimeout(() => {
+      isMounted.current = true
+    }, 100)
+    return () => clearTimeout(t)
+  }, [])
+
+  const restartZoomAnimation = React.useCallback(
+    (swiper: { slides?: HTMLElement[]; activeIndex?: number }) => {
+      const activeSlide = swiper.slides?.[swiper.activeIndex ?? 0]
+      if (!activeSlide) return
+      const img = activeSlide.querySelector('img')
+      if (!img) return
+      img.style.animationName = 'none'
+      void img.offsetWidth // trigger reflow to restart
+      img.style.animationName = ''
+    },
+    [],
+  )
   const heightStyle: React.CSSProperties | undefined = carouselHeight
     ? { height: carouselHeight }
     : { height: '80vh' }
@@ -159,9 +181,16 @@ export const Carousel: React.FC<Partial<NonNullable<Page['hero']>>> = ({
           style={
             {
               '--autoplay-duration': `${autoplayInterval || 2000}ms`,
+              '--slide-speed': `${autoplayInterval || 2000}ms`,
             } as React.CSSProperties
           }
-          onSlideChange={(swiper) => setActiveIndex(swiper.realIndex)}
+          onRealIndexChange={(swiper) => {
+            setActiveIndex(swiper.realIndex)
+            if (animation && !isCentered && isMounted.current) {
+              // Small delay lets Swiper finish its loop-jump reposition before we restart
+              setTimeout(() => restartZoomAnimation(swiper), 50)
+            }
+          }}
         >
           {slides?.map(({ media, richText }, i) => {
             return (

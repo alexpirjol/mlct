@@ -10,12 +10,6 @@
   }
 }
 
-@media (max-width: 639px) {
-  .page-hero .carousel-hero-wrapper {
-    max-height: 30vh !important;
-  }
-}
-
 .swiper-wrapper {
   height: 100%;
 }
@@ -23,6 +17,7 @@
 .swiper-slide {
   text-align: center;
   font-size: 18px;
+  overflow: hidden;
 
   /* Center slide text vertically */
   display: flex;
@@ -62,11 +57,11 @@
 }
 
 .mySwiper.animation-enabled .swiper-slide[data-zoom='in'] img {
-  animation: zoomIn 20s linear infinite alternate;
+  animation: zoomIn calc(var(--autoplay-duration, 5000ms) + var(--slide-speed, 1000ms)) linear forwards;
 }
 
 .mySwiper.animation-enabled .swiper-slide[data-zoom='out'] img {
-  animation: zoomOut 20s linear infinite alternate;
+  animation: zoomOut calc(var(--autoplay-duration, 5000ms) + var(--slide-speed, 1000ms)) linear forwards;
 }
 
 .vertial .mySwiper .swiper-pagination {
