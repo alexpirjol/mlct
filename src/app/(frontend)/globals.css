@@ -491,3 +491,97 @@ html[data-theme='light'] {
 .hero-text div {
   color: white !important;
 }
+
+/* ── Lexical text animation effects ────────────────────────────────────────── */
+/* Animations fire when <AnimatedEffect> sets data-visible="true" via           */
+/* IntersectionObserver — so they trigger as the element scrolls into view.     */
+
+/* Keyframes */
+
+@keyframes lx-fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes lx-slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Triggered rules — only play once the element is in the viewport */
+
+[data-effect="fade-in"][data-visible="true"] {
+  animation: lx-fade-in 0.8s ease-in both;
+}
+
+[data-effect="slide-up"][data-visible="true"] {
+  animation: lx-slide-up 0.6s ease-out both;
+}
+
+[data-effect="pulse"][data-visible="true"] {
+  animation: lx-pulse 2s ease-in-out infinite;
+}
+
+[data-effect="shake"][data-visible="true"] {
+  animation: lx-shake 0.5s ease-in-out;
+}
+
+@keyframes lx-pulse {
+
+  0%,
+  100% {
+    opacity: 1;
+    text-shadow: 0 0 0px transparent;
+  }
+
+  50% {
+    opacity: 0.7;
+    text-shadow: 0 0 8px currentColor;
+  }
+}
+
+@keyframes lx-shake {
+
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  15% {
+    transform: translateX(-5px);
+  }
+
+  30% {
+    transform: translateX(5px);
+  }
+
+  45% {
+    transform: translateX(-4px);
+  }
+
+  60% {
+    transform: translateX(4px);
+  }
+
+  75% {
+    transform: translateX(-2px);
+  }
+
+  90% {
+    transform: translateX(2px);
+  }
+}
+
+/* Counter effect: JS counting handled by <AnimatedEffect> — no CSS keyframes needed. */

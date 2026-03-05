@@ -1,11 +1,7 @@
 import type { CollectionConfig } from 'payload'
 import { normalizeRichText } from '@/hooks/normalizeRichText'
 
-import {
-  FixedToolbarFeature,
-  InlineToolbarFeature,
-  lexicalEditor,
-} from '@payloadcms/richtext-lexical'
+import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import path from 'path'
 import { fileURLToPath } from 'url'
 
@@ -35,7 +31,7 @@ export const Media: CollectionConfig = {
       hooks: { beforeChange: [normalizeRichText] },
       editor: lexicalEditor({
         features: ({ rootFeatures }) => {
-          return [...rootFeatures, FixedToolbarFeature(), InlineToolbarFeature()]
+          return [...rootFeatures]
         },
       }),
     },

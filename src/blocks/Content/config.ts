@@ -1,13 +1,7 @@
 import type { Block, Field } from 'payload'
 import { normalizeRichText } from '@/hooks/normalizeRichText'
 
-import {
-  BlocksFeature,
-  FixedToolbarFeature,
-  HorizontalRuleFeature,
-  InlineToolbarFeature,
-  lexicalEditor,
-} from '@payloadcms/richtext-lexical'
+import { BlocksFeature, HorizontalRuleFeature, lexicalEditor } from '@payloadcms/richtext-lexical'
 import { BannerForLexical } from '../../blocks/Banner/config'
 import { CodeForLexical } from '../../blocks/Code/config'
 import { MediaBlockForLexical } from '../../blocks/MediaBlock/config'
@@ -87,8 +81,6 @@ const columnFields: Field[] = [
               MediaCardBlockForLexical,
             ],
           }),
-          FixedToolbarFeature(),
-          InlineToolbarFeature(),
           HorizontalRuleFeature(),
         ]
       },

@@ -4,11 +4,7 @@ import { colorPickerField } from '@/fields/colorPicker'
 import { noVerticalSpacingField } from '@/fields/noVerticalSpacing'
 import { noHorizontalSpacingField } from '@/fields/noHorizontalSpacing'
 
-import {
-  FixedToolbarFeature,
-  InlineToolbarFeature,
-  lexicalEditor,
-} from '@payloadcms/richtext-lexical'
+import { lexicalEditor } from '@payloadcms/richtext-lexical'
 
 import { link } from '../../fields/link'
 
@@ -101,7 +97,7 @@ const buildMediaCardBlock = (opts: { forLexical?: boolean } = {}): Block => ({
       hooks: { beforeChange: [normalizeRichText] },
       editor: lexicalEditor({
         features: ({ rootFeatures }) => {
-          return [...rootFeatures, FixedToolbarFeature(), InlineToolbarFeature()]
+          return [...rootFeatures]
         },
       }),
     },

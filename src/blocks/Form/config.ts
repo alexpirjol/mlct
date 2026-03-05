@@ -4,12 +4,7 @@ import { colorPickerField } from '@/fields/colorPicker'
 import { noVerticalSpacingField } from '@/fields/noVerticalSpacing'
 import { noHorizontalSpacingField } from '@/fields/noHorizontalSpacing'
 
-import {
-  FixedToolbarFeature,
-  HeadingFeature,
-  InlineToolbarFeature,
-  lexicalEditor,
-} from '@payloadcms/richtext-lexical'
+import { lexicalEditor } from '@payloadcms/richtext-lexical'
 
 export const FormBlock: Block = {
   slug: 'formBlock',
@@ -38,7 +33,7 @@ export const FormBlock: Block = {
       },
       editor: lexicalEditor({
         features: ({ rootFeatures }) => {
-          return [...rootFeatures, FixedToolbarFeature(), InlineToolbarFeature()]
+          return [...rootFeatures]
         },
       }),
       label: 'Intro Content',

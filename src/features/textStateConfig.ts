@@ -69,6 +69,27 @@ export const textStateForPayload = {
     xl: { label: 'XL', css: { 'font-size': '1.5em' as const, 'line-height': '2rem' as const } },
     '2xl': { label: '2XL', css: { 'font-size': '2em' as const, 'line-height': '2.5rem' as const } },
   },
+  effect: {
+    'fade-in': { label: 'Fade In', css: { animation: 'lx-fade-in 0.8s ease-in both' as const } },
+    'slide-up': {
+      label: 'Slide Up',
+      css: {
+        animation: 'lx-slide-up 0.6s ease-out both' as const,
+        display: 'inline-block' as const,
+      },
+    },
+    pulse: { label: 'Pulse Glow', css: { animation: 'lx-pulse 2s ease-in-out infinite' as const } },
+    shake: {
+      label: 'Shake',
+      css: { animation: 'lx-shake 0.5s ease-in-out' as const, display: 'inline-block' as const },
+    },
+    counter: {
+      label: 'Counter',
+      css: {
+        display: 'inline-block' as const,
+      },
+    },
+  },
 }
 
 // ── React CSS map (camelCase, for JSX inline styles) ─────────────────────────
@@ -100,7 +121,46 @@ export const textStateCSSMap: Record<string, Record<string, React.CSSProperties>
     xl: { fontSize: '1.5em', lineHeight: '2rem' },
     '2xl': { fontSize: '2em', lineHeight: '2.5rem' },
   },
+  effect: {
+    // Animations are triggered by IntersectionObserver in <AnimatedEffect>.
+    // data-visible="true" is set on entry; CSS @keyframes keyed off that attribute.
+    // display:inline-block is kept for transform-based effects (slide-up, shake).
+    'fade-in': { display: 'inline-block' },
+    'slide-up': { display: 'inline-block' },
+    pulse: { display: 'inline-block' },
+    shake: { display: 'inline-block' },
+    counter: { display: 'inline-block' },
+  },
 }
+
+// ── Text animation effects (separate toolbar menu) ─────────────────────────
+// Each value maps to a CSS animation name defined in globals.css.
+// `display: inline-block` is needed for transform-based animations on text.
+
+export const effectStateForPayload = {
+  effect: {
+    'fade-in': {
+      label: 'Fade In',
+      css: { animation: 'lx-fade-in 0.8s ease-in both' },
+    },
+    'slide-up': {
+      label: 'Slide Up',
+      css: { animation: 'lx-slide-up 0.6s ease-out both', display: 'inline-block' },
+    },
+    pulse: {
+      label: 'Pulse Glow',
+      css: { animation: 'lx-pulse 2s ease-in-out infinite' },
+    },
+    shake: {
+      label: 'Shake',
+      css: { animation: 'lx-shake 0.5s ease-in-out', display: 'inline-block' },
+    },
+    counter: {
+      label: 'Counter',
+      css: { display: 'inline-block' },
+    },
+  },
+} as const
 
 // ── Icon toolbar values ───────────────────────────────────────────────────────
 // Used by the icon feature client to build toolbar colour/bg/size pickers.

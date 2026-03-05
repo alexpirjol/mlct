@@ -14,6 +14,7 @@ import {
 } from '@payloadcms/richtext-lexical/react'
 import type React from 'react'
 import { textStateCSSMap } from '@/features/textStateConfig'
+import { AnimatedEffect } from './CounterNumber'
 
 import { CodeBlock, CodeBlockProps } from '@/blocks/Code/Component'
 
@@ -53,17 +54,40 @@ const jsxConverters: JSXConvertersFunction<NodeTypes> = ({ defaultConverters }) 
     const { node } = args
     const n = node as unknown as Record<string, unknown>
     const nodeState = (n['$'] as Record<string, string> | undefined) ?? {}
-    const stateStyle: React.CSSProperties = {}
+
+    // Collect non-effect inline styles (color, fontSize, transform, etc.).
+    const activeEffect = nodeState['effect'] as string | undefined
+    const baseStyle: React.CSSProperties = {}
     for (const [stateKey, stateValues] of Object.entries(textStateCSSMap)) {
+      if (stateKey === 'effect') continue
       const activeVal = nodeState[stateKey]
       if (activeVal && stateValues[activeVal]) {
-        Object.assign(stateStyle, stateValues[activeVal])
+        Object.assign(baseStyle, stateValues[activeVal])
       }
     }
+
     const textConverter = defaultConverters.text
     const base = typeof textConverter === 'function' ? textConverter(args) : null
-    if (Object.keys(stateStyle).length === 0) return base
-    return <span style={stateStyle}>{base}</span>
+
+    // Any effect: wrap in AnimatedEffect so it triggers on viewport entry.
+    if (activeEffect) {
+      // Counter: only animate integers; fall through to plain render otherwise.
+      if (activeEffect === 'counter') {
+        const parsed = parseInt(node.text, 10)
+        if (Number.isInteger(parsed) && String(parsed) === node.text.trim()) {
+          return <AnimatedEffect effect="counter" counterValue={parsed} style={baseStyle} />
+        }
+      } else {
+        return (
+          <AnimatedEffect effect={activeEffect} style={baseStyle}>
+            {base}
+          </AnimatedEffect>
+        )
+      }
+    }
+
+    if (Object.keys(baseStyle).length === 0) return base
+    return <span style={baseStyle}>{base}</span>
   },
   icon: ({ node }) => {
     const n = node as unknown as SerializedIconNode
