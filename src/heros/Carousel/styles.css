@@ -10,6 +10,12 @@
   }
 }
 
+@media (max-width: 639px) {
+  .page-hero .carousel-hero-wrapper {
+    max-height: 30vh !important;
+  }
+}
+
 .swiper-wrapper {
   height: 100%;
 }
@@ -56,11 +62,11 @@
 }
 
 .mySwiper.animation-enabled .swiper-slide[data-zoom='in'] img {
-  animation: zoomIn 20s linear infinite;
+  animation: zoomIn 20s linear infinite alternate;
 }
 
 .mySwiper.animation-enabled .swiper-slide[data-zoom='out'] img {
-  animation: zoomOut 20s linear infinite;
+  animation: zoomOut 20s linear infinite alternate;
 }
 
 .vertial .mySwiper .swiper-pagination {
