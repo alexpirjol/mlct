@@ -19,6 +19,7 @@ export const validateHexColor = (value?: string | null): true | string => {
   if (!value) return true
   const v = String(value).trim()
   if (v === 'transparent') return true
+  if (v === 'none') return true
   if (v.startsWith('var(')) return true
   if (v.startsWith('--')) return true
   if (/^#(?:[0-9a-fA-F]{3,6}$)/.test(v)) return true

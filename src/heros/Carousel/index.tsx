@@ -87,6 +87,7 @@ export const Carousel: React.FC<Partial<NonNullable<Page['hero']>>> = ({
           'relative',
           !isCentered && direction,
           'flex items-center justify-center text-white',
+          'carousel-hero-wrapper',
         )}
         data-theme="dark"
         style={
