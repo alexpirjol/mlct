@@ -86,10 +86,34 @@
       transparent calc(50% + 1px));
 }
 
+.ccp-add {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-start;
+}
+
+.ccp-add-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.ccp-swatch {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  border: 1px solid rgba(0,0,0,0.15);
+  flex-shrink: 0;
+}
+
 .ccp-input {
   padding: 6px 8px;
   border-radius: 4px;
   border: 1px solid #ddd;
+  font-family: monospace;
+  font-size: 13px;
+  width: 90px;
 }
 
 .ccp-cell {
@@ -97,10 +121,4 @@
   height: 16px;
   border-radius: 4px;
   border: 1px solid rgba(0, 0, 0, 0.1);
-}
-
-.ccp-add {
-  display: flex;
-  gap: 8px;
-  align-items: center
 }

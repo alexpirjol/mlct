@@ -1,9 +1,11 @@
 'use client'
 import React, { useEffect, useState, Fragment, useCallback, useMemo } from 'react'
 import { useField, usePreferences, FieldLabel, Button } from '@payloadcms/ui'
+import { ColorPicker } from '@vtaits/react-color-picker'
 import { cn } from '@/utilities/ui'
 import { DEFAULT_COLORS } from './index'
 import type { ColorOption } from './index'
+import '@vtaits/react-color-picker/index.css'
 import './styles.css'
 
 const PREFERENCE_KEY = 'color-picker-colors'
@@ -79,19 +81,31 @@ const Field: React.FC<ColorPickerFieldProps> = ({
       <FieldLabel htmlFor={path} label={label || undefined} required={required} />
       {isAdding ? (
         <div className="ccp-add">
-          <input
-            className="ccp-input"
-            type="text"
-            placeholder="#ffffff or tailwind class"
-            value={colorToAdd}
-            onChange={(e) => setColorToAdd(e.target.value)}
+          <ColorPicker
+            saturationWidth={220}
+            saturationHeight={160}
+            hueWidth={20}
+            hueMargin={10}
+            value={colorToAdd || '#ffffff'}
+            onDrag={(hex: string) => setColorToAdd(hex)}
+            onChange={(hex: string) => setColorToAdd(hex)}
           />
-          <Button buttonStyle="primary" size="small" onClick={handleAdd}>
-            Add
-          </Button>
-          <Button buttonStyle="secondary" size="small" onClick={() => setIsAdding(false)}>
-            Cancel
-          </Button>
+          <div className="ccp-add-row">
+            <div className="ccp-swatch" style={{ backgroundColor: colorToAdd || '#ffffff' }} />
+            <input
+              className="ccp-input"
+              type="text"
+              placeholder="#ffffff"
+              value={colorToAdd}
+              onChange={(e) => setColorToAdd(e.target.value)}
+            />
+            <Button buttonStyle="primary" size="small" onClick={handleAdd}>
+              Add
+            </Button>
+            <Button buttonStyle="secondary" size="small" onClick={() => setIsAdding(false)}>
+              Cancel
+            </Button>
+          </div>
         </div>
       ) : (
         <Fragment>
