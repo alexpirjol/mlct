@@ -216,7 +216,7 @@ export const Carousel: React.FC<Partial<NonNullable<Page['hero']>>> = ({
                             isCentered ? undefined : 'max-w-[36.5rem] mx-auto md:text-center'
                           }
                         >
-                          <RichText className="mb-6" data={richText!} enableGutter={false} />
+                          <RichText data={richText!} enableGutter={false} />
                         </div>
                       </div>
                     </div>

@@ -22,9 +22,7 @@ export const HighImpactHero: React.FC<Partial<NonNullable<Page['hero']>>> = ({
     <div className="relative -mt-[10.4rem] flex items-end text-white" data-theme="dark">
       <div className="container z-10 relative lg:grid lg:grid-cols-[1fr_48rem_1fr] pb-8 hero-text">
         <div className="col-start-1 col-span-1 md:col-span-2">
-          {!isEmptyLexical(richText) && (
-            <RichText className="mb-6" data={richText!} enableGutter={false} />
-          )}
+          {!isEmptyLexical(richText) && <RichText data={richText!} enableGutter={false} />}
         </div>
       </div>
       <div className="min-h-[50vh] md:min-h-[80vh] select-none">
