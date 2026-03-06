@@ -5,7 +5,8 @@ const normalizeUrl = (url: string) =>
 
 export const getServerSideURL = () => {
   if (process.env.NEXT_PUBLIC_SERVER_URL) return normalizeUrl(process.env.NEXT_PUBLIC_SERVER_URL)
-  if (process.env.VERCEL_PROJECT_PRODUCTION_URL) return normalizeUrl(process.env.VERCEL_PROJECT_PRODUCTION_URL)
+  if (process.env.VERCEL_PROJECT_PRODUCTION_URL)
+    return normalizeUrl(process.env.VERCEL_PROJECT_PRODUCTION_URL)
   return 'http://localhost:3000'
 }
 
