@@ -74,6 +74,7 @@ export default buildConfig({
       },
     },
   }),
+  serverURL: getServerSideURL(),
   collections: [Pages, Projects, Media, Categories, Users],
   cors: [getServerSideURL()].filter(Boolean),
   globals: [Header, Footer, Settings],
