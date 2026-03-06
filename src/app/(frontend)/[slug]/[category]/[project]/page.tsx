@@ -69,7 +69,7 @@ export default async function Project({ params: paramsPromise }: Args) {
 
       <PostHero project={projectDoc} />
 
-      {projectDoc.layout && <RenderBlocks blocks={projectDoc.layout} />}
+      {projectDoc?.layout && <RenderBlocks blocks={projectDoc.layout} />}
     </article>
   )
 }
