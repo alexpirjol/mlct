@@ -204,7 +204,12 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
         </div>
       </div>
       {/* Mobile nav dropdown */}
-      <div className="lg:hidden absolute top-full left-0 right-0 z-50 overflow-hidden">
+      <div
+        className={cn(
+          'lg:hidden absolute top-full left-0 right-0 z-50 overflow-hidden',
+          mobileOpen ? 'pointer-events-auto' : 'pointer-events-none',
+        )}
+      >
         <nav
           className={cn(
             styles['header-mobile-nav'],
